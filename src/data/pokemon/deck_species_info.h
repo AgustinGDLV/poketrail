@@ -22,6 +22,50 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .portraitPalette = gCaterpiePortraitPal, 
     },
 
+    [SPECIES_METAPOD] = 
+    { 
+        .baseHP = 100, 
+        .basePower = 100, 
+        .baseDef = 100, 
+        .move = MOVE_TACKLE, 
+        .ability = ABILITY_NONE, 
+    
+        .playerIdle = gMetapodPlayerIdleGfx, 
+        .opponentIdle = gMetapodOpponentIdleGfx, 
+        .playerAttack = gMetapodPlayerAttackGfx, 
+        .opponentAttack = gMetapodOpponentAttackGfx, 
+        .playerHurt = gMetapodPlayerHurtGfx, 
+        .opponentHurt = gMetapodOpponentHurtGfx, 
+        .objectPalette = gMetapodObjectPal, 
+        .playerYOffset = 0, 
+        .opponentYOffset = 0, 
+    
+        .portrait = gMetapodPortraitGfx, 
+        .portraitPalette = gMetapodPortraitPal, 
+    },
+
+    [SPECIES_BUTTERFREE] = 
+    { 
+        .baseHP = 100, 
+        .basePower = 100,
+        .baseDef = 100, 
+        .move = MOVE_TACKLE, 
+        .ability = ABILITY_NONE, 
+    
+        .playerIdle = gButterfreePlayerIdleGfx, 
+        .opponentIdle = gButterfreeOpponentIdleGfx, 
+        .playerAttack = gButterfreePlayerAttackGfx, 
+        .opponentAttack = gButterfreeOpponentAttackGfx, 
+        .playerHurt = gButterfreePlayerHurtGfx, 
+        .opponentHurt = gButterfreeOpponentHurtGfx, 
+        .objectPalette = gButterfreeObjectPal, 
+        .playerYOffset = -6, 
+        .opponentYOffset = -6, 
+    
+        .portrait = gButterfreePortraitGfx, 
+        .portraitPalette = gButterfreePortraitPal, 
+    },
+
     [SPECIES_RATTATA] =
     {
         .baseHP = 50,

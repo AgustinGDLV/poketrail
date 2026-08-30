@@ -10,6 +10,30 @@ const u16 gCaterpieObjectPal[] = INCBIN_U16("graphics/deck_pokemon/caterpie/play
 const u8 gCaterpiePortraitGfx[] = INCBIN_U8("graphics/deck_pokemon/caterpie/portrait_normal.4bpp"); 
 const u16 gCaterpiePortraitPal[] = INCBIN_U16("graphics/deck_pokemon/caterpie/portrait_normal.gbapal");
 
+// Metapod
+const u8 gMetapodPlayerIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/metapod/player_idle.4bpp"); 
+const u8 gMetapodOpponentIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/metapod/opponent_idle.4bpp"); 
+const u8 gMetapodPlayerAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/metapod/player_attack.4bpp"); 
+const u8 gMetapodOpponentAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/metapod/opponent_attack.4bpp"); 
+const u8 gMetapodPlayerHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/metapod/player_hurt.4bpp"); 
+const u8 gMetapodOpponentHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/metapod/opponent_hurt.4bpp"); 
+const u16 gMetapodObjectPal[] = INCBIN_U16("graphics/deck_pokemon/metapod/player_idle.gbapal"); 
+ 
+const u8 gMetapodPortraitGfx[] = INCBIN_U8("graphics/deck_pokemon/metapod/portrait_normal.4bpp"); 
+const u16 gMetapodPortraitPal[] = INCBIN_U16("graphics/deck_pokemon/metapod/portrait_normal.gbapal");
+
+// Butterfree
+const u8 gButterfreePlayerIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/butterfree/player_idle.4bpp"); 
+const u8 gButterfreeOpponentIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/butterfree/opponent_idle.4bpp"); 
+const u8 gButterfreePlayerAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/butterfree/player_attack.4bpp"); 
+const u8 gButterfreeOpponentAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/butterfree/opponent_attack.4bpp"); 
+const u8 gButterfreePlayerHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/butterfree/player_hurt.4bpp"); 
+const u8 gButterfreeOpponentHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/butterfree/opponent_hurt.4bpp"); 
+const u16 gButterfreeObjectPal[] = INCBIN_U16("graphics/deck_pokemon/butterfree/player_idle.gbapal"); 
+ 
+const u8 gButterfreePortraitGfx[] = INCBIN_U8("graphics/deck_pokemon/butterfree/portrait_normal.4bpp"); 
+const u16 gButterfreePortraitPal[] = INCBIN_U16("graphics/deck_pokemon/butterfree/portrait_normal.gbapal");
+
 // Rattata
 const u8 gRattataPlayerIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/rattata/player_idle.4bpp");
 const u8 gRattataOpponentIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/rattata/opponent_idle.4bpp");

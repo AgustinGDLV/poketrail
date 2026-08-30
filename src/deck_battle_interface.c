@@ -799,7 +799,7 @@ static void SpriteCB_BattlerStatChange(struct Sprite *sprite)
     }
 }
 
-void StartBattlerAnim(enum BattleId battler, u32 animId) // TODO: overwrite sprite tiles?
+void StartBattlerAnim(enum BattleId battler, u32 animId)
 {
     switch (animId)
     {

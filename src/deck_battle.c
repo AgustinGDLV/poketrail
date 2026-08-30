@@ -424,11 +424,11 @@ static void Task_HandleBattleVictory(u8 taskId)
             if (expAfterGain >= nextLevelExp)
                 gTasks[taskId].tState = 3;
             else
-                gTasks[taskId].tState = 4;
+                gTasks[taskId].tState = 6;
         }
         else
         {
-            gTasks[taskId].tState = 4;
+            gTasks[taskId].tState = 6;
         }
         break;
     case 3: // Print level up message.
@@ -447,13 +447,50 @@ static void Task_HandleBattleVictory(u8 taskId)
             ++gTasks[taskId].tState;
         }
         break;
-    case 4: // Loop until all player positions have been given exp.
+    case 4: // Check evolution.
+        if (gDeckMons[gDeckStruct.battlerExp].species != SPECIES_NONE)
+        {
+            bool32 canStopEvo = TRUE;
+            struct Pokemon *mon = &gPlayerParty[gDeckMons[gDeckStruct.battlerExp].partyIndex];
+            u32 evoSpecies = GetEvolutionTargetSpecies(mon, EVO_MODE_BATTLE_ONLY, ITEM_NONE, NULL, &canStopEvo, CHECK_EVO);
+            if (evoSpecies != gDeckMons[gDeckStruct.battlerExp].species)
+            {
+                StringCopy(gStringVar2, GetSpeciesName(gDeckMons[gDeckStruct.battlerExp].species));
+                SetMonData(mon, MON_DATA_SPECIES, &evoSpecies);
+                EvolutionRenameMon(mon, gDeckMons[gDeckStruct.battlerExp].species, evoSpecies);
+                gDeckMons[gDeckStruct.battlerExp].species = evoSpecies;
+                CalculateMonStats(mon);
+                LoadBattlerObjectSprite(gDeckStruct.battlerExp);
+                StartBattlerAnim(gDeckStruct.battlerExp, ANIM_ATTACK);
+                gTasks[taskId].tState = 5;
+                return;
+            }
+        }
+        gTasks[taskId].tState = 6;
+        break;
+    case 5: // Print evolution message.
+        if (gTasks[taskId].tTimer == 0)
+        {
+            StringCopy(gStringVar3, GetSpeciesName(gDeckMons[gDeckStruct.battlerExp].species));
+            StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2} evolved into\n{STR_VAR_3}!"));
+            PrintStringToMessageBox(gStringVar1);
+            PlaySE(MUS_LEVEL_UP);
+            ++gTasks[taskId].tTimer;
+        }
+        else if (++gTasks[taskId].tTimer > 60 && (gMain.newKeys & A_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            gTasks[taskId].tTimer = 0;
+            ++gTasks[taskId].tState;
+        }
+        break;
+    case 6: // Loop until all player positions have been given exp.
         if (++gDeckStruct.battlerExp > B_PLAYER_5)
-            gTasks[taskId].tState = 5;
+            gTasks[taskId].tState = 7;
         else
             gTasks[taskId].tState = 2;
         break;
-    case 5: // End battle if no caught mon.
+    case 7: // End battle if no caught mon.
         gTasks[taskId].tState = 0;
         if (gDeckStruct.battlerCaught != MAX_DECK_BATTLERS_COUNT)
         {
