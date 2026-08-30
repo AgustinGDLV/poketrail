@@ -7,7 +7,7 @@ const struct OamData sOamData_8x8 =
     .bpp = ST_OAM_4BPP,
     .shape = SPRITE_SHAPE(8x8),
     .size = SPRITE_SIZE(8x8),
-    .priority = 0,
+    .priority = 1,
 };
 
 const struct OamData sOamData_Battler =

@@ -1082,7 +1082,7 @@ void PrintStringToMessageBox(const u8 *str)
 {
     StringCopy(gStringVar1, str);
     FillWindowPixelBuffer(WINDOW_MESSAGE, PIXEL_FILL(0));
-    BreakStringAutomatic(gStringVar1, 200, 2, FONT_NORMAL, SHOW_SCROLL_PROMPT);
+    BreakStringAutomatic(gStringVar1, 196, 2, FONT_NORMAL, SHOW_SCROLL_PROMPT);
     AddTextPrinterParameterized3(WINDOW_MESSAGE, FONT_NORMAL, 4, 1, sTextColorNormal, 1, gStringVar1);
     CopyWindowToVram(WINDOW_MESSAGE, COPYWIN_FULL);
 }

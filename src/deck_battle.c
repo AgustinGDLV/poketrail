@@ -57,6 +57,7 @@ static void Task_HandleBattleVictory(u8 taskId);
 static void Task_HandleBattleLoss(u8 taskId);
 static void Task_HandleCaughtBattler(u8 taskId);
 static void Task_HandleTurnEndEffects(u8 taskId);
+static void Task_SelectPartyMemberToSwap(u8 taskId);
 
 static u32 GetBattleSpeedScale(void);
 
@@ -453,7 +454,7 @@ static void Task_HandleBattleVictory(u8 taskId)
             bool32 canStopEvo = TRUE;
             struct Pokemon *mon = &gPlayerParty[gDeckMons[gDeckStruct.battlerExp].partyIndex];
             u32 evoSpecies = GetEvolutionTargetSpecies(mon, EVO_MODE_BATTLE_ONLY, ITEM_NONE, NULL, &canStopEvo, CHECK_EVO);
-            if (evoSpecies != gDeckMons[gDeckStruct.battlerExp].species)
+            if (evoSpecies != gDeckMons[gDeckStruct.battlerExp].species && evoSpecies != SPECIES_NONE)
             {
                 StringCopy(gStringVar2, GetSpeciesName(gDeckMons[gDeckStruct.battlerExp].species));
                 SetMonData(mon, MON_DATA_SPECIES, &evoSpecies);
@@ -585,18 +586,34 @@ void Task_CloseDeckBattle(u8 taskId)
 
 static const struct ListMenuItem sCaughtListMenuItems[] = 
 {
-    { COMPOUND_STRING("PARTY"),     0 },
-    { COMPOUND_STRING("PC"),        1 },
-    { COMPOUND_STRING("RELEASE"),   2 },
+    { COMPOUND_STRING("RECRUIT"),   0 },
+    { COMPOUND_STRING("RELEASE"),   1 },
+};
+
+static const struct ListMenuItem sYesNoMenuItems[] = 
+{
+    { COMPOUND_STRING("YES"),   0 },
+    { COMPOUND_STRING("NO"),   1 },
 };
 
 static const struct WindowTemplate sCaughtWindowTemplate =
 {
     .bg = 1,
     .tilemapLeft = 18,
-    .tilemapTop = 27,
+    .tilemapTop = 29,
     .width = 9,
-    .height = 6,
+    .height = 4,
+    .paletteNum = 15,
+    .baseBlock = 1 + 21*4 + 24*4,
+};
+
+static const struct WindowTemplate sYesNoWindowTemplate =
+{
+    .bg = 1,
+    .tilemapLeft = 22,
+    .tilemapTop = 29,
+    .width = 5,
+    .height = 4,
     .paletteNum = 15,
     .baseBlock = 1 + 21*4 + 24*4,
 };
@@ -623,15 +640,15 @@ static void Task_HandleCaughtBattler(u8 taskId)
     case 2: // Create list menu.
     {
         struct ListMenuTemplate menuTemplate = {0};
-        u32 windowId = AddWindow(&sCaughtWindowTemplate);
+        gDeckStruct.caughtWindowId = AddWindow(&sCaughtWindowTemplate);
         LoadMessageBoxAndBorderGfx();
-        DrawStdWindowFrame(windowId, FALSE);
+        DrawStdWindowFrame(gDeckStruct.caughtWindowId, FALSE);
 
         menuTemplate.moveCursorFunc = ListMenuDefaultCursorMoveFunc;
         menuTemplate.items = sCaughtListMenuItems;
-        menuTemplate.totalItems = 3;
-        menuTemplate.maxShowed = 3;
-        menuTemplate.windowId = windowId;
+        menuTemplate.totalItems = 2;
+        menuTemplate.maxShowed = 2;
+        menuTemplate.windowId = gDeckStruct.caughtWindowId;
         menuTemplate.item_X = 8;
         menuTemplate.upText_Y = 1;
         menuTemplate.cursorPal = 1;
@@ -640,7 +657,7 @@ static void Task_HandleCaughtBattler(u8 taskId)
         menuTemplate.scrollMultiple = LIST_NO_MULTIPLE_SCROLL;
         menuTemplate.fontId = FONT_NORMAL;
         gTasks[taskId].data[2] = ListMenuInit(&menuTemplate, 0, 0);
-        CopyWindowToVram(windowId, COPYWIN_FULL);
+        CopyWindowToVram(gDeckStruct.caughtWindowId, COPYWIN_FULL);
         CopyBgTilemapBufferToVram(1);
         ++gTasks[taskId].tState;
         break;
@@ -666,11 +683,16 @@ static void Task_HandleCaughtBattler(u8 taskId)
     }
     case 4: // Party
     {
+        FillWindowPixelBuffer(gDeckStruct.caughtWindowId, PIXEL_FILL(0));
+        ClearStdWindowAndFrame(gDeckStruct.caughtWindowId, FALSE);
+        CopyWindowToVram(gDeckStruct.caughtWindowId, COPYWIN_FULL);
+        CopyBgTilemapBufferToVram(1);
+
         if (CalculatePlayerPartyCount() == PARTY_SIZE)
         {
-            StringCopy(gStringVar2, GetSpeciesName(gDeckMons[gDeckStruct.battlerCaught].species));
-            StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Your party is full!\n{STR_VAR_2} went to your PC."));
-            PrintStringToMessageBox(gStringVar1);
+            gTasks[taskId].tState = 0;
+            gTasks[taskId].func = Task_SelectPartyMemberToSwap;
+            return;
         }
         else
         {
@@ -683,27 +705,21 @@ static void Task_HandleCaughtBattler(u8 taskId)
         u32 hp = gDeckMons[gDeckStruct.battlerCaught].maxHP;
         SetMonData(mon, MON_DATA_HP, &hp);
         GiveMonToPlayer(mon);
-        gTasks[taskId].tState = 7; // *TODO: remove magic numbers
+        gTasks[taskId].tState = 6; // *TODO: remove magic numbers
         break;
     }
-    case 5: // PC
-        StringCopy(gStringVar2, GetSpeciesName(gDeckMons[gDeckStruct.battlerCaught].species));
-        StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("You sent {STR_VAR_2}\nto your PC!"));
-        PrintStringToMessageBox(gStringVar1);
+    case 5: // Release
+        FillWindowPixelBuffer(gDeckStruct.caughtWindowId, PIXEL_FILL(0));
+        ClearStdWindowAndFrame(gDeckStruct.caughtWindowId, FALSE);
+        CopyWindowToVram(gDeckStruct.caughtWindowId, COPYWIN_FULL);
+        CopyBgTilemapBufferToVram(1);
 
-        struct Pokemon *mon = &gEnemyParty[gDeckMons[gDeckStruct.battlerCaught].partyIndex];
-        u32 hp = gDeckMons[gDeckStruct.battlerCaught].maxHP;
-        SetMonData(mon, MON_DATA_HP, &hp);
-        GiveMonToPlayer(mon);
-        gTasks[taskId].tState = 7;
-        break;
-    case 6: // Release
         StringCopy(gStringVar2, GetSpeciesName(gDeckMons[gDeckStruct.battlerCaught].species));
         StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("You let {STR_VAR_2} go…"));
         PrintStringToMessageBox(gStringVar1);
-        gTasks[taskId].tState = 7;
+        gTasks[taskId].tState = 6;
         break;
-    case 7: // Wait for message box.
+    case 6: // Wait for message box.
         if (++gTasks[taskId].tTimer > 15 && (gMain.newKeys & A_BUTTON))
         {
             PlaySE(SE_SELECT);
@@ -711,7 +727,164 @@ static void Task_HandleCaughtBattler(u8 taskId)
             ++gTasks[taskId].tState;
         }
         break;
-    case 8: // End battle.
+    case 7: // End battle.
+        gTasks[taskId].tState = 0;
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
+        gTasks[taskId].func = Task_CloseDeckBattle;
+        break;
+    }
+}
+
+static void Task_SelectPartyMemberToSwap(u8 taskId)
+{
+    enum BattleId battler;
+    switch (gTasks[taskId].tState)
+    {
+    default:
+    case 0: // Print message.
+        PrintStringToMessageBox(COMPOUND_STRING("Your party is full! Select a battler to send home."));
+        ++gTasks[taskId].tState;
+        break;
+    case 1: // Wait for message box.
+        if (++gTasks[taskId].tTimer > 15 && (gMain.newKeys & A_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            gDeckStruct.selectedPos = GetLeftmostOccupiedPosition(B_SIDE_PLAYER);
+            UpdateBattlerSelection(GetDeckBattlerAtPos(B_SIDE_PLAYER, gDeckStruct.selectedPos), TRUE);
+            gTasks[taskId].tTimer = 0;
+            ++gTasks[taskId].tState;
+        }
+        break;
+    case 2:
+        if ((JOY_NEW(DPAD_LEFT)) // Check for a battler to move to the left.
+            && gDeckStruct.selectedPos != POSITION_0)
+        {
+            // Deselect battler.
+            PlaySE(SE_SELECT);
+            UpdateBattlerSelection(GetDeckBattlerAtPos(B_SIDE_PLAYER, gDeckStruct.selectedPos), FALSE);
+
+            // Select new battler.
+            gDeckStruct.selectedPos -= 1;
+            battler = GetDeckBattlerAtPos(B_SIDE_PLAYER, gDeckStruct.selectedPos);
+            UpdateBattlerSelection(battler, TRUE);
+        }
+        if ((JOY_NEW(DPAD_RIGHT)) // Check for a battler to move to the right.
+            && gDeckStruct.selectedPos != POSITION_5)
+        {
+            // Deselect battler.
+            PlaySE(SE_SELECT);
+            UpdateBattlerSelection(GetDeckBattlerAtPos(B_SIDE_PLAYER, gDeckStruct.selectedPos), FALSE);
+
+            // Select new battler.
+            gDeckStruct.selectedPos += 1;
+            battler = GetDeckBattlerAtPos(B_SIDE_PLAYER, gDeckStruct.selectedPos);
+            UpdateBattlerSelection(battler, TRUE);
+        }
+        if (JOY_NEW(A_BUTTON))
+        {
+            StringCopy(gStringVar2, GetSpeciesName(gDeckMons[GetDeckBattlerAtPos(B_SIDE_PLAYER, gDeckStruct.selectedPos)].species));
+            StringCopy(gStringVar3, GetSpeciesName(gDeckMons[gDeckStruct.battlerCaught].species));
+            StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Swap {STR_VAR_2} with {STR_VAR_3}?"));
+            PrintStringToMessageBox(gStringVar1);
+            ++gTasks[taskId].tState;
+        }
+        if (JOY_NEW(B_BUTTON))
+        {
+            UpdateBattlerSelection(GetDeckBattlerAtPos(B_SIDE_PLAYER, gDeckStruct.selectedPos), FALSE);
+            gTasks[taskId].tState = 5; // pick up at the end of the caught mon task
+            gTasks[taskId].func = Task_HandleCaughtBattler;
+            return;
+        }
+        break;
+    case 3: // Create list menu.
+    {
+        struct ListMenuTemplate menuTemplate = {0};
+        gDeckStruct.caughtWindowId = AddWindow(&sYesNoWindowTemplate);
+        LoadMessageBoxAndBorderGfx();
+        DrawStdWindowFrame(gDeckStruct.caughtWindowId, FALSE);
+
+        menuTemplate.moveCursorFunc = ListMenuDefaultCursorMoveFunc;
+        menuTemplate.items = sYesNoMenuItems;
+        menuTemplate.totalItems = 2;
+        menuTemplate.maxShowed = 2;
+        menuTemplate.windowId = gDeckStruct.caughtWindowId;
+        menuTemplate.item_X = 8;
+        menuTemplate.upText_Y = 1;
+        menuTemplate.cursorPal = 1;
+        menuTemplate.fillValue = 15;
+        menuTemplate.cursorShadowPal = 15;
+        menuTemplate.scrollMultiple = LIST_NO_MULTIPLE_SCROLL;
+        menuTemplate.fontId = FONT_NORMAL;
+        gTasks[taskId].data[2] = ListMenuInit(&menuTemplate, 0, 0);
+        CopyWindowToVram(gDeckStruct.caughtWindowId, COPYWIN_FULL);
+        CopyBgTilemapBufferToVram(1);
+        ++gTasks[taskId].tState;
+        break;
+    }
+    case 4: // Wait for input.
+    {
+        u32 input = ListMenu_ProcessInput(gTasks[taskId].data[2]);
+        if (++gTasks[taskId].tTimer > 15 && (gMain.newKeys & A_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            DestroyTask(gTasks[taskId].data[2]);
+            FillWindowPixelBuffer(gDeckStruct.caughtWindowId, PIXEL_FILL(0));
+            ClearStdWindowAndFrame(gDeckStruct.caughtWindowId, FALSE);
+            CopyWindowToVram(gDeckStruct.caughtWindowId, COPYWIN_FULL);
+            CopyBgTilemapBufferToVram(1);
+
+            gTasks[taskId].tTimer = 0;
+            if (input == 0)
+            {
+                gTasks[taskId].tState = 5;
+            }
+            else
+            {
+                PrintStringToMessageBox(COMPOUND_STRING("Your party is full! Select a battler to send home."));
+                gTasks[taskId].tState = 2;
+            }
+        }
+        else if (gTasks[taskId].tTimer > 15 && (gMain.newKeys & B_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            DestroyTask(gTasks[taskId].data[2]);
+            FillWindowPixelBuffer(gDeckStruct.caughtWindowId, PIXEL_FILL(0));
+            ClearStdWindowAndFrame(gDeckStruct.caughtWindowId, FALSE);
+            CopyWindowToVram(gDeckStruct.caughtWindowId, COPYWIN_FULL);
+            CopyBgTilemapBufferToVram(1);
+
+            gTasks[taskId].tTimer = 0;
+            gTasks[taskId].tState = 2;
+            PrintStringToMessageBox(COMPOUND_STRING("Your party is full! Select a battler to send home."));
+        }
+        break;
+    }
+    case 5: // Update party data.
+    {
+        u32 battler = GetDeckBattlerAtPos(B_SIDE_PLAYER, gDeckStruct.selectedPos);
+        StringCopy(gStringVar2, GetSpeciesName(gDeckMons[battler].species));
+        StringCopy(gStringVar3, GetSpeciesName(gDeckMons[gDeckStruct.battlerCaught].species));
+        StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("You recruited {STR_VAR_2} and sent {STR_VAR_3} home."));
+        PrintStringToMessageBox(gStringVar1);
+
+        CpuCopy32(&gEnemyParty[gDeckMons[gDeckStruct.battlerCaught].partyIndex], &gPlayerParty[gDeckMons[battler].partyIndex], sizeof(struct Pokemon));
+        gDeckMons[battler].species = gDeckMons[gDeckStruct.battlerCaught].species;
+        SetMonData(&gPlayerParty[gDeckMons[battler].partyIndex], MON_DATA_POSITION, &gDeckStruct.selectedPos);
+        UpdateBattlerSelection(battler, FALSE);
+        LoadBattlerObjectSprite(battler);
+        StartBattlerAnim(battler, ANIM_ATTACK);
+        gTasks[taskId].tState = 6;
+        break;
+    }
+    case 6: // Wait for message box.
+        if (++gTasks[taskId].tTimer > 60 && (gMain.newKeys & A_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            gTasks[taskId].tTimer = 0;
+            gTasks[taskId].tState = 7;
+        }
+        break;
+    case 7: // End battle.
         gTasks[taskId].tState = 0;
         BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
         gTasks[taskId].func = Task_CloseDeckBattle;

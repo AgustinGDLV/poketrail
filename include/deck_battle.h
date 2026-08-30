@@ -126,6 +126,7 @@ struct DeckBattleStruct
 
     bool8 isBossBattle;
     u32 musicOverride;
+    u8 caughtWindowId;
 };
 
 enum DeckBattleBackgroundId
