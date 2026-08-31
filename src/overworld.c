@@ -1582,7 +1582,7 @@ void UpdateTimeOfDay(void)
 {
     s32 hours, minutes;
     hours = gSaveBlock1Ptr->hour + gSaveBlock1Ptr->halfDay * 12;
-    minutes = 0;
+    minutes = gSaveBlock1Ptr->minute;
 
     if (IsBetweenHours(hours, MORNING_HOUR_BEGIN, MORNING_HOUR_MIDDLE)) // night->morning
     {
@@ -2006,7 +2006,10 @@ void CB2_ContinueSavedGame(void)
     gExitStairsMovementDisabled = TRUE;
     InitMatchCallCounters();
 
-    if (UseContinueGameWarp() == FALSE && gSaveBlock1Ptr->location.mapGroup != MAP_GROUP(INTRO_SEQUENCE)) // Campsite or checkpoint
+    if ((UseContinueGameWarp() == FALSE
+        && gSaveBlock1Ptr->location.mapGroup != MAP_GROUP(INTRO_SEQUENCE))
+        || (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(INTRO_SEQUENCE)
+        && gSaveBlock1Ptr->location.mapNum == 0)) // Campsite or checkpoint
     {
         SetMainCallback2(CB2_InitTrailInterface);
     }

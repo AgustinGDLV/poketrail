@@ -2,6 +2,7 @@
 #define GUARD_TRAIL_INTERFACE_H
 
 void CB2_InitTrailInterface(void);
+void IncrementTrailTime(u32 minutes);
 
 #define TRAIL_MAP_WIDTH     28
 #define TRAIL_MAP_HEIGHT    17

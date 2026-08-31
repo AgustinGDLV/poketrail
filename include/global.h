@@ -1085,6 +1085,7 @@ struct SaveBlock1
               u8 day;                   // current day
               u8 halfDay;               // AM or PM
               u8 hour;                  // current hour
+              u8 minute;                // current minute
               u8 trailX;                // x coord on trail map
               u8 trailY;                // y coord on trail map
               u8 facing;                // facing direction

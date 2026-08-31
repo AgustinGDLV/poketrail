@@ -342,7 +342,7 @@ static void Task_SaveAndExit(u8 taskId);
 static void Task_GoToOverworldCamp(u8 taskId);
 static void Task_GoToCheckpoint(u8 taskId);
 static void LoadMapGraphics(u32 characterId);
-static void IncrementTime(u32 hours);
+static void IncrementTime(u32 minutes);
 static void PrintTime(void);
 static void PrintLocation(void);
 static void PrintTextToMessageBox(const u8 *str);
@@ -467,22 +467,22 @@ static void Task_TrailMapWaitForKeypress(u8 taskId)
     if (JOY_NEW(DPAD_UP) || (JOY_HELD(DPAD_UP) && gTrailInterface.keyHeldTimer % 12 == 0))
     {
         if (TryMoveInDirection(DIR_NORTH))
-            IncrementTime(1);
+            IncrementTime(60);
     }
     if (JOY_NEW(DPAD_DOWN) || (JOY_HELD(DPAD_DOWN) && gTrailInterface.keyHeldTimer % 12 == 0))
     {
         if (TryMoveInDirection(DIR_SOUTH))
-            IncrementTime(1);
+            IncrementTime(60);
     }
     if (JOY_NEW(DPAD_RIGHT) || (JOY_HELD(DPAD_RIGHT) && gTrailInterface.keyHeldTimer % 12 == 0))
     {
         if (TryMoveInDirection(DIR_EAST))
-            IncrementTime(1);
+            IncrementTime(60);
     }
     if (JOY_NEW(DPAD_LEFT) || (JOY_HELD(DPAD_LEFT) && gTrailInterface.keyHeldTimer % 12 == 0))
     {
         if (TryMoveInDirection(DIR_WEST))
-            IncrementTime(1);
+            IncrementTime(60);
     }
     if ((JOY_NEW(DPAD_ANY) || JOY_HELD(DPAD_ANY)) && CheckCheckpointTrigger())
     {
@@ -531,7 +531,7 @@ static void Task_SaveAndExit(u8 taskId)
             break;
         }
         case 2: // Do save.
-            TrySavingData(SAVE_LINK);
+            TrySavingData(SAVE_NORMAL);
             ++gTasks[taskId].data[0];
         case 3: // Print confirmation.
             ClearWindow(WIN_YESNO);
@@ -793,21 +793,32 @@ static void LoadMapGraphics(u32 characterId)
     PrintLocation();
 }
 
-// Increment time by set amount of hours and update text.
-static void IncrementTime(u32 hours)
+void IncrementTrailTime(u32 minutes)
 {
-    gSaveBlock1Ptr->hour += 1;
-    while (gSaveBlock1Ptr->hour >= 13)
+    gSaveBlock1Ptr->minute += minutes;
+    while (gSaveBlock1Ptr->minute >= 60)
     {
-        gSaveBlock1Ptr->hour -= 12;
-        gSaveBlock1Ptr->halfDay += 1;
+        gSaveBlock1Ptr->minute -= 60;
+        gSaveBlock1Ptr->hour += 1;
+        if (gSaveBlock1Ptr->hour >= 13)
+        {
+            gSaveBlock1Ptr->hour -= 12;
+            gSaveBlock1Ptr->halfDay += 1;
+        }
     }
 
     while (gSaveBlock1Ptr->halfDay >= 2) // AM/PM
     {
         gSaveBlock1Ptr->halfDay -= 2;
         gSaveBlock1Ptr->day += 1;
-    }
+    }    
+}
+
+// Increment time by set amount of hours and update text.
+static void IncrementTime(u32 minutes)
+{
+    // Update trail time.
+    IncrementTrailTime(minutes);
 
     // Update UI.
     PrintTime();
@@ -832,7 +843,7 @@ static void PrintTime(void)
     StringAppend(gStringVar1, gStringVar2);
 
     StringCopy(gStringVar2, COMPOUND_STRING(":"));
-	ConvertIntToDecimalStringN(gStringVar3, 0, STR_CONV_MODE_LEADING_ZEROS, 2);
+	ConvertIntToDecimalStringN(gStringVar3, gSaveBlock1Ptr->minute, STR_CONV_MODE_LEADING_ZEROS, 2);
 	StringAppend(gStringVar2, gStringVar3);
     StringAppend(gStringVar1, gStringVar2);
 

@@ -13,6 +13,7 @@
 #include "map_gen.h"
 #include "map_preview.h"
 #include "overworld.h"
+#include "palette.h"
 #include "pokemon_gen.h"
 #include "random.h"
 #include "save.h"
@@ -52,7 +53,26 @@ static u32 CountNeighbors(struct Floorplan* floorplan, u32 i)
 // The visited flags for a room are set in a saveblock bitfield.
 void SetRoomAsVisited(u32 i)
 {
-    gSaveBlock1Ptr->visitedRooms[i / 32] |= (1 << i % 32);
+    if (!IsRoomVisited(i))
+    {
+        gSaveBlock1Ptr->visitedRooms[i / 32] |= (1 << i % 32);
+        IncrementTrailTime(20);
+
+        if (!gPaletteFade.active)
+        {
+            struct TimeBlendSettings cachedBlend = gTimeBlend;
+            u32 *bld0 = (u32*)&cachedBlend;
+            u32 *bld1 = (u32*)&gTimeBlend;
+            UpdateTimeOfDay();
+            if (bld0[0] != bld1[0]
+            || bld0[1] != bld1[1]
+            || bld0[2] != bld1[2])
+            {
+            UpdateAltBgPalettes(PALETTES_BG);
+            UpdatePalettesWithTime(PALETTES_ALL);
+            }
+        }
+    }
 }
 
 bool32 IsRoomVisited(u32 i)
