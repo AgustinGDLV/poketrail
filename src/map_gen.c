@@ -392,6 +392,7 @@ void GenerateFloorplan(void)
     // Handle the rest of the floorplan data.
     gFloorplan.templateType = gSaveBlock1Ptr->currentTemplateType;
     AssignRoomMapIds(&gFloorplan);
+    gSaveBlock1Ptr->floorSeed = gFloorplan.nextFloorSeed;
     gFloorplan.nextFloorSeed = RandomF();
     GenerateKecleonShopList();
 }

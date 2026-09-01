@@ -552,6 +552,7 @@ static void NewRunInitData(void)
     u32 val = ((u32)REG_TM2CNT_L) << 16;
     val |= REG_TM1CNT_L;
     SeedRng(val);
+    gFloorplan.nextFloorSeed = val;
 }
 
 // Go to intro sequence.
