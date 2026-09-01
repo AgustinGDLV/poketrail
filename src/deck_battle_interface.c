@@ -782,22 +782,29 @@ static void SpriteCB_BattlerFaint(struct Sprite *sprite)
     }
 }
 
-static void SpriteCB_BattlerStatChange(struct Sprite *sprite)
+#define tSpriteId data[0]
+#define tTimer  data[1]
+
+static void Task_BattlerStatChange(u8 taskId)
 {
-    if (++sprite->sTimer >= 60)
+    struct Sprite *sprite = &gSprites[gTasks[taskId].tSpriteId];
+    ++gTasks[taskId].tTimer;
+    if (gTasks[taskId].tTimer >= 60)
     {
         BlendPalettes(1 << (16 + sprite->oam.paletteNum), 0, RGB_WHITE);
-        sprite->sTimer = 0;
-        sprite->callback = SpriteCallbackDummy;
+        DestroyTask(taskId);
     }
-    else if (sprite->sTimer < 60)
+    else if (gTasks[taskId].tTimer < 60)
     {
-        if (sprite->sTimer % 4 < 2)
+        if (gTasks[taskId].tTimer % 4 < 2)
             BlendPalettes(1 << (16 + sprite->oam.paletteNum), 8, RGB_WHITE);
         else
             BlendPalettes(1 << (16 + sprite->oam.paletteNum), 0, RGB_WHITE);
     }
 }
+
+#undef tSpriteId
+#undef tTimer
 
 void StartBattlerAnim(enum BattleId battler, u32 animId)
 {
@@ -818,8 +825,11 @@ void StartBattlerAnim(enum BattleId battler, u32 animId)
             gSprites[gDeckGraphics.battlerSpriteIds[battler]].callback = SpriteCB_BattlerFaint;
             break;
         case ANIM_STAT_CHANGE:
-            gSprites[gDeckGraphics.battlerSpriteIds[battler]].callback = SpriteCB_BattlerStatChange;
+        {
+            u32 taskId = CreateTask(Task_BattlerStatChange, 0);
+            gTasks[taskId].data[0] = gDeckGraphics.battlerSpriteIds[battler];
             break;
+        }
     }
 }
 
@@ -1010,7 +1020,7 @@ void PrintFixedTargetsPrompt(bool32 viableTarget)
 void PrintMoveUseString(void)
 {
     StringCopy(gStringVar2, GetSpeciesName(gDeckMons[gBattlerAttacker].species));
-    StringCopy(gStringVar3, GetMoveName(gDeckSpeciesInfo[gDeckMons[gBattlerAttacker].species].move));
+    StringCopy(gStringVar3, gDeckMovesInfo[gDeckSpeciesInfo[gDeckMons[gBattlerAttacker].species].move].name);
     StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2} used {STR_VAR_3}!"));
 
     FillWindowPixelBuffer(WINDOW_MESSAGE, PIXEL_FILL(0));
@@ -1018,33 +1028,51 @@ void PrintMoveUseString(void)
     CopyWindowToVram(WINDOW_MESSAGE, COPYWIN_FULL);
 }
 
-void PrintMoveOutcomeString(void) // *TODO: refactor
+void PrintMoveOutcomeString(u32 targets) // *TODO: refactor
 {
     // Prepare string buffers.
-    StringCopy(gStringVar2, GetSpeciesName(gDeckMons[gBattlerTarget].species)); // unsafe
+    if (targets == 1)
+        StringCopy(gStringVar2, GetSpeciesName(gDeckMons[gBattlerTarget].species)); // unsafe
+    else
+        StringCopy(gStringVar2, COMPOUND_STRING("???"));
     ConvertIntToDecimalStringN(gStringVar3, abs(gDeckStruct.lastHitDamage), STR_CONV_MODE_LEFT_ALIGN, 2);
 
+    // Prepare strings.
     if (gDeckMovesInfo[gCurrentMove].effect == DECK_EFFECT_HIT)
     {
-        if (gDeckMovesInfo[gCurrentMove].target & TARGET_SINGLE_OPPONENT)
+        if (targets == 1)
             StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2} took {STR_VAR_3} damage!"));
-        if (gDeckMovesInfo[gCurrentMove].target & TARGET_ALL_OPPONENTS)
+        else
             StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Opponents took damage!"));
     }
     if (gDeckMovesInfo[gCurrentMove].effect == DECK_EFFECT_HEAL)
     {
-        if (gDeckMovesInfo[gCurrentMove].target & (TARGET_LEFT_ALLY | TARGET_RIGHT_ALLY | TARGET_SINGLE_ALLY))
+        if (targets == 1)
             StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2} healed {STR_VAR_3} HP!"));
-        if (gDeckMovesInfo[gCurrentMove].target & TARGET_ALL_ALLIES)
+        else if (gDeckMovesInfo[gCurrentMove].target & TARGET_ALL_ALLIES)
             StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Allies had their HP healed!"));
     }
     else if (gDeckMovesInfo[gCurrentMove].effect == DECK_EFFECT_POWER_UP)
     {
-        StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2}'s power was boosted!"));
+        if (gDeckMovesInfo[gCurrentMove].param == STAT_DEF)
+        {
+            if (targets == 1)
+                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2}'s defense was boosted!"));
+            else
+                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Allies had their defense boosted!"));
+        }
+        else
+        {
+            if (targets == 1)
+                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2}'s power was boosted!"));
+            else
+                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Allies had their defense boosted!"));
+        }
     }
 
+    // Print strings.
     FillWindowPixelBuffer(WINDOW_MESSAGE, PIXEL_FILL(0));
-    BreakStringAutomatic(gStringVar1, 128, 2, FONT_NORMAL, SHOW_SCROLL_PROMPT);
+    BreakStringAutomatic(gStringVar1, 200, 2, FONT_NORMAL, SHOW_SCROLL_PROMPT);
     AddTextPrinterParameterized3(WINDOW_MESSAGE, FONT_NORMAL, 4, 1, sTextColorNormal, TEXT_SKIP_DRAW, gStringVar1);
     CopyWindowToVram(WINDOW_MESSAGE, COPYWIN_FULL);
 }
@@ -1071,7 +1099,8 @@ void PrintSwapString(enum BattleId battler1, enum BattleId battler2)
 {
     StringCopy(gStringVar2, GetSpeciesName(gDeckMons[battler1].species));
     StringCopy(gStringVar3, GetSpeciesName(gDeckMons[battler2].species));
-    StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2} and {STR_VAR_3} swapped\nplaces!"));
+    StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2} and {STR_VAR_3} swapped places!"));
+    BreakStringAutomatic(gStringVar1, 200, 2, FONT_NORMAL, SHOW_SCROLL_PROMPT);
 
     FillWindowPixelBuffer(WINDOW_MESSAGE, PIXEL_FILL(0));
     AddTextPrinterParameterized3(WINDOW_MESSAGE, FONT_NORMAL, 4, 1, sTextColorNormal, TEXT_SKIP_DRAW, gStringVar1);
@@ -1082,7 +1111,7 @@ void PrintStringToMessageBox(const u8 *str)
 {
     StringCopy(gStringVar1, str);
     FillWindowPixelBuffer(WINDOW_MESSAGE, PIXEL_FILL(0));
-    BreakStringAutomatic(gStringVar1, 196, 2, FONT_NORMAL, SHOW_SCROLL_PROMPT);
+    BreakStringAutomatic(gStringVar1, 200, 2, FONT_NORMAL, SHOW_SCROLL_PROMPT);
     AddTextPrinterParameterized3(WINDOW_MESSAGE, FONT_NORMAL, 4, 1, sTextColorNormal, 1, gStringVar1);
     CopyWindowToVram(WINDOW_MESSAGE, COPYWIN_FULL);
 }

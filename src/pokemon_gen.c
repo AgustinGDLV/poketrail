@@ -31,6 +31,7 @@ void InitEnemyPartyFromEncounter(void) // used by callnative
         SetMonData(&gEnemyParty[i], MON_DATA_POSITION, &i);
     }
     gDeckStruct.isBossBattle = FALSE;
+    gDeckStruct.bossHPMult = 0;
     gDeckStruct.musicOverride = MUS_NONE;
 }
 
@@ -39,11 +40,19 @@ void InitBossPartyFromEncounter(void) // used by callnative
     u32 species = gSpecialVar_0x8000;
     u32 level = 5;
 
+    gDeckStruct.isBossBattle = TRUE;
+    gDeckStruct.bossHPMult = 0;
+    gDeckStruct.musicOverride = MUS_NONE;
+
     switch (species)
     {
         default:
         case SPECIES_RATTATA:
-            level = 5;
+            level = 8;
+            break;
+        case SPECIES_SHUCKLE:
+            level = 20;
+            gDeckStruct.bossHPMult = UQ_4_12(2.0);
             break;
         case SPECIES_LOTAD:
             level = 20;
@@ -53,10 +62,8 @@ void InitBossPartyFromEncounter(void) // used by callnative
     
     for (u32 i = 0; i < PARTY_SIZE; ++i)
     {
-        CreateMon(&gEnemyParty[i], gBossEncountersInfo[species][i], level + (Random() % 2), USE_RANDOM_IVS, 0, 0, OT_ID_PLAYER_ID, 0);
+        CreateMon(&gEnemyParty[i], gBossEncountersInfo[species][i], level, USE_RANDOM_IVS, 0, 0, OT_ID_PLAYER_ID, 0);
         SetMonData(&gEnemyParty[i], MON_DATA_POSITION, &i);
     }
-
-    gDeckStruct.isBossBattle = TRUE;
 }
 

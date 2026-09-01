@@ -8,7 +8,7 @@
 #include "deck_battle_ai.h"
 #include "constants/species.h"
 
-/* deck_battle_interface.c
+/* deck_battle_util.c
  *
  * This file holds several utility functions used across
  * all the deck battle engine files. Splashable functions

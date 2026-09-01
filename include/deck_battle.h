@@ -66,6 +66,7 @@ struct DeckBattlePokemon
     bool8 hasSwapped;
 
     u16 powerBoost; // flat power boost
+    u16 defBoost;   // flat defense boost
 };
 
 // action constants
@@ -100,6 +101,21 @@ struct BattleAction
 #define TURN_END_COMPLETED      5
 #define TURN_END_PAUSE          6
 
+// move data
+
+enum DeckMove
+{
+    DECK_TACKLE,
+    DECK_VINE_WHIP,
+    DECK_HELPING_HAND,
+    DECK_SURF,
+    DECK_EARTHQUAKE,
+    DECK_CRABHAMMER,
+    DECK_NOURISH,
+    DECK_HARDEN,
+    DECK_MOVES_COUNT,
+};
+
 struct DeckMoveInfo
 {
     const u8* name;
@@ -107,6 +123,7 @@ struct DeckMoveInfo
     u8 power;
     u8 target;
     u8 effect;
+    u8 param;
 };
 
 struct DeckBattleStruct
@@ -126,7 +143,8 @@ struct DeckBattleStruct
 
     bool8 isBossBattle;
     u32 musicOverride;
-    u8 caughtWindowId;
+    uq4_12_t bossHPMult;
+    u8 caughtWindowId; // maybe belongs in interface struct
 };
 
 enum DeckBattleBackgroundId
@@ -188,7 +206,7 @@ void UpdateBattlerHP(u32 battler, s32 damage);
 extern struct DeckBattleStruct gDeckStruct;
 extern struct DeckBattlePokemon gDeckMons[MAX_DECK_BATTLERS_COUNT];
 extern const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES];
-extern const struct DeckMoveInfo gDeckMovesInfo[850]; // *TODO
+extern const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT];
 extern const struct DeckBattleBackground gDeckBackgrounds[BG_COUNT];
 
 #endif

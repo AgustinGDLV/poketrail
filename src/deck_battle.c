@@ -955,8 +955,8 @@ static void Task_HandleTurnEndEffects(u8 taskId)
         break;
     default:
     case TURN_END_COMPLETED: // TODO
-        ResetTurnValues();
         gDeckStruct.turns++;
+        ResetTurnValues();
         gDeckStruct.actingSide ^= 1; // get opposite side
         gDeckStruct.isSelectionPhase = TRUE;
         gTasks[taskId].tState = 0;
@@ -1005,9 +1005,8 @@ static void Task_HandleTurnEndEffects(u8 taskId)
 // Initialize gDeckStruct to start battle with clean data.
 static void InitBattleStructData(void)
 {
-    ResetTurnValues();
-
     gDeckStruct.turns = 0;
+    ResetTurnValues();
     gDeckStruct.exp = 0;
     gDeckStruct.battlerCaught = MAX_DECK_BATTLERS_COUNT;
     gDeckStruct.selectedPos = GetLeftmostOccupiedPosition(B_SIDE_PLAYER);
@@ -1021,7 +1020,11 @@ static void ResetTurnValues(void)
         gDeckMons[battler].hasMoved = FALSE;
         gDeckMons[battler].hasSwapped = FALSE;
         gDeckMons[battler].initialPos = gDeckMons[battler].pos;
-        gDeckMons[battler].powerBoost = 0;
+        if (gDeckStruct.actingSide != GetDeckBattlerSide(battler) || gDeckStruct.turns == 0)
+        {
+            gDeckMons[battler].powerBoost = 0;
+            gDeckMons[battler].defBoost = 0;
+        }
     }
     gDeckStruct.actionsCount = 0;
     gDeckStruct.executedCount = 0;
@@ -1070,6 +1073,12 @@ static void InitBattleMonData(void)
         gDeckMons[i].def = GetMonData(mon, MON_DATA_DEF);
         gDeckMons[i].pos = GetMonData(mon, MON_DATA_POSITION);
         gDeckMons[i].initialPos = gDeckMons[i].pos;
+
+        if (GetDeckBattlerSide(i) == B_SIDE_OPPONENT && gDeckStruct.bossHPMult != 0)
+        {
+            gDeckMons[i].hp = UQ_4_12_TO_INT(uq4_12_multiply(UQ_4_12(gDeckMons[i].hp), gDeckStruct.bossHPMult));
+            gDeckMons[i].maxHP = UQ_4_12_TO_INT(uq4_12_multiply(UQ_4_12(gDeckMons[i].maxHP), gDeckStruct.bossHPMult));
+        }
     }
 }
 
@@ -1107,7 +1116,7 @@ s32 CalculateDamage(u32 battlerAtk, u32 battlerDef, u32 move)
     u32 movePower = gDeckMovesInfo[move].power;
     u32 level = 50;
     u32 power = gDeckMons[battlerAtk].power + gDeckMons[battlerAtk].powerBoost;
-    u32 defense = gDeckMons[battlerDef].def;
+    u32 defense = gDeckMons[battlerDef].def + gDeckMons[battlerDef].defBoost;
 
     s32 dmg = movePower * power * (2 * level / 5 + 2) / defense / 50 + 2;
     dmg *= DMG_ROLL_PERCENT_HI - RandomUniform(RNG_DAMAGE_MODIFIER, 0, DMG_ROLL_PERCENT_HI - DMG_ROLL_PERCENT_LO);
@@ -1122,6 +1131,9 @@ s32 CalculateDamage(u32 battlerAtk, u32 battlerDef, u32 move)
 // Performs the HP change when a battler is hurt or healed.
 void UpdateBattlerHP(u32 battler, s32 damage)
 {
+    s32 delta;
+    s32 before = gDeckMons[battler].hp;
+
     if (damage < -999) // cap damage at 3 digits
         damage = -999;
 
@@ -1132,7 +1144,8 @@ void UpdateBattlerHP(u32 battler, s32 damage)
     else
         gDeckMons[battler].hp -= damage;
 
-    PrintDamageNumbers(battler, damage);
+    delta = before - (s32) gDeckMons[battler].hp;
+    PrintDamageNumbers(battler, delta);
 }
 
 u32 GetBattleSpeedScale(void)

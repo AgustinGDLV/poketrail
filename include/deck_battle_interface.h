@@ -61,7 +61,7 @@ void PrintBattlerMoveInfo(enum BattleId battler);
 void PrintTargetBattlerPrompt(enum BattleId battler);
 void PrintFixedTargetsPrompt(bool32 viableTarget);
 void PrintMoveUseString(void);
-void PrintMoveOutcomeString(void);
+void PrintMoveOutcomeString(u32 targets);
 void PrintSwapTargetPrompt(enum BattlePosition position);
 void PrintSwapString(enum BattleId battler1, enum BattleId battler2);
 void PrintStringToMessageBox(const u8 *str);

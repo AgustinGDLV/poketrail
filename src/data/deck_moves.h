@@ -1,6 +1,6 @@
-const struct DeckMoveInfo gDeckMovesInfo[MOVES_COUNT] =
+const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
 {
-    [MOVE_TACKLE] =
+    [DECK_TACKLE] =
     {
         .name = COMPOUND_STRING("TACKLE"),
         .description = COMPOUND_STRING("Damages one opponent."),
@@ -9,7 +9,7 @@ const struct DeckMoveInfo gDeckMovesInfo[MOVES_COUNT] =
         .effect = DECK_EFFECT_HIT,
     },
 
-    [MOVE_VINE_WHIP] =
+    [DECK_VINE_WHIP] =
     {
         .name = COMPOUND_STRING("VINE WHIP"),
         .description = COMPOUND_STRING("Damages one opponent."),
@@ -18,16 +18,16 @@ const struct DeckMoveInfo gDeckMovesInfo[MOVES_COUNT] =
         .effect = DECK_EFFECT_HIT,
     },
 
-    [MOVE_HELPING_HAND] =
+    [DECK_HELPING_HAND] =
     {
         .name = COMPOUND_STRING("HELPING HAND"),
         .description = COMPOUND_STRING("Powers up right ally."),
-        .power = 0,
+        .power = 50,
         .target = TARGET_RIGHT_ALLY,
         .effect = DECK_EFFECT_POWER_UP,
     },
 
-    [MOVE_SURF] =
+    [DECK_SURF] =
     {
         .name = COMPOUND_STRING("SURF"),
         .description = COMPOUND_STRING("Damages all opponents."),
@@ -36,7 +36,7 @@ const struct DeckMoveInfo gDeckMovesInfo[MOVES_COUNT] =
         .effect = DECK_EFFECT_HIT,
     },
 
-    [MOVE_EARTHQUAKE] =
+    [DECK_EARTHQUAKE] =
     {
         .name = COMPOUND_STRING("EARTHQUAKE"),
         .description = COMPOUND_STRING("Damages all opponents."),
@@ -45,7 +45,7 @@ const struct DeckMoveInfo gDeckMovesInfo[MOVES_COUNT] =
         .effect = DECK_EFFECT_HIT,
     },
 
-    [MOVE_CRABHAMMER] =
+    [DECK_CRABHAMMER] =
     {
         .name = COMPOUND_STRING("CRABHAMMER"),
         .description = COMPOUND_STRING("Damages one opponent."),
@@ -54,12 +54,22 @@ const struct DeckMoveInfo gDeckMovesInfo[MOVES_COUNT] =
         .effect = DECK_EFFECT_HIT,
     },
 
-    [MOVE_FLORAL_HEALING] =
+    [DECK_NOURISH] =
     {
         .name = COMPOUND_STRING("NOURISH"),
         .description = COMPOUND_STRING("Heals right ally."),
         .power = 25,
         .target = TARGET_RIGHT_ALLY,
         .effect = DECK_EFFECT_HEAL,
+    },
+
+    [DECK_HARDEN] =
+    {
+        .name = COMPOUND_STRING("HARDEN"),
+        .description = COMPOUND_STRING("Boosts defense of adjacent allies."),
+        .power = 50,
+        .target = TARGET_LEFT_ALLY | TARGET_USER | TARGET_RIGHT_ALLY,
+        .effect = DECK_EFFECT_POWER_UP,
+        .param = STAT_DEF,
     },
 };

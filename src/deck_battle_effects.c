@@ -74,7 +74,7 @@ static void ExecuteHitEffect(void)
     // Print string.
     if (aliveCount > 0)
     {
-        PrintMoveOutcomeString();
+        PrintMoveOutcomeString(aliveCount);
         PlaySE(SE_EFFECTIVE);
     }
     else
@@ -97,7 +97,10 @@ static void ExecuteStatChangeEffect(void)
         {
             gBattlerTarget = targets[i];
             StartBattlerAnim(targets[i], ANIM_STAT_CHANGE);
-            gDeckMons[targets[i]].powerBoost += gDeckMons[gBattlerAttacker].power / 2;
+            if (gDeckMovesInfo[gCurrentMove].param == STAT_DEF)
+                gDeckMons[targets[i]].defBoost += (gDeckMons[gBattlerAttacker].power * gDeckMovesInfo[gCurrentMove].power) / 100;
+            else
+                gDeckMons[targets[i]].powerBoost += (gDeckMons[gBattlerAttacker].power * gDeckMovesInfo[gCurrentMove].power) / 100;
             aliveCount += 1;
         }
     }
@@ -105,7 +108,7 @@ static void ExecuteStatChangeEffect(void)
     // Print string.
     if (aliveCount > 0)
     {
-        PrintMoveOutcomeString();
+        PrintMoveOutcomeString(aliveCount);
         PlaySE(SE_M_STAT_INCREASE);
     }
     else
@@ -138,7 +141,7 @@ static void ExecuteHealEffect(void)
     // Print string.
     if (aliveCount > 0)
     {
-        PrintMoveOutcomeString();
+        PrintMoveOutcomeString(aliveCount);
         PlaySE(SE_M_ABSORB_2);
     }
     else
