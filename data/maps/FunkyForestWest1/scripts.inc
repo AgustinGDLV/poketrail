@@ -19,6 +19,8 @@ FunkyForestWest1_ShuckleBoss::
     end
 
 FunkyForestWest1_End::
+	closemessage
+	releaseall
 	end
 
 FunkyForestWest1_ShuckleeText:

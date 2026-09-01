@@ -708,7 +708,6 @@ static void Task_GoToCheckpoint(u8 taskId)
                 PlayRainStoppingSoundEffect();
                 SetWarpDestination(MAP_GROUP(INTRO_SEQUENCE), gCheckpointData[checkpoint].mapNum, gCheckpointData[checkpoint].warpId[gSaveBlock1Ptr->facing], 0, 0);
                 WarpIntoMap();
-                ClearContinueGameWarpStatus();
                 SetMainCallback2(CB2_LoadMap);
 
                 // Clean up data.

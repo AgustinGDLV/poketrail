@@ -2006,14 +2006,11 @@ void CB2_ContinueSavedGame(void)
     gExitStairsMovementDisabled = TRUE;
     InitMatchCallCounters();
 
-    if ((UseContinueGameWarp() == FALSE
-        && gSaveBlock1Ptr->location.mapGroup != MAP_GROUP(INTRO_SEQUENCE))
-        || (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(INTRO_SEQUENCE)
-        && gSaveBlock1Ptr->location.mapNum == 0)) // Campsite or checkpoint
+    if (!UseContinueGameWarp())
     {
         SetMainCallback2(CB2_InitTrailInterface);
     }
-    else if (UseContinueGameWarp() == TRUE)
+    else if (UseContinueGameWarp() == TRUE && IsPlayerInFloorMap()) // Campsite
     {
         ClearContinueGameWarpStatus();
         SetWarpDestinationToContinueGameWarp();
@@ -2021,7 +2018,7 @@ void CB2_ContinueSavedGame(void)
         TryPutTodaysRivalTrainerOnAir();
         SetMainCallback2(CB2_LoadMap);
     }
-    else
+    else // Checkpoint
     {
         TryPutTodaysRivalTrainerOnAir();
         gFieldCallback = FieldCB_FadeTryShowMapPopup;

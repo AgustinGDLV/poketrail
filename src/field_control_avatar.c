@@ -882,11 +882,26 @@ static bool8 TryArrowWarp(struct MapPosition *position, u16 metatileBehavior, u8
                 gSaveBlock1Ptr->trailY = 31;
                 gSaveBlock1Ptr->facing = DIR_NORTH;
             }
-            if (gSaveBlock1Ptr->location.mapNum == MAP_NUM(FUNKY_FOREST_NORTH1) && direction == DIR_EAST)
+            if (gSaveBlock1Ptr->location.mapNum == MAP_NUM(FUNKY_FOREST_NORTH1) && direction == DIR_SOUTH)
             {
                 gSaveBlock1Ptr->trailX = 16;
                 gSaveBlock1Ptr->trailY = 33;
                 gSaveBlock1Ptr->checkpoints |= (1 << CHECKPOINT_FUNKY_FOREST_NORTH);
+                gSaveBlock1Ptr->facing = DIR_SOUTH;
+            }
+
+            // Funky Forest West
+            if (gSaveBlock1Ptr->location.mapNum == MAP_NUM(FUNKY_FOREST_WEST1) && direction == DIR_EAST)
+            {
+                gSaveBlock1Ptr->trailX = 9;
+                gSaveBlock1Ptr->trailY = 56;
+                gSaveBlock1Ptr->facing = DIR_EAST;
+            }
+            if (gSaveBlock1Ptr->location.mapNum == MAP_NUM(FUNKY_FOREST_WEST1) && direction == DIR_SOUTH)
+            {
+                gSaveBlock1Ptr->trailX = 8;
+                gSaveBlock1Ptr->trailY = 57;
+                gSaveBlock1Ptr->checkpoints |= (1 << CHECKPOINT_FUNKY_FOREST_WEST);
                 gSaveBlock1Ptr->facing = DIR_SOUTH;
             }
 

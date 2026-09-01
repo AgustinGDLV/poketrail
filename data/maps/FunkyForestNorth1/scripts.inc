@@ -23,6 +23,7 @@ FunkyForestNorth1_RattataBoss::
     end
 
 FunkyForestNorth1_End:
+	closemessage
 	releaseall
 	end
 
