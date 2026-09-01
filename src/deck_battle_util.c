@@ -184,7 +184,7 @@ enum BattleId GetRandomBattlerOnSide(u32 side)
     for (enum BattlePosition pos = POSITION_0; pos < POSITIONS_COUNT; ++pos)
     {
         battler = GetDeckBattlerAtPos(side, pos);
-        if (!gDeckMons[battler].hasMoved && gDeckMons[battler].hp != 0)
+        if (IsDeckBattlerAlive(battler))
         {
             ids[occupiedCount] = battler;
             ++occupiedCount;

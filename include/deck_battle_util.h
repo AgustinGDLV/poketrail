@@ -17,6 +17,7 @@ enum BattlePosition GetAnyNonAttackerOnRight(u32 side, enum BattlePosition posit
 enum BattlePosition GetToMoveOnRight(u32 side, enum BattlePosition position);
 
 enum BattleId GetRandomBattlerOnSide(u32 side);
+enum BattleId GetRandomTargetOnSide(u32 side);
 
 bool32 IsDeckBattlerAlive(enum BattleId battler);
 bool32 IsBattlerAliveOnSide(u32 side);
