@@ -91,6 +91,9 @@ struct BattleAction
 #define TARGET_RIGHT_ALLY           (1 << 4)
 #define TARGET_ALL_ALLIES           (1 << 5)
 #define TARGET_USER                 (1 << 6)
+#define TARGET_OPPOSITE_LEFT        (1 << 7)
+#define TARGET_OPPOSITE             (1 << 8)
+#define TARGET_OPPOSITE_RIGHT       (1 << 9)
 
 // turn end constants
 #define TURN_END_CHECK_FATIGUE  0
@@ -121,7 +124,7 @@ struct DeckMoveInfo
     const u8* name;
     const u8* description;
     u8 power;
-    u8 target;
+    u16 target;
     u8 effect;
     u8 param;
 };

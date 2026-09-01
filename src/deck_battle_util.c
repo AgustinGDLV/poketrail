@@ -221,6 +221,7 @@ void PopulateTargetsList(enum BattleId *targets, u32 *targetsCount)
 {
     u32 side = GetDeckBattlerSide(gBattlerAttacker);
     enum BattleId battler;
+    enum BattlePosition pos = gDeckMons[gBattlerAttacker].pos;
 
     // ALL_OPPONENTS / ALL_ALLIES
     if ((side == B_SIDE_PLAYER && (gDeckMovesInfo[gCurrentMove].target & TARGET_ALL_OPPONENTS))
@@ -253,17 +254,17 @@ void PopulateTargetsList(enum BattleId *targets, u32 *targetsCount)
 
     // LEFT_ALLY
     if ((gDeckMovesInfo[gCurrentMove].target & TARGET_LEFT_ALLY)
-        && gDeckMons[gBattlerAttacker].pos != POSITION_0)
+        && pos != POSITION_0)
     {
-        targets[*targetsCount] = GetDeckBattlerAtPos(side, gDeckMons[gBattlerAttacker].pos-1);
+        targets[*targetsCount] = GetDeckBattlerAtPos(side, pos - 1);
         *targetsCount += 1;
     }
 
     // RIGHT_ALLY
     if ((gDeckMovesInfo[gCurrentMove].target & TARGET_RIGHT_ALLY)
-        && gDeckMons[gBattlerAttacker].pos != POSITION_5)
+        && pos != POSITION_5)
     {
-        targets[*targetsCount] = GetDeckBattlerAtPos(side, gDeckMons[gBattlerAttacker].pos+1);
+        targets[*targetsCount] = GetDeckBattlerAtPos(side, pos + 1);
         *targetsCount += 1;
     }
 
@@ -274,7 +275,7 @@ void PopulateTargetsList(enum BattleId *targets, u32 *targetsCount)
         if (!IsDeckBattlerAlive(gBattlerTarget))
         {
             if (gDeckMovesInfo[gCurrentMove].target & TARGET_SINGLE_OPPONENT)
-                targets[*targetsCount] = GetRandomBattlerOnSide(side ^= 1);
+                targets[*targetsCount] = GetRandomBattlerOnSide(side ^ 1);
             else
                 targets[*targetsCount] = GetRandomBattlerOnSide(side);
         }
@@ -282,6 +283,29 @@ void PopulateTargetsList(enum BattleId *targets, u32 *targetsCount)
         {
             targets[*targetsCount] = gBattlerTarget;
         }
+        *targetsCount += 1;
+    }
+
+    // OPPOSITE_LEFT
+    if ((gDeckMovesInfo[gCurrentMove].target & TARGET_OPPOSITE_LEFT)
+        && pos != POSITION_0)
+    {
+        targets[*targetsCount] = GetDeckBattlerAtPos(side ^ 1, pos - 1);
+        *targetsCount += 1;
+    }
+
+    // OPPOSITE
+    if (gDeckMovesInfo[gCurrentMove].target & TARGET_OPPOSITE)
+    {
+        targets[*targetsCount] = GetDeckBattlerAtPos(side ^ 1, pos);
+        *targetsCount += 1;
+    }
+
+    // OPPOSITE_RIGHT
+    if ((gDeckMovesInfo[gCurrentMove].target & TARGET_OPPOSITE_RIGHT)
+        && pos != POSITION_5)
+    {
+        targets[*targetsCount] = GetDeckBattlerAtPos(side ^ 1, pos + 1);
         *targetsCount += 1;
     }
 }

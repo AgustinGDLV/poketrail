@@ -48,9 +48,9 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
     [DECK_CRABHAMMER] =
     {
         .name = COMPOUND_STRING("CRABHAMMER"),
-        .description = COMPOUND_STRING("Damages one opponent."),
+        .description = COMPOUND_STRING("Damages 3 opposite opponents."),
         .power = 80,
-        .target = TARGET_SINGLE_OPPONENT,
+        .target = TARGET_OPPOSITE_LEFT | TARGET_OPPOSITE | TARGET_OPPOSITE_RIGHT,
         .effect = DECK_EFFECT_HIT,
     },
 
