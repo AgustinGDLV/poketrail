@@ -250,6 +250,14 @@ void ClearFloorEventFlags(void)
         FlagClear(i);
 }
 
+// Clears all checkpoint flags in a new run.
+void ClearCheckpointEventFlags(void)
+{
+    u32 i;
+    for (i = FLAG_BOSS_ENCOUNTER; i < FLAG_UNUSED_0x4EF + 1; ++i)
+        FlagClear(i);
+}
+
 // Returns whether a room in the layout exists.
 bool32 DoesRoomExist(u32 i)
 {

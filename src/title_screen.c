@@ -238,7 +238,7 @@ static void Task_FadeOutToGame(u8 taskId)
             sTitleTilemapPtrs[i] = NULL;
         }
 		DestroyTask(taskId);
-        if (!FlagGet(FLAG_RECEIVED_RUNNING_SHOES)) // TODO: Proper new game check
+        if (gSaveBlock1Ptr->checkpoints == 0) // TODO: Proper new game check
             SetMainCallback2(CB2_StartNewRun);
         else
             SetMainCallback2(CB2_StartScreen);

@@ -22,6 +22,7 @@
 #include "palette.h"
 #include "pokemon.h"
 #include "scanline_effect.h"
+#include "save.h"
 #include "sound.h"
 #include "sprite.h"
 #include "string_util.h"
@@ -517,48 +518,43 @@ static void Task_HandleBattleLoss(u8 taskId)
         ++gTasks[taskId].tState;
         break;
     case 1:
-        if (++gTasks[taskId].tTimer > 10 && (gMain.newKeys & A_BUTTON))
+        if (++gTasks[taskId].tTimer > 30 && (gMain.newKeys & A_BUTTON))
         {
             PlaySE(SE_SELECT);
             gTasks[taskId].tTimer = 0;
             ++gTasks[taskId].tState;
         }
         break;
-    case 2: // *TODO: check for scripted loss
-    {
-        u32 partyLevel = 0;
-        for (enum BattleId battler = B_PLAYER_0; battler < B_OPPONENT_0; ++battler)
-            partyLevel += gDeckMons[battler].lvl;
-        RemoveMoney(&gSaveBlock1Ptr->money, 8 * partyLevel);
-        ConvertIntToDecimalStringN(gStringVar2, 8 * partyLevel, STR_CONV_MODE_LEFT_ALIGN, 5);
-        StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("You panicked and dropped ¥{STR_VAR_2}!"));
-        PrintStringToMessageBox(gStringVar1);
+    case 2:
+        PrintStringToMessageBox(COMPOUND_STRING("You end your journey and return home…"));
+        gSaveBlock1Ptr->checkpoints = 0;
         ++gTasks[taskId].tState;
         break;
-    }
-    case 3:
-        if (++gTasks[taskId].tTimer > 10 && (gMain.newKeys & A_BUTTON))
+    case 3: // Wait for message.
+        if (++gTasks[taskId].tTimer > 60 && (gMain.newKeys & A_BUTTON))
         {
             PlaySE(SE_SELECT);
             gTasks[taskId].tTimer = 0;
             ++gTasks[taskId].tState;
         }
         break;
-    case 4:
-        PrintStringToMessageBox(COMPOUND_STRING("You were overwhelmed by your defeat!"));
-        ++gTasks[taskId].tState;
-    case 5:
-        if (++gTasks[taskId].tTimer > 10 && (gMain.newKeys & A_BUTTON))
-        {
-            PlaySE(SE_SELECT);
-            gTasks[taskId].tTimer = 0;
-            ++gTasks[taskId].tState;
-        }
+    case 4: // Force save.
+        TrySavingData(SAVE_LINK);
+        ++gTasks[taskId].data[0];
         break;
-    case 6:
-        gTasks[taskId].tState = 0;
+    case 5: // Fade out.
         BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
-        gTasks[taskId].func = Task_CloseDeckBattle;
+        ++gTasks[taskId].tState;
+    case 6: // Wait for fade.
+        if (++gTasks[taskId].tTimer > 60 && (gMain.newKeys & A_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            gTasks[taskId].tTimer = 0;
+            ++gTasks[taskId].tState;
+        }
+        break;
+    case 7: // Soft reset.
+        DoSoftReset();
         break;
     }
 }

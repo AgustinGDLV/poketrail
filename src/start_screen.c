@@ -37,6 +37,7 @@
 #include "text_window.h"
 #include "title_screen.h"
 #include "trainer_pokemon_sprites.h"
+#include "trail_interface.h"
 #include "util.h"
 #include "window.h"
 #include "constants/rgb.h"
@@ -531,7 +532,7 @@ static void NewRunInitData(void)
     ZeroPlayerPartyMons();
     ZeroEnemyPartyMons();
     gPlayerPartyCount = 0;
-    gSaveBlock1Ptr->checkpoints = 0;
+    gSaveBlock1Ptr->checkpoints = (1 << CHECKPOINT_PEONY_TOWN);
     gSaveBlock1Ptr->trailX = 16;
     gSaveBlock1Ptr->trailY = 8;
     gSaveBlock1Ptr->hour = 9;
@@ -540,14 +541,20 @@ static void NewRunInitData(void)
     gSaveBlock1Ptr->day = 1;
     gSaveBlock1Ptr->facing = DIR_SOUTH;
     StringCopy(gSaveBlock2Ptr->playerName, COMPOUND_STRING("Player"));
-    for (u32 i = 0; i < PLAYER_NAME_LENGTH; ++i)
-        DebugPrintf("%d: %d", i, gSaveBlock2Ptr->playerName);
     gSaveBlock1Ptr->currentTemplateType = TEMPLATES_PEONY_TOWN;
     ClearBag();
+    ClearFloorEventFlags();
+    ClearCheckpointEventFlags();
     PlayTimeCounter_Reset();
+
+    REG_TM1CNT_H = 0;
+    REG_TM2CNT_H = 0;
+    u32 val = ((u32)REG_TM2CNT_L) << 16;
+    val |= REG_TM1CNT_L;
+    SeedRng(val);
 }
 
-// Go directly to intro sequence.
+// Go to intro sequence.
 void CB2_StartNewRun(void)
 {
     StopMapMusic();
