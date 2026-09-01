@@ -287,7 +287,7 @@ const u8 gTrailMapCheckpointData[TRAIL_MAP_HEIGHT][TRAIL_MAP_WIDTH] = // TODO: S
     {0, 0, CHECKPOINT_FUNKY_FOREST_NORTH, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0, CHECKPOINT_FUNKY_FOREST_EAST, 1, 1, 1, CHECKPOINT_FUNKY_FOREST_WEST, 1, 1, 1, CHECKPOINT_SMELLY_SWAMP, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, CHECKPOINT_FUNKY_FOREST_WEST, 1, 1, 1, CHECKPOINT_FUNKY_FOREST_EAST, 1, 1, 1, CHECKPOINT_SMELLY_SWAMP, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     {0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     {0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     {0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -329,6 +329,15 @@ const struct CheckpointData gCheckpointData[CHECKPOINT_COUNT] =
         .warpId = {
             [DIR_NORTH] = 2,
             [DIR_SOUTH] = 0,
+        }
+    },
+    [CHECKPOINT_FUNKY_FOREST_WEST] =
+    {
+        .name = COMPOUND_STRING("Funky Forest"),
+        .mapNum = MAP_NUM(FUNKY_FOREST_WEST1),
+        .warpId = {
+            [DIR_WEST] = 0,
+            [DIR_NORTH] = 2,
         }
     },
 };

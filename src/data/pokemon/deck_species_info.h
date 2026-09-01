@@ -593,4 +593,26 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .portrait = gWiglettPortraitGfx,
         .portraitPalette = gWiglettPortraitPal,
     },
+
+    [SPECIES_SHUCKLE] = 
+    { 
+        .baseHP = 100, 
+        .basePower = 100, 
+        .baseDef = 100, 
+        .move = MOVE_TACKLE, 
+        .ability = ABILITY_NONE, 
+    
+        .playerIdle = gShucklePlayerIdleGfx, 
+        .opponentIdle = gShuckleOpponentIdleGfx, 
+        .playerAttack = gShucklePlayerAttackGfx, 
+        .opponentAttack = gShuckleOpponentAttackGfx, 
+        .playerHurt = gShucklePlayerHurtGfx, 
+        .opponentHurt = gShuckleOpponentHurtGfx, 
+        .objectPalette = gShuckleObjectPal, 
+        .playerYOffset = 2,
+        .opponentYOffset = 2,
+    
+        .portrait = gShucklePortraitGfx, 
+        .portraitPalette = gShucklePortraitPal, 
+    },
 };

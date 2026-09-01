@@ -321,3 +321,15 @@ const u16 gWiglettObjectPal[] = INCBIN_U16("graphics/deck_pokemon/wiglett/player
 
 const u8 gWiglettPortraitGfx[] = INCBIN_U8("graphics/deck_pokemon/wiglett/portrait_normal.4bpp");
 const u16 gWiglettPortraitPal[] = INCBIN_U16("graphics/deck_pokemon/wiglett/portrait_normal.gbapal");
+
+// Shuckle
+const u8 gShucklePlayerIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/shuckle/player_idle.4bpp"); 
+const u8 gShuckleOpponentIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/shuckle/opponent_idle.4bpp"); 
+const u8 gShucklePlayerAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/shuckle/player_attack.4bpp"); 
+const u8 gShuckleOpponentAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/shuckle/opponent_attack.4bpp"); 
+const u8 gShucklePlayerHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/shuckle/player_hurt.4bpp"); 
+const u8 gShuckleOpponentHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/shuckle/opponent_hurt.4bpp"); 
+const u16 gShuckleObjectPal[] = INCBIN_U16("graphics/deck_pokemon/shuckle/player_idle.gbapal"); 
+ 
+const u8 gShucklePortraitGfx[] = INCBIN_U8("graphics/deck_pokemon/shuckle/portrait_normal.4bpp"); 
+const u16 gShucklePortraitPal[] = INCBIN_U16("graphics/deck_pokemon/shuckle/portrait_normal.gbapal");

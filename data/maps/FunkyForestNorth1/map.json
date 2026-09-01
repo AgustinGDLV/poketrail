@@ -161,15 +161,15 @@
       "dest_warp_id": "0"
     },
     {
-      "x": 28,
-      "y": 50,
+      "x": 20,
+      "y": 49,
       "elevation": 0,
       "dest_map": "MAP_FUNKY_FOREST_NORTH1",
       "dest_warp_id": "0"
     },
     {
-      "x": 28,
-      "y": 51,
+      "x": 21,
+      "y": 49,
       "elevation": 0,
       "dest_map": "MAP_FUNKY_FOREST_NORTH1",
       "dest_warp_id": "0"

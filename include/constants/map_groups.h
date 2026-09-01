@@ -87,6 +87,7 @@
 // gMapGroup_Checkpoints
 #define MAP_INTRO_SEQUENCE      (0 | (10 << 8))
 #define MAP_FUNKY_FOREST_NORTH1 (1 | (10 << 8))
+#define MAP_FUNKY_FOREST_WEST1  (2 | (10 << 8))
 
 // gMapGroup_TownsAndRoutes
 #define MAP_PETALBURG_CITY      (0 | (11 << 8))

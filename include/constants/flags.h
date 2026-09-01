@@ -1264,13 +1264,13 @@
 #define FLAG_FUNKY_FOREST_NORTH_BOSS                                0x4B8
 #define FLAG_FUNKY_FOREST_NORTH_ITEM_1                              0x4B9
 #define FLAG_FUNKY_FOREST_NORTH_ITEM_2                              0x4BA
-#define FLAG_FUNKY_FOREST_NORTH_ENCOUNTER_1                         0x4BB // Unused Flag
-#define FLAG_FUNKY_FOREST_NORTH_ENCOUNTER_2                         0x4BC // Unused Flag
-#define FLAG_UNUSED_0x4BD                                           0x4BD // Unused Flag
-#define FLAG_UNUSED_0x4BE                                           0x4BE // Unused Flag
-#define FLAG_UNUSED_0x4BF                                           0x4BF // Unused Flag
-#define FLAG_UNUSED_0x4C0                                           0x4C0 // Unused Flag
-#define FLAG_UNUSED_0x4C1                                           0x4C1 // Unused Flag
+#define FLAG_FUNKY_FOREST_NORTH_ENCOUNTER_1                         0x4BB
+#define FLAG_FUNKY_FOREST_NORTH_ENCOUNTER_2                         0x4BC
+#define FLAG_FUNKY_FOREST_WEST_BOSS                                 0x4BD
+#define FLAG_FUNKY_FOREST_WEST_ITEM_1                               0x4BE
+#define FLAG_FUNKY_FOREST_WEST_ENCOUNTER_1                          0x4BF
+#define FLAG_FUNKY_FOREST_WEST_ENCOUNTER_2                          0x4C0
+#define FLAG_UNUSED_0x4C1                                           0x4C1
 #define FLAG_UNUSED_0x4C2                                           0x4C2 // Unused Flag
 #define FLAG_UNUSED_0x4C3                                           0x4C3 // Unused Flag
 #define FLAG_UNUSED_0x4C4                                           0x4C4 // Unused Flag

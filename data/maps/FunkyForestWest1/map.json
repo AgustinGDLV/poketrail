@@ -1,0 +1,119 @@
+{
+  "id": "MAP_FUNKY_FOREST_WEST1",
+  "name": "FunkyForestWest1",
+  "layout": "LAYOUT_FUNKY_FOREST_WEST1",
+  "music": "MUS_RG_VIRIDIAN_FOREST",
+  "region_map_section": "MAPSEC_ABANDONED_SHIP",
+  "requires_flash": false,
+  "weather": "WEATHER_NONE",
+  "map_type": "MAP_TYPE_ROUTE",
+  "allow_cycling": false,
+  "allow_escaping": false,
+  "allow_running": true,
+  "show_map_name": false,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": 0,
+  "object_events": [
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(APPLIN)",
+      "x": 22,
+      "y": 18,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_ENCOUNTER_TRACK_PLAYER",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "4",
+      "script": "NULL",
+      "flag": "FLAG_FUNKY_FOREST_WEST_ENCOUNTER_1"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(APPLIN)",
+      "x": 27,
+      "y": 32,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_ENCOUNTER_TRACK_PLAYER",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "4",
+      "script": "NULL",
+      "flag": "FLAG_FUNKY_FOREST_WEST_ENCOUNTER_2"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(APPLIN)",
+      "x": 22,
+      "y": 18,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_ENCOUNTER_TRACK_PLAYER",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "4",
+      "script": "NULL",
+      "flag": "FLAG_FUNKY_FOREST_WEST_ENCOUNTER_1"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
+      "x": 40,
+      "y": 33,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 1,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "ITEM_SITRUS_BERRY",
+      "script": "Common_EventScript_FindItem",
+      "flag": "FLAG_FUNKY_FOREST_WEST_ITEM_1"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(SHUCKLE)",
+      "x": 36,
+      "y": 37,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_WALK_IN_PLACE_UP",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "FunkyForestWest1_ShuckleBoss",
+      "flag": "FLAG_FUNKY_FOREST_WEST_BOSS"
+    }
+  ],
+  "warp_events": [
+    {
+      "x": 37,
+      "y": 5,
+      "elevation": 0,
+      "dest_map": "MAP_FUNKY_FOREST_WEST1",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 37,
+      "y": 6,
+      "elevation": 0,
+      "dest_map": "MAP_FUNKY_FOREST_WEST1",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 31,
+      "y": 53,
+      "elevation": 0,
+      "dest_map": "MAP_FUNKY_FOREST_WEST1",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 32,
+      "y": 53,
+      "elevation": 0,
+      "dest_map": "MAP_FUNKY_FOREST_WEST1",
+      "dest_warp_id": "0"
+    }
+  ],
+  "coord_events": [
+
+  ],
+  "bg_events": [
+
+  ]
+}
