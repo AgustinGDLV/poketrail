@@ -477,7 +477,7 @@ static void Task_HandleBattleVictory(u8 taskId)
             StringCopy(gStringVar3, GetSpeciesName(gDeckMons[gDeckStruct.battlerExp].species));
             StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2} evolved into\n{STR_VAR_3}!"));
             PrintStringToMessageBox(gStringVar1);
-            PlaySE(MUS_LEVEL_UP);
+            PlayFanfare(MUS_LEVEL_UP);
             ++gTasks[taskId].tTimer;
         }
         else if (++gTasks[taskId].tTimer > 60 && (gMain.newKeys & A_BUTTON))
@@ -1151,6 +1151,8 @@ s32 GetAbilityPowerBoost(u32 battlerAtk)
                 if (battler != battlerAtk && GetDeckBattlerAbility(battler) == DECK_ALPHA)
                     boost += (power * 10) / 100; // 0.5x
         }
+        break;
+    default:
         break;
     }
 

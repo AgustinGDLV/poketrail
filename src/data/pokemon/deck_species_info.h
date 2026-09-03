@@ -103,8 +103,8 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .playerHurt = gEkansPlayerHurtGfx, 
         .opponentHurt = gEkansOpponentHurtGfx, 
         .objectPalette = gEkansObjectPal, 
-        .playerYOffset = 0, 
-        .opponentYOffset = 0, 
+        .playerYOffset = -1,
+        .opponentYOffset = -1,
     
         .portrait = gEkansPortraitGfx, 
         .portraitPalette = gEkansPortraitPal, 
@@ -323,8 +323,8 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .playerHurt = gHoppipPlayerHurtGfx, 
         .opponentHurt = gHoppipOpponentHurtGfx, 
         .objectPalette = gHoppipObjectPal, 
-        .playerYOffset = 0, 
-        .opponentYOffset = 0, 
+        .playerYOffset = -4, 
+        .opponentYOffset = -4, 
     
         .portrait = gHoppipPortraitGfx, 
         .portraitPalette = gHoppipPortraitPal, 
