@@ -15,6 +15,7 @@
 #include "international_string_util.h"
 #include "item.h"
 #include "item_icon.h"
+#include "load_save.h"
 #include "main.h"
 #include "main_menu.h"
 #include "malloc.h"
@@ -543,6 +544,7 @@ static void NewRunInitData(void)
     StringCopy(gSaveBlock2Ptr->playerName, COMPOUND_STRING("Player"));
     gSaveBlock1Ptr->currentTemplateType = TEMPLATES_PEONY_TOWN;
     ClearBag();
+    ClearContinueGameWarpStatus();
     ClearFloorEventFlags();
     ClearCheckpointEventFlags();
     PlayTimeCounter_Reset();
@@ -552,7 +554,7 @@ static void NewRunInitData(void)
     u32 val = ((u32)REG_TM2CNT_L) << 16;
     val |= REG_TM1CNT_L;
     SeedRng(val);
-    gFloorplan.nextFloorSeed = val;
+    SeedFloorRng(Random());
 }
 
 // Go to intro sequence.

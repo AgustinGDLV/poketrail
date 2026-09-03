@@ -597,7 +597,7 @@ static void Task_GoToOverworldCamp(u8 taskId)
         case 2: // Do map generation.
             // Update save fields.
             ++gSaveBlock1Ptr->currentFloor;
-            gSaveBlock1Ptr->floorSeed = gFloorplan.nextFloorSeed;
+            gSaveBlock1Ptr->floorSeed = Random();
             memset(gSaveBlock1Ptr->visitedRooms, 0, sizeof(gSaveBlock1Ptr->visitedRooms));
 
             // Generate the new floorplan and warp.
