@@ -88,6 +88,8 @@
 #define MAP_INTRO_SEQUENCE      (0 | (10 << 8))
 #define MAP_FUNKY_FOREST_NORTH1 (1 | (10 << 8))
 #define MAP_FUNKY_FOREST_WEST1  (2 | (10 << 8))
+#define MAP_FUNKY_FOREST_EAST1  (3 | (10 << 8))
+#define MAP_DEEP_DESERT_WEST1   (4 | (10 << 8))
 
 // gMapGroup_TownsAndRoutes
 #define MAP_PETALBURG_CITY      (0 | (11 << 8))

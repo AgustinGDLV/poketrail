@@ -5030,6 +5030,26 @@
       "secondary_tileset": "gTileset_Unused1",
       "border_filepath": "data/layouts/FunkyForestWest1/border.bin",
       "blockdata_filepath": "data/layouts/FunkyForestWest1/map.bin"
+    },
+    {
+      "id": "LAYOUT_FUNKY_FOREST_EAST1",
+      "name": "FunkyForestEast1_Layout",
+      "width": 60,
+      "height": 60,
+      "primary_tileset": "gTileset_Forest",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/FunkyForestEast1/border.bin",
+      "blockdata_filepath": "data/layouts/FunkyForestEast1/map.bin"
+    },
+    {
+      "id": "LAYOUT_DEEP_DESERT_WEST1",
+      "name": "DeepDesertWest1_Layout",
+      "width": 60,
+      "height": 60,
+      "primary_tileset": "gTileset_Desert",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/DeepDesertWest1/border.bin",
+      "blockdata_filepath": "data/layouts/DeepDesertWest1/map.bin"
     }
   ]
 }

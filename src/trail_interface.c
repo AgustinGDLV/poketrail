@@ -340,6 +340,24 @@ const struct CheckpointData gCheckpointData[CHECKPOINT_COUNT] =
             [DIR_NORTH] = 2,
         }
     },
+    [CHECKPOINT_FUNKY_FOREST_EAST] =
+    {
+        .name = COMPOUND_STRING("Funky Forest"),
+        .mapNum = MAP_NUM(FUNKY_FOREST_EAST1),
+        .warpId = {
+            [DIR_EAST] = 0,
+            [DIR_WEST] = 2,
+        }
+    },
+    [CHECKPOINT_DEEP_DESERT_WEST] =
+    {
+        .name = COMPOUND_STRING("Deep Desert"),
+        .mapNum = MAP_NUM(DEEP_DESERT_WEST1),
+        .warpId = {
+            [DIR_SOUTH] = 0,
+            [DIR_WEST] = 2,
+        }
+    },
 };
 
 // forward declarations

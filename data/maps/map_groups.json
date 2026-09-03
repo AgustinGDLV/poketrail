@@ -130,7 +130,9 @@
   "gMapGroup_Checkpoints": [
     "IntroSequence",
     "FunkyForestNorth1",
-    "FunkyForestWest1"
+    "FunkyForestWest1",
+    "FunkyForestEast1",
+    "DeepDesertWest1"
   ],
   "gMapGroup_TownsAndRoutes": [
     "PetalburgCity",

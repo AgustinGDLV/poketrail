@@ -905,6 +905,36 @@ static bool8 TryArrowWarp(struct MapPosition *position, u16 metatileBehavior, u8
                 gSaveBlock1Ptr->facing = DIR_SOUTH;
             }
 
+            // Funky Forest East
+            if (gSaveBlock1Ptr->location.mapNum == MAP_NUM(FUNKY_FOREST_EAST1) && direction == DIR_WEST)
+            {
+                gSaveBlock1Ptr->trailX = 39;
+                gSaveBlock1Ptr->trailY = 56;
+                gSaveBlock1Ptr->facing = DIR_WEST;
+            }
+            if (gSaveBlock1Ptr->location.mapNum == MAP_NUM(FUNKY_FOREST_EAST1) && direction == DIR_EAST)
+            {
+                gSaveBlock1Ptr->trailX = 41;
+                gSaveBlock1Ptr->trailY = 56;
+                gSaveBlock1Ptr->checkpoints |= (1 << CHECKPOINT_FUNKY_FOREST_EAST);
+                gSaveBlock1Ptr->facing = DIR_EAST;
+            }
+
+            // Deep Desert West
+            if (gSaveBlock1Ptr->location.mapNum == MAP_NUM(DEEP_DESERT_WEST1) && direction == DIR_NORTH)
+            {
+                gSaveBlock1Ptr->trailX = 8;
+                gSaveBlock1Ptr->trailY = 87;
+                gSaveBlock1Ptr->facing = DIR_NORTH;
+            }
+            if (gSaveBlock1Ptr->location.mapNum == MAP_NUM(DEEP_DESERT_WEST1) && direction == DIR_EAST)
+            {
+                gSaveBlock1Ptr->trailX = 9;
+                gSaveBlock1Ptr->trailY = 88;
+                gSaveBlock1Ptr->checkpoints |= (1 << CHECKPOINT_DEEP_DESERT_WEST);
+                gSaveBlock1Ptr->facing = DIR_EAST;
+            }
+
             PlaySE(SE_EXIT);
             SetMainCallback2(CB2_InitTrailInterface);
             FadeScreen(FADE_TO_BLACK, 2);
