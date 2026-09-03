@@ -58,7 +58,7 @@ static void Task_HandleBattleVictory(u8 taskId);
 static void Task_HandleBattleLoss(u8 taskId);
 static void Task_HandleCaughtBattler(u8 taskId);
 static void Task_HandleTurnEndEffects(u8 taskId);
-static void Task_SelectPartyMemberToSwap(u8 taskId);
+static void Task_SelectPartyMemberToReplace(u8 taskId);
 
 static u32 GetBattleSpeedScale(void);
 
@@ -673,7 +673,7 @@ static void Task_HandleCaughtBattler(u8 taskId)
             PlaySE(SE_SELECT);
             DestroyTask(gTasks[taskId].data[2]);
             gTasks[taskId].tTimer = 0;
-            gTasks[taskId].tState = 6;
+            gTasks[taskId].tState = 5;
         }
         break;
     }
@@ -687,7 +687,7 @@ static void Task_HandleCaughtBattler(u8 taskId)
         if (CalculatePlayerPartyCount() == PARTY_SIZE)
         {
             gTasks[taskId].tState = 0;
-            gTasks[taskId].func = Task_SelectPartyMemberToSwap;
+            gTasks[taskId].func = Task_SelectPartyMemberToReplace;
             return;
         }
         else
@@ -731,7 +731,7 @@ static void Task_HandleCaughtBattler(u8 taskId)
     }
 }
 
-static void Task_SelectPartyMemberToSwap(u8 taskId)
+static void Task_SelectPartyMemberToReplace(u8 taskId)
 {
     enum BattleId battler;
     switch (gTasks[taskId].tState)
