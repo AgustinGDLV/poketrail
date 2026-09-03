@@ -24,4 +24,6 @@ bool32 IsBattlerAliveOnSide(u32 side);
 
 void PopulateTargetsList(enum BattleId *targets, u32 *targetsCount);
 
+enum DeckAbility GetDeckBattlerAbility(enum BattleId battler);
+
 #endif

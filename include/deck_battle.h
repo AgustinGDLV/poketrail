@@ -129,6 +129,28 @@ struct DeckMoveInfo
     u8 param;
 };
 
+// ability data
+
+enum DeckAbility
+{
+    DECK_ABILITY_NONE,
+    DECK_AGGRESSIVE,
+    DECK_PATIENT,
+    DECK_RESTLESS,
+    DECK_HEAVY,
+    DECK_SOCIAL,
+    DECK_ALPHA,
+    DECK_INSPIRED,
+    DECK_ENDURING,
+    DECK_ABILITIES_COUNT,
+};
+
+struct DeckAbilityInfo
+{
+    const u8* name;
+    const u8* description;
+};
+
 struct DeckBattleStruct
 {
     enum BattlePosition selectedPos; // for player selection
@@ -210,6 +232,7 @@ extern struct DeckBattleStruct gDeckStruct;
 extern struct DeckBattlePokemon gDeckMons[MAX_DECK_BATTLERS_COUNT];
 extern const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES];
 extern const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT];
+extern const struct DeckAbilityInfo gDeckAbilitiesInfo[DECK_ABILITIES_COUNT];
 extern const struct DeckBattleBackground gDeckBackgrounds[BG_COUNT];
 
 #endif

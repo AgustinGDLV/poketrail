@@ -6,7 +6,7 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .basePower = 100, 
         .baseDef = 100, 
         .move = DECK_TACKLE, 
-        .ability = ABILITY_NONE, 
+        .ability = DECK_AGGRESSIVE, 
     
         .playerIdle = gCaterpiePlayerIdleGfx, 
         .opponentIdle = gCaterpieOpponentIdleGfx, 
@@ -28,7 +28,7 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .basePower = 100, 
         .baseDef = 100, 
         .move = DECK_TACKLE, 
-        .ability = ABILITY_NONE, 
+        .ability = DECK_AGGRESSIVE, 
     
         .playerIdle = gMetapodPlayerIdleGfx, 
         .opponentIdle = gMetapodOpponentIdleGfx, 
@@ -50,7 +50,7 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .basePower = 100,
         .baseDef = 100, 
         .move = DECK_TACKLE, 
-        .ability = ABILITY_NONE, 
+        .ability = DECK_AGGRESSIVE, 
     
         .playerIdle = gButterfreePlayerIdleGfx, 
         .opponentIdle = gButterfreeOpponentIdleGfx, 

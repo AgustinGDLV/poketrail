@@ -70,6 +70,7 @@ EWRAM_DATA struct DeckBattlePokemon gDeckMons[MAX_DECK_BATTLERS_COUNT] = {0};
 #include "data/graphics/deck_pokemon.h"
 #include "data/pokemon/deck_species_info.h"
 #include "data/deck_moves.h"
+#include "data/deck_abilities.h"
 
 static void MainCB2_DeckBattle(void) // battle speed up ported from Pokeabbie by Alex/Rain
 {
@@ -1106,12 +1107,62 @@ void SwapBattlerPositions(u32 battler1, u32 battler2)
     gDeckMons[battler2].hasSwapped = TRUE;
 }
 
+// Calculates power boosts from abilities (e.g., AGGRESSIVE, SOCIAL).
+s32 GetAbilityPowerBoost(u32 battlerAtk)
+{
+    u32 power = gDeckMons[battlerAtk].power;
+    u32 boost = 0;
+    u32 side = GetDeckBattlerSide(battlerAtk);
+
+    switch (GetDeckBattlerAbility(battlerAtk))
+    {
+    case DECK_AGGRESSIVE:
+        if (gDeckStruct.executedCount == 1)
+            boost = (power * 50) / 100; // 1.5x
+        break;
+    case DECK_PATIENT:
+        if (gDeckStruct.executedCount == gDeckStruct.actionsCount)
+            boost = (power * 50) / 100; // 1.5x
+        break;
+    case DECK_SOCIAL:
+        if (side == B_SIDE_PLAYER)
+        {
+            for (u32 battler = B_PLAYER_0; battler <= B_PLAYER_5; ++battler)
+                if (battler != battlerAtk && GetDeckBattlerAbility(battler) == DECK_SOCIAL)
+                    boost += (power * 10) / 100; // 1.1x per
+        }
+        else
+        {
+            for (u32 battler = B_OPPONENT_0; battler <= B_OPPONENT_5; ++battler)
+                if (battler != battlerAtk && GetDeckBattlerAbility(battler) == DECK_SOCIAL)
+                    boost += (power * 10) / 100; // 1.1x per
+        }
+        break;
+    case DECK_ALPHA:
+        if (side == B_SIDE_PLAYER)
+        {
+            for (u32 battler = B_PLAYER_0; battler <= B_PLAYER_5; ++battler)
+                if (battler != battlerAtk && GetDeckBattlerAbility(battler) == DECK_ALPHA)
+                    boost = -(power * 50) / 100; // 0.5x
+        }
+        else
+        {
+            for (u32 battler = B_OPPONENT_0; battler <= B_OPPONENT_5; ++battler)
+                if (battler != battlerAtk && GetDeckBattlerAbility(battler) == DECK_ALPHA)
+                    boost += (power * 10) / 100; // 0.5x
+        }
+        break;
+    }
+
+    return boost;
+}
+
 // Performs basic damage calc formula using two battler IDs and a move.
 s32 CalculateDamage(u32 battlerAtk, u32 battlerDef, u32 move)
 {
     u32 movePower = gDeckMovesInfo[move].power;
-    u32 level = 50;
-    u32 power = gDeckMons[battlerAtk].power + gDeckMons[battlerAtk].powerBoost;
+    u32 level = gDeckMons[battlerAtk].lvl;
+    u32 power = gDeckMons[battlerAtk].power + gDeckMons[battlerAtk].powerBoost + GetAbilityPowerBoost(battlerAtk);
     u32 defense = gDeckMons[battlerDef].def + gDeckMons[battlerDef].defBoost;
 
     s32 dmg = movePower * power * (2 * level / 5 + 2) / defense / 50 + 2;

@@ -309,3 +309,8 @@ void PopulateTargetsList(enum BattleId *targets, u32 *targetsCount)
         *targetsCount += 1;
     }
 }
+
+enum DeckAbility GetDeckBattlerAbility(enum BattleId battler)
+{
+    return gDeckSpeciesInfo[gDeckMons[battler].species].ability;
+}

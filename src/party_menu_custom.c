@@ -275,6 +275,7 @@ static void LoadPartyMenuGfx(void);
 static void CreatePartyMenuWindows(void);
 static void PrintMonInfo(vu32 index);
 static void PrintMoveInfo(u32 index);
+static void PrintAbilityInfo(u32 index);
 static void DrawBattlerSprites(void);
 static void MoveCursorOverPosition(u32 position);
 static void InitPartyDataStruct(void);
@@ -388,7 +389,7 @@ static void UpdateDisplayedMonInfo(u32 index)
             PrintMoveInfo(index);
             break;
         case PAGE_ABILITY:
-            PrintMoveInfo(index);
+            PrintAbilityInfo(index);
             break;
     }
 }
@@ -688,6 +689,19 @@ static void PrintMoveInfo(u32 index)
     CopyWindowToVram(WINDOW_INFO, COPYWIN_FULL);
 }
 
+static void PrintAbilityInfo(u32 index)
+{
+    const struct DeckAbilityInfo *info = &gDeckAbilitiesInfo[gDeckSpeciesInfo[sPartyMenuData.mons[index].species].ability];
+    FillWindowPixelBuffer(WINDOW_INFO, PIXEL_FILL(0));
+
+    AddTextPrinterParameterized3(WINDOW_INFO, FONT_NORMAL, 0, 8, sTextColor_Red, TEXT_SKIP_DRAW, info->name);
+
+    StringCopy(gStringVar1, info->description);
+    BreakStringAutomatic(gStringVar1, 176, 2, FONT_NORMAL, SHOW_SCROLL_PROMPT);
+    AddTextPrinterParameterized3(WINDOW_INFO, FONT_NORMAL, 0, 24, sTextColor_Black, TEXT_SKIP_DRAW, gStringVar1);    
+    CopyWindowToVram(WINDOW_INFO, COPYWIN_FULL);
+}
+
 static void DrawBattlerSprites(void)
 {
     u32 species, palIndex;
@@ -787,6 +801,7 @@ static void IncrementCurrentPage(void)
             AddTextPrinterParameterized3(WINDOW_CONTROL, FONT_SMALL, 2, 0, sTextColor_White, TEXT_SKIP_DRAW, COMPOUND_STRING("ABILITY"));
             break;
         case PAGE_ABILITY:
+            PrintAbilityInfo(index);
             LZDecompressWram(sPartyMenuAbilityTilemap, sPartyMenuTilemapPtr);
             FillWindowPixelBuffer(WINDOW_CONTROL, PIXEL_FILL(0));
             AddTextPrinterParameterized3(WINDOW_CONTROL, FONT_SMALL, 2, 0, sTextColor_White, TEXT_SKIP_DRAW, COMPOUND_STRING("STATS"));
