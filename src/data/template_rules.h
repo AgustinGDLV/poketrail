@@ -292,12 +292,7 @@ const struct TemplateRules gTemplateRules[TEMPLATE_TYPES_COUNT] =
             [SHOP_ROOM] = MAP_NUM(CITY_TEMPLATES_SHOP_ROOM),
         },
         .itemPools = gDefaultItemPools,
-        .encounterPool = {
-            {SPECIES_RATTATA, 100},
-            {SPECIES_SPEAROW, 100},
-            {SPECIES_SMEARGLE, 100},
-            {SPECIES_GRIMER, 100},
-        }
+        .encounterPool = {}
     },
 
     [TEMPLATES_ICE_PATH] =
@@ -496,10 +491,7 @@ const struct TemplateRules gTemplateRules[TEMPLATE_TYPES_COUNT] =
             [SHOP_ROOM] = MAP_NUM(FOREST_TEMPLATES_BOSS_ROOM),
         },
         .itemPools = gDefaultItemPools,
-        .encounterPool = {
-            {SPECIES_APPLIN, 100},
-            {SPECIES_SPEAROW, 100},
-        }
+        .encounterPool = {}
     },
 
     [TEMPLATES_COOL_COAST] =
@@ -577,10 +569,7 @@ const struct TemplateRules gTemplateRules[TEMPLATE_TYPES_COUNT] =
             [SHOP_ROOM] = MAP_NUM(FOREST_TEMPLATES_BOSS_ROOM),
         },
         .itemPools = gDefaultItemPools,
-        .encounterPool = {
-            {SPECIES_APPLIN, 100},
-            {SPECIES_SPEAROW, 100},
-        }
+        .encounterPool = {}
     },
 
     [TEMPLATES_POSITIVE_PLAINS] =

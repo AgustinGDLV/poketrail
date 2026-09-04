@@ -16,6 +16,7 @@
 #include "intro.h"
 #include "item.h"
 #include "list_menu.h"
+#include "line_break.h"
 #include "load_save.h"
 #include "m4a.h"
 #include "main.h"
@@ -29,6 +30,7 @@
 #include "palette.h"
 #include "play_time.h"
 #include "pokemon.h"
+#include "pokemon_gen.h"
 #include "reset_rtc_screen.h"
 #include "berry_fix_program.h"
 #include "save.h"
@@ -368,6 +370,7 @@ static void Task_TrailMapWaitForKeypress(u8 taskId);
 static void Task_SaveAndExit(u8 taskId);
 static void Task_GoToOverworldCamp(u8 taskId);
 static void Task_GoToCheckpoint(u8 taskId);
+static void Task_TriggerOverworldEncounter(u8 taskId);
 static void LoadMapGraphics(u32 characterId);
 static void IncrementTime(u32 minutes);
 static void PrintTime(void);
@@ -482,6 +485,7 @@ static void Task_OpenTrailMap(u8 taskId)
 
 static void Task_TrailMapWaitForKeypress(u8 taskId)
 {
+    // Track key hold.
     if (JOY_HELD(DPAD_ANY))
     {
         gTrailInterface.keyHeldTimer += 1;
@@ -491,6 +495,7 @@ static void Task_TrailMapWaitForKeypress(u8 taskId)
         gTrailInterface.keyHeldTimer = 0;
     }
 
+    // Move around overworld.
     if (JOY_NEW(DPAD_UP) || (JOY_HELD(DPAD_UP) && gTrailInterface.keyHeldTimer % 12 == 0))
     {
         if (TryMoveInDirection(DIR_NORTH))
@@ -511,16 +516,26 @@ static void Task_TrailMapWaitForKeypress(u8 taskId)
         if (TryMoveInDirection(DIR_WEST))
             IncrementTime(60);
     }
+
+    // Check for checkpoint.
     if ((JOY_NEW(DPAD_ANY) || JOY_HELD(DPAD_ANY)) && CheckCheckpointTrigger())
     {
         gTasks[taskId].func = Task_GoToCheckpoint;
     }
+    // Check for encounter.
+    else if ((JOY_NEW(DPAD_ANY) || (JOY_HELD(DPAD_ANY) && gTrailInterface.keyHeldTimer % 12 == 0)) && (Random() % 10) == 0)
+    {
+        gTasks[taskId].func = Task_TriggerOverworldEncounter;
+    }
 
+    // Save and exit.
     if (JOY_NEW(START_BUTTON))
     {
         PlaySE(SE_SELECT);
         gTasks[taskId].func = Task_SaveAndExit;
     }
+
+    // Camp in overworld.
     if (JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_SELECT);
@@ -588,89 +603,89 @@ static void Task_GoToOverworldCamp(u8 taskId)
 {
     switch (gTasks[taskId].data[0])
     {
-        case 0: // Check if uncampable location.
-            if (gSaveBlock1Ptr->currentTemplateType == TEMPLATES_PEONY_TOWN
-                || gSaveBlock1Ptr->currentTemplateType == TEMPLATES_TULIP_TOWN
-                || gSaveBlock1Ptr->currentTemplateType == TEMPLATES_ORCHID_CITY)
-            {
-                PlaySE(SE_FAILURE);
-                PrintTextToMessageBox(COMPOUND_STRING("You can't camp here…"));
-                gTasks[taskId].data[0] = 7;
-            }
-            else
-            {
-                ++gTasks[taskId].data[0];
-            }
-            break;
-        case 1: // Print message and yes no box.
-            PrintTextToMessageBox(COMPOUND_STRING("Stop to camp?"));
-            gTasks[taskId].data[2] = CreateYesNoBox();
-            ++gTasks[taskId].data[0];
-            break;
-        case 2: // Process menu input.
+    case 0: // Check if uncampable location.
+        if (gSaveBlock1Ptr->currentTemplateType == TEMPLATES_PEONY_TOWN
+            || gSaveBlock1Ptr->currentTemplateType == TEMPLATES_TULIP_TOWN
+            || gSaveBlock1Ptr->currentTemplateType == TEMPLATES_ORCHID_CITY)
         {
-            u32 input = ListMenu_ProcessInput(gTasks[taskId].data[2]);
-            if (gMain.newKeys & A_BUTTON)
-            {
-                PlaySE(SE_SELECT);
-                DestroyTask(gTasks[taskId].data[2]);
-                if (input == 0) gTasks[taskId].data[0] += 1;
-                else gTasks[taskId].data[0] = 6;
-            }
-            else if (gMain.newKeys & B_BUTTON)
-            {
-                PlaySE(SE_SELECT);
-                DestroyTask(gTasks[taskId].data[2]);
-                gTasks[taskId].data[0] = 6;
-            }
-            break;
+            PlaySE(SE_FAILURE);
+            PrintTextToMessageBox(COMPOUND_STRING("You can't camp here…"));
+            gTasks[taskId].data[0] = 7;
         }
-        case 3: // Do map generation.
-            // Update save fields.
-            ++gSaveBlock1Ptr->currentFloor;
-            gSaveBlock1Ptr->floorSeed = Random();
-            memset(gSaveBlock1Ptr->visitedRooms, 0, sizeof(gSaveBlock1Ptr->visitedRooms));
-
-            // Generate the new floorplan and warp.
-            GenerateFloorplan();
-            ClearFloorEventFlags();
-            SetContinueGameWarpStatus();
-            SetWarpData(&gSaveBlock1Ptr->continueGameWarp, GetCurrentTemplateRules()->mapGroup,
-                        gFloorplan.layout[STARTING_ROOM].mapNum, 0, -1, -1);
-            gSaveBlock1Ptr->currentRoom = STARTING_ROOM;
-
-            // Autosave.
-            TrySavingData(SAVE_LINK);
+        else
+        {
             ++gTasks[taskId].data[0];
-            break;
-        case 4: // Confirm save and begin warp.
-            PlaySE(SE_SAVE);
-            FadeScreen(FADE_TO_BLACK, 0);
-            ++gTasks[taskId].data[0];
-            break;
-        case 5: // Warp.
-            if (!gPaletteFade.active)
-            {
-                TryWarpToRoom(STARTING_ROOM, 0xFF);
-                Free(sTrailMapTilemapPtr);
-                sTrailMapTilemapPtr = NULL;
-                FreeAllWindowBuffers();
-                ResetSpriteData();
-                UnlockPlayerFieldControls();
-                UnfreezeObjectEvents();
-                DestroyTask(taskId);
-            }
-            break;
-        case 6: // Return to trail map.
-            ClearWindow(WIN_MESSAGE);
-            ClearWindow(WIN_YESNO);
-            gTasks[taskId].func = Task_TrailMapWaitForKeypress;
-            gTasks[taskId].data[0] = 0;
-            break;
-        case 7: // Wait for message then return to trail map.
-            if (JOY_NEW(A_BUTTON))
-                gTasks[taskId].data[0] = 6;            
-            break;
+        }
+        break;
+    case 1: // Print message and yes no box.
+        PrintTextToMessageBox(COMPOUND_STRING("Stop to camp?"));
+        gTasks[taskId].data[2] = CreateYesNoBox();
+        ++gTasks[taskId].data[0];
+        break;
+    case 2: // Process menu input.
+    {
+        u32 input = ListMenu_ProcessInput(gTasks[taskId].data[2]);
+        if (gMain.newKeys & A_BUTTON)
+        {
+            PlaySE(SE_SELECT);
+            DestroyTask(gTasks[taskId].data[2]);
+            if (input == 0) gTasks[taskId].data[0] += 1;
+            else gTasks[taskId].data[0] = 6;
+        }
+        else if (gMain.newKeys & B_BUTTON)
+        {
+            PlaySE(SE_SELECT);
+            DestroyTask(gTasks[taskId].data[2]);
+            gTasks[taskId].data[0] = 6;
+        }
+        break;
+    }
+    case 3: // Do map generation.
+        // Update save fields.
+        ++gSaveBlock1Ptr->currentFloor;
+        gSaveBlock1Ptr->floorSeed = Random();
+        memset(gSaveBlock1Ptr->visitedRooms, 0, sizeof(gSaveBlock1Ptr->visitedRooms));
+
+        // Generate the new floorplan and warp.
+        GenerateFloorplan();
+        ClearFloorEventFlags();
+        SetContinueGameWarpStatus();
+        SetWarpData(&gSaveBlock1Ptr->continueGameWarp, GetCurrentTemplateRules()->mapGroup,
+        gFloorplan.layout[STARTING_ROOM].mapNum, 0, -1, -1);
+        gSaveBlock1Ptr->currentRoom = STARTING_ROOM;
+
+        // Autosave.
+        TrySavingData(SAVE_LINK);
+        ++gTasks[taskId].data[0];
+        break;
+    case 4: // Confirm save and begin warp.
+        PlaySE(SE_SAVE);
+        FadeScreen(FADE_TO_BLACK, 0);
+        ++gTasks[taskId].data[0];
+        break;
+    case 5: // Warp.
+        if (!gPaletteFade.active)
+        {
+            TryWarpToRoom(STARTING_ROOM, 0xFF);
+            Free(sTrailMapTilemapPtr);
+            sTrailMapTilemapPtr = NULL;
+            FreeAllWindowBuffers();
+            ResetSpriteData();
+            UnlockPlayerFieldControls();
+            UnfreezeObjectEvents();
+            DestroyTask(taskId);
+        }
+        break;
+    case 6: // Return to trail map.
+        ClearWindow(WIN_MESSAGE);
+        ClearWindow(WIN_YESNO);
+        gTasks[taskId].func = Task_TrailMapWaitForKeypress;
+        gTasks[taskId].data[0] = 0;
+        break;
+    case 7: // Wait for message then return to trail map.
+        if (JOY_NEW(A_BUTTON))
+            gTasks[taskId].data[0] = 6;            
+        break;
     }
 }
 
@@ -681,98 +696,139 @@ static void Task_GoToCheckpoint(u8 taskId)
 
     switch (gTasks[taskId].data[0])
     {
-        case 0: // Route to correct step.
-            if (gCheckpointData[checkpoint].mapNum == 0) // Safety check
-            {
-                gTasks[taskId].func = Task_TrailMapWaitForKeypress;
-                return;
-            }
-            else if (gSaveBlock1Ptr->checkpoints & (1 << checkpoint)) // Yes no
-            {
-                ++gTasks[taskId].data[0];
-            }
-            else // No choice
-            {
-                gTasks[taskId].data[0] = 6;
-            }
-            PlaySE(SE_SELECT);
-            break;
-        case 1: // Print message and yes no box.
-            StringCopy(gStringVar1, COMPOUND_STRING("Stop at "));
-            StringAppend(gStringVar1, gCheckpointData[checkpoint].name);
-            StringAppend(gStringVar1, COMPOUND_STRING("?"));
-            PrintTextToMessageBox(gStringVar1);
-            gTasks[taskId].data[2] = CreateYesNoBox();
-            ++gTasks[taskId].data[0];
-            break;
-        case 2: // Process menu input.
+    case 0: // Route to correct step.
+        if (gCheckpointData[checkpoint].mapNum == 0) // Safety check
         {
-            u32 input = ListMenu_ProcessInput(gTasks[taskId].data[2]);
-            if (gMain.newKeys & A_BUTTON)
-            {
-                PlaySE(SE_SELECT);
-                DestroyTask(gTasks[taskId].data[2]);
-                if (input == 0) gTasks[taskId].data[0] += 1;
-                else gTasks[taskId].data[0] = 8;
-            }
-            else if (gMain.newKeys & B_BUTTON)
-            {
-                PlaySE(SE_SELECT);
-                DestroyTask(gTasks[taskId].data[2]);
-                gTasks[taskId].data[0] = 8;
-            }
-            break;
-        }
-        case 3: // Autosave.
-            SetContinueGameWarpStatus();
-            SetWarpData(&gSaveBlock1Ptr->continueGameWarp, MAP_GROUP(INTRO_SEQUENCE), gCheckpointData[checkpoint].mapNum, gCheckpointData[checkpoint].warpId[gSaveBlock1Ptr->facing], 0, 0);
-            TrySavingData(SAVE_LINK);
-            ++gTasks[taskId].data[0];
-            break;
-        case 4: // Confirm save and begin warp.
-            PlaySE(SE_SAVE);
-            FadeScreen(FADE_TO_BLACK, 0);
-            ++gTasks[taskId].data[0];
-            break;
-        case 5: // Go to map.
-            if (!gPaletteFade.active)
-            {
-                StoreInitialPlayerAvatarState();
-                LockPlayerFieldControls();
-                PlayBGM(GetCurrentTemplateRules()->bgm);
-                WarpFadeOutScreen();
-                PlayRainStoppingSoundEffect();
-                SetWarpDestination(MAP_GROUP(INTRO_SEQUENCE), gCheckpointData[checkpoint].mapNum, gCheckpointData[checkpoint].warpId[gSaveBlock1Ptr->facing], 0, 0);
-                WarpIntoMap();
-                SetMainCallback2(CB2_LoadMap);
-
-                // Clean up data.
-                Free(sTrailMapTilemapPtr);
-                sTrailMapTilemapPtr = NULL;
-                FreeAllWindowBuffers();
-                ResetSpriteData();
-                UnlockPlayerFieldControls();
-                UnfreezeObjectEvents();
-                DestroyTask(taskId);
-            }
-            break;
-        case 6: // Print message with no yes no box.
-            StringCopy(gStringVar1, COMPOUND_STRING("Stopping at "));
-            StringAppend(gStringVar1, gCheckpointData[checkpoint].name);
-            StringAppend(gStringVar1, COMPOUND_STRING("…"));
-            PrintTextToMessageBox(gStringVar1);
-            ++gTasks[taskId].data[0];
-            break;
-        case 7: // Wait for input.
-            if (JOY_NEW(A_BUTTON))
-                gTasks[taskId].data[0] = 3;
-            break;
-        case 8: // Return to trail map.
-            ClearWindow(WIN_MESSAGE);
-            ClearWindow(WIN_YESNO);
             gTasks[taskId].func = Task_TrailMapWaitForKeypress;
-            gTasks[taskId].data[0] = 0;
-            break;
+            return;
+        }
+        else if (gSaveBlock1Ptr->checkpoints & (1 << checkpoint)) // Yes no
+        {
+            ++gTasks[taskId].data[0];
+        }
+        else // No choice
+        {
+            gTasks[taskId].data[0] = 6;
+        }
+        PlaySE(SE_SELECT);
+        break;
+    case 1: // Print message and yes no box.
+        StringCopy(gStringVar1, COMPOUND_STRING("Stop at "));
+        StringAppend(gStringVar1, gCheckpointData[checkpoint].name);
+        StringAppend(gStringVar1, COMPOUND_STRING("?"));
+        PrintTextToMessageBox(gStringVar1);
+        gTasks[taskId].data[2] = CreateYesNoBox();
+        ++gTasks[taskId].data[0];
+        break;
+    case 2: // Process menu input.
+    {
+        u32 input = ListMenu_ProcessInput(gTasks[taskId].data[2]);
+        if (gMain.newKeys & A_BUTTON)
+        {
+            PlaySE(SE_SELECT);
+            DestroyTask(gTasks[taskId].data[2]);
+            if (input == 0) gTasks[taskId].data[0] += 1;
+            else gTasks[taskId].data[0] = 8;
+        }
+        else if (gMain.newKeys & B_BUTTON)
+        {
+            PlaySE(SE_SELECT);
+            DestroyTask(gTasks[taskId].data[2]);
+            gTasks[taskId].data[0] = 8;
+        }
+        break;
+    }
+    case 3: // Autosave.
+        SetContinueGameWarpStatus();
+        SetWarpData(&gSaveBlock1Ptr->continueGameWarp, MAP_GROUP(INTRO_SEQUENCE), gCheckpointData[checkpoint].mapNum, gCheckpointData[checkpoint].warpId[gSaveBlock1Ptr->facing], 0, 0);
+        TrySavingData(SAVE_LINK);
+        ++gTasks[taskId].data[0];
+        break;
+    case 4: // Confirm save and begin warp.
+        PlaySE(SE_SAVE);
+        FadeScreen(FADE_TO_BLACK, 0);
+        ++gTasks[taskId].data[0];
+        break;
+    case 5: // Go to map.
+        if (!gPaletteFade.active)
+        {
+            StoreInitialPlayerAvatarState();
+            LockPlayerFieldControls();
+            PlayBGM(GetCurrentTemplateRules()->bgm);
+            WarpFadeOutScreen();
+            PlayRainStoppingSoundEffect();
+            SetWarpDestination(MAP_GROUP(INTRO_SEQUENCE), gCheckpointData[checkpoint].mapNum, gCheckpointData[checkpoint].warpId[gSaveBlock1Ptr->facing], 0, 0);
+            WarpIntoMap();
+            SetMainCallback2(CB2_LoadMap);
+
+            // Clean up data.
+            Free(sTrailMapTilemapPtr);
+            sTrailMapTilemapPtr = NULL;
+            FreeAllWindowBuffers();
+            ResetSpriteData();
+            UnlockPlayerFieldControls();
+            UnfreezeObjectEvents();
+            DestroyTask(taskId);
+        }
+        break;
+    case 6: // Print message with no yes no box.
+        StringCopy(gStringVar1, COMPOUND_STRING("Stopping at "));
+        StringAppend(gStringVar1, gCheckpointData[checkpoint].name);
+        StringAppend(gStringVar1, COMPOUND_STRING("…"));
+        PrintTextToMessageBox(gStringVar1);
+        ++gTasks[taskId].data[0];
+        break;
+    case 7: // Wait for input.
+        if (JOY_NEW(A_BUTTON))
+            gTasks[taskId].data[0] = 3;
+        break;
+    case 8: // Return to trail map.
+        ClearWindow(WIN_MESSAGE);
+        ClearWindow(WIN_YESNO);
+        gTasks[taskId].func = Task_TrailMapWaitForKeypress;
+        gTasks[taskId].data[0] = 0;
+        break;
+    }
+}
+
+static void Task_TriggerOverworldEncounter(u8 taskId)
+{
+    switch (gTasks[taskId].data[0])
+    {
+    case 0: // Route to correct step.
+        if (GetCurrentTemplateRules()->encounterPool[0].item == SPECIES_NONE)
+            gTasks[taskId].func = Task_TrailMapWaitForKeypress;
+        else
+            ++gTasks[taskId].data[0];
+        break;
+    case 1: // Create encounter and print message.
+    {
+        PlaySE(SE_PIN);
+        SeedFloorRng(Random());
+        gSpecialVar_0x8000 = ChooseElementFromPool(GetCurrentTemplateRules()->encounterPool);
+        InitEnemyPartyFromEncounter(); // uses gSpecialVar_0x8000
+        StringCopy(gStringVar2, GetSpeciesName(gSpecialVar_0x8000));
+        StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("A wild {STR_VAR_2} approaches…"));
+        PrintTextToMessageBox(gStringVar1);
+        ++gTasks[taskId].data[0];
+        break;
+    }
+    case 2: // Wait for input.
+        if (JOY_NEW(A_BUTTON))
+        {
+            FadeScreen(FADE_TO_BLACK, 2);
+            ++gTasks[taskId].data[0];
+        }
+        break;
+    case 3: // Fade out to battle.
+        if (!gPaletteFade.active)
+        {
+            Free(sTrailMapTilemapPtr);
+            sTrailMapTilemapPtr = NULL;
+            SetMainCallback2(CB2_OpenDeckBattleCustom);
+            DestroyTask(taskId);
+        }
+        break;
     }
 }
 
@@ -921,7 +977,9 @@ static void PrintTextToMessageBox(const u8 *str)
     FillWindowPixelBuffer(WIN_MESSAGE, PIXEL_FILL(0));
     DrawStdWindowFrame(WIN_MESSAGE, FALSE);
 
-    AddTextPrinterParameterized3(WIN_MESSAGE, FONT_NORMAL, 6, 0, textColor, TEXT_SKIP_DRAW, str);
+    StringCopy(gStringVar1, str);
+    BreakStringAutomatic(gStringVar1, 196, 2, FONT_NORMAL, SHOW_SCROLL_PROMPT);
+    AddTextPrinterParameterized3(WIN_MESSAGE, FONT_NORMAL, 6, 0, textColor, TEXT_SKIP_DRAW, gStringVar1);
     CopyWindowToVram(WIN_MESSAGE, COPYWIN_FULL);
     CopyBgTilemapBufferToVram(1);
 }

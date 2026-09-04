@@ -12,6 +12,7 @@
 #include "field_weather.h"
 #include "gpu_regs.h"
 #include "list_menu.h"
+#include "load_save.h"
 #include "m4a.h"
 #include "main.h"
 #include "malloc.h"
@@ -28,6 +29,7 @@
 #include "string_util.h"
 #include "task.h"
 #include "text.h"
+#include "trail_interface.h"
 #include "util.h"
 #include "constants/abilities.h"
 #include "constants/battle.h"
@@ -151,7 +153,6 @@ static void PlayDeckBattleMusic(void)
 
 void OpenDeckBattle(void)
 {
-    PlayDeckBattleMusic();
     FadeScreen(FADE_TO_BLACK, 0);
     SetMainCallback2(CB2_OpenDeckBattleCustom);
 }
@@ -166,6 +167,7 @@ void CB2_OpenDeckBattleCustom(void)
                 gMain.state++;
             break;
         case 1:
+            PlayDeckBattleMusic();
             SetVBlankCallback(NULL); 
             ClearVramOamPlttRegs();
             SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
@@ -571,8 +573,8 @@ void Task_CloseDeckBattle(u8 taskId)
 
     // Return to overworld.
     FadeOutMapMusic(5);
-    if (gBattleOutcome == B_OUTCOME_LOST)
-        SetMainCallback2(CB2_WhiteOut); // *TODO: fade out looks off
+    if (!UseContinueGameWarp())
+        SetMainCallback2(CB2_InitTrailInterface);
     else
         SetMainCallback2(CB2_ReturnToField);
 }
