@@ -547,12 +547,8 @@ static void Task_HandleBattleLoss(u8 taskId)
         BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
         ++gTasks[taskId].tState;
     case 6: // Wait for fade.
-        if (++gTasks[taskId].tTimer > 60 && (gMain.newKeys & A_BUTTON))
-        {
-            PlaySE(SE_SELECT);
-            gTasks[taskId].tTimer = 0;
+        if (!gPaletteFade.active)
             ++gTasks[taskId].tState;
-        }
         break;
     case 7: // Soft reset.
         DoSoftReset();
