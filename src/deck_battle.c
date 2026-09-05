@@ -427,9 +427,14 @@ static void Task_HandleBattleVictory(u8 taskId)
             SetMonData(&gPlayerParty[gDeckMons[gDeckStruct.battlerExp].partyIndex], MON_DATA_EXP, &expAfterGain);
             CalculateMonStats(&gPlayerParty[gDeckMons[gDeckStruct.battlerExp].partyIndex]);
             if (expAfterGain >= nextLevelExp)
+            {
+                gDeckMons[gDeckStruct.battlerExp].hp += GetMonData(&gPlayerParty[gDeckMons[gDeckStruct.battlerExp].partyIndex], MON_DATA_MAX_HP) - gDeckMons[gDeckStruct.battlerExp].maxHP;
                 gTasks[taskId].tState = 3;
+            }
             else
+            {
                 gTasks[taskId].tState = 6;
+            }
         }
         else
         {
@@ -442,7 +447,7 @@ static void Task_HandleBattleVictory(u8 taskId)
             StringCopy(gStringVar2, GetSpeciesName(gDeckMons[gDeckStruct.battlerExp].species));
             StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2} leveled up!"));
             PrintStringToMessageBox(gStringVar1);
-            PlaySE(MUS_LEVEL_UP);
+            PlaySE(SE_EXP_MAX);
             ++gTasks[taskId].tTimer;
         }
         else if (++gTasks[taskId].tTimer > 10 && (gMain.newKeys & A_BUTTON))
@@ -570,6 +575,13 @@ void Task_CloseDeckBattle(u8 taskId)
     ResetSpriteData();
     UnfreezeObjectEvents();
     DestroyTask(taskId);
+
+    // Update battler health.
+    for (u32 battler = B_PLAYER_0; battler < B_PLAYER_5; ++battler)
+    {
+        if (IsDeckBattlerAlive(battler))
+            SetMonData(&gPlayerParty[gDeckMons[battler].partyIndex], MON_DATA_HP, &gDeckMons[battler].hp);
+    }
 
     // Return to overworld.
     FadeOutMapMusic(5);

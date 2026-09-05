@@ -1255,3 +1255,49 @@ static bool32 TryMoveInDirection(u32 dir)
 
     return TRUE;
 }
+
+void RestAtCampsite(void) // callnative
+{
+    CalculatePlayerPartyCount();
+    for (u32 i = 0; i < gPlayerPartyCount; ++i)
+    {
+        u32 maxHP = GetMonData(&gPlayerParty[i], MON_DATA_MAX_HP);
+        u32 hp = GetMonData(&gPlayerParty[i], MON_DATA_HP);
+        switch (gSpecialVar_Result)
+        {
+        case 0:
+            if (hp != 0)
+                hp += ((maxHP * 25) / 100);
+            IncrementTrailTime(180);
+            break;
+        case 1:            
+            if (hp != 0)
+                hp += ((maxHP * 50) / 100);
+            IncrementTrailTime(360);
+            break;
+        case 2:
+            if (hp != 0)
+                hp = maxHP;
+            IncrementTrailTime(720);
+            break;
+        }
+        if (hp > maxHP)
+            hp = maxHP;
+        SetMonData(&gPlayerParty[i], MON_DATA_HP, &hp);
+    }
+
+    if (!gPaletteFade.active)
+    {
+        struct TimeBlendSettings cachedBlend = gTimeBlend;
+        u32 *bld0 = (u32*)&cachedBlend;
+        u32 *bld1 = (u32*)&gTimeBlend;
+        UpdateTimeOfDay();
+        if (bld0[0] != bld1[0]
+        || bld0[1] != bld1[1]
+        || bld0[2] != bld1[2])
+        {
+        UpdateAltBgPalettes(PALETTES_BG);
+        UpdatePalettesWithTime(PALETTES_ALL);
+        }
+    }
+}

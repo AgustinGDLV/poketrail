@@ -2012,7 +2012,6 @@ void CB2_ContinueSavedGame(void)
     }
     else if (UseContinueGameWarp() == TRUE && IsPlayerInFloorMap()) // Campsite
     {
-        ClearContinueGameWarpStatus();
         SetWarpDestinationToContinueGameWarp();
         WarpIntoMap();
         TryPutTodaysRivalTrainerOnAir();

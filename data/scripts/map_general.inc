@@ -114,6 +114,8 @@ EventScript_EnterBossRoomFromConnection::
 	case 0, EventScript_WalkOppposite
 
 EventScript_End:
+	closemessage
+	releaseall
 	end
 
 EventScript_GoToNextFloor_Text:
@@ -145,6 +147,21 @@ EventScript_Campfire::
 	end
 
 EventScript_Campfire_Rest:
+	message EventScript_RestHowLong_Text
+	waitmessage
+	dynmultipush EventScript_3_Hours_Text, 0
+	dynmultipush EventScript_6_Hours_Text, 1
+	dynmultipush EventScript_12_Hours_Text, 2
+	dynmultipush EventScript_Exit_Text, 3
+	dynmultistack 21, 4, TRUE, 4, FALSE, 0, NULL
+	goto_if_eq VAR_RESULT, 3, EventScript_End
+	fadescreenswapbuffers FADE_TO_BLACK
+	playfanfare MUS_HEAL
+	waitfanfare
+	callnative RestAtCampsite
+	fadescreenswapbuffers FADE_FROM_BLACK
+	releaseall
+	closemessage
 	end
 
 EventScript_Campfire_Resume:
@@ -163,3 +180,18 @@ EventScript_Resume_Text:
 
 EventScript_Stay_Text:
 	.string "Stay$"
+
+EventScript_RestHowLong_Text:
+	.string "Rest how long?$"
+
+EventScript_3_Hours_Text:
+	.string "3 hours$"
+
+EventScript_6_Hours_Text:
+	.string "6 hours$"
+
+EventScript_12_Hours_Text:
+	.string "12 hours$"
+
+EventScript_Exit_Text:
+	.string "Exit$"
