@@ -1039,36 +1039,52 @@ void PrintMoveOutcomeString(u32 targets) // *TODO: refactor
     ConvertIntToDecimalStringN(gStringVar3, abs(gDeckStruct.lastHitDamage), STR_CONV_MODE_LEFT_ALIGN, 2);
 
     // Prepare strings.
-    if (gDeckMovesInfo[gCurrentMove].effect == DECK_EFFECT_HIT)
+    switch (gDeckMovesInfo[gCurrentMove].effect)
     {
+    case DECK_EFFECT_HIT:
         if (targets == 1)
             StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2} took {STR_VAR_3} damage!"));
         else
             StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Opponents took damage!"));
-    }
-    if (gDeckMovesInfo[gCurrentMove].effect == DECK_EFFECT_HEAL)
-    {
+        break;
+    case DECK_EFFECT_HEAL:
         if (targets == 1)
             StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2} healed {STR_VAR_3} HP!"));
         else if (gDeckMovesInfo[gCurrentMove].target & TARGET_ALL_ALLIES)
             StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Allies had their HP healed!"));
-    }
-    else if (gDeckMovesInfo[gCurrentMove].effect == DECK_EFFECT_POWER_UP)
-    {
-        if (gDeckMovesInfo[gCurrentMove].param == STAT_DEF)
+        break;
+    case DECK_EFFECT_POWER_UP:
+        if (gDeckMovesInfo[gCurrentMove].param == 0xFF)
         {
             if (targets == 1)
-                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2}'s defense was boosted!"));
+                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2}'s stats were boosted!"));
             else
-                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Allies had their defense boosted!"));
+                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Allies had their stats boosted!"));
+        }
+        else if (gDeckMovesInfo[gCurrentMove].param == STAT_DEF)
+        {
+            if (targets == 1)
+                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2}'s DEF was boosted!"));
+            else
+                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Allies had their DEF boosted!"));
         }
         else
         {
             if (targets == 1)
-                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2}'s power was boosted!"));
+                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2}'s PWR was boosted!"));
             else
-                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Allies had their defense boosted!"));
+                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Allies had their DEF boosted!"));
         }
+        break;
+    case DECK_EFFECT_SWAP:
+        if (gDeckMovesInfo[gCurrentMove].param == STAT_ATK)
+            StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Targets were swapped and had their PWR boosted!"));
+        else if (gDeckMovesInfo[gCurrentMove].param == STAT_DEF)
+            StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Targets were swapped and had their DEF boosted!"));
+        else if (gDeckMovesInfo[gCurrentMove].param == 0xFF)
+            StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Targets were swapped and had their stats boosted!"));
+        else
+            StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Targets were swapped!"));
     }
 
     // Print strings.

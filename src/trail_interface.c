@@ -655,7 +655,7 @@ static void Task_GoToOverworldCamp(u8 taskId)
         ClearFloorEventFlags();
         SetContinueGameWarpStatus();
         SetWarpData(&gSaveBlock1Ptr->continueGameWarp, GetCurrentTemplateRules()->mapGroup,
-        gFloorplan.layout[STARTING_ROOM].mapNum, 0, -1, -1);
+            gFloorplan.layout[STARTING_ROOM].mapNum, 0, -1, -1);
         gSaveBlock1Ptr->currentRoom = STARTING_ROOM;
 
         // Autosave.

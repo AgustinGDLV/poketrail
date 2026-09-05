@@ -64,6 +64,8 @@ struct DeckBattlePokemon
     enum BattlePosition initialPos;
     bool8 hasMoved;
     bool8 hasSwapped;
+    u8 swapCount;
+    u8 rechargeTurns;
 
     u16 powerBoost; // flat power boost
     u16 defBoost;   // flat defense boost
@@ -101,14 +103,16 @@ struct BattleAction
 #define TURN_END_POISON         2
 #define TURN_END_SLEEP          3
 #define TURN_END_RESET_STATUS   4
-#define TURN_END_COMPLETED      5
-#define TURN_END_PAUSE          6
+#define TURN_END_RECHARGE       5
+#define TURN_END_COMPLETED      6
+#define TURN_END_PAUSE          7
 
 // move data
 
 enum DeckMove
 {
     DECK_TACKLE,
+    DECK_QUICK_ATTACK,
     DECK_VINE_WHIP,
     DECK_HELPING_HAND,
     DECK_SURF,
@@ -116,6 +120,19 @@ enum DeckMove
     DECK_CRABHAMMER,
     DECK_NOURISH,
     DECK_HARDEN,
+    DECK_FLAME_WHEEL,
+    DECK_FLARE_BLITZ,
+    DECK_CHARGE,
+    DECK_COTTON_GUARD,
+    DECK_BITE,
+    DECK_CRUNCH,
+    DECK_HEAL_BELL,
+    DECK_FRENZY_PLANT,
+    DECK_POLLEN_PUFF,
+    DECK_AROMATHERAPY,
+    DECK_WHIRLWIND,
+    DECK_BUG_BITE,
+    DECK_SILVER_WIND,
     DECK_MOVES_COUNT,
 };
 
@@ -126,6 +143,7 @@ struct DeckMoveInfo
     u8 power;
     u16 target;
     u8 effect;
+    u8 secondary;
     u8 param;
 };
 
@@ -136,7 +154,7 @@ enum DeckAbility
     DECK_ABILITY_NONE,
     DECK_AGGRESSIVE,
     DECK_PATIENT,
-    DECK_RESTLESS,
+    DECK_ENERGETIC,
     DECK_HEAVY,
     DECK_SOCIAL,
     DECK_ALPHA,

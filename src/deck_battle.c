@@ -962,12 +962,20 @@ static void Task_HandleTurnEndEffects(u8 taskId)
     case TURN_END_RESET_STATUS: // TODO
         ++gTasks[taskId].tTurnEndState;
         break;
+    case TURN_END_RECHARGE:
+        for (enum BattleId battler = B_PLAYER_0; battler < MAX_DECK_BATTLERS_COUNT; ++battler)
+        {
+            if (GetDeckBattlerSide(battler) == gDeckStruct.actingSide && gDeckMons[battler].rechargeTurns > 0)
+                gDeckMons[battler].rechargeTurns -= 1;
+        }
+        ++gTasks[taskId].tTurnEndState;
+        break;
     default:
-    case TURN_END_COMPLETED: // TODO
+    case TURN_END_COMPLETED:
         gDeckStruct.turns++;
-        ResetTurnValues();
         gDeckStruct.actingSide ^= 1; // get opposite side
         gDeckStruct.isSelectionPhase = TRUE;
+        ResetTurnValues();
         gTasks[taskId].tState = 0;
         gTasks[taskId].tTimer = 0;
         gTasks[taskId].tTurnEndState = 0;
@@ -984,15 +992,22 @@ static void Task_HandleTurnEndEffects(u8 taskId)
             else
             {
                 gDeckStruct.selectedPos = GetLeftmostPositionToMove(B_SIDE_PLAYER);
-                u32 battler = GetDeckBattlerAtPos(B_SIDE_PLAYER, gDeckStruct.selectedPos);
-                UpdateBattlerSelection(battler, TRUE);
-                DisplayActionSelectionInfo(battler);
+                if (gDeckStruct.selectedPos == POSITIONS_COUNT)
+                {
+                    gTasks[taskId].func = Task_ExecuteQueuedActionOrEnd;
+                }
+                else
+                {
+                    u32 battler = GetDeckBattlerAtPos(B_SIDE_PLAYER, gDeckStruct.selectedPos);
+                    UpdateBattlerSelection(battler, TRUE);
+                    DisplayActionSelectionInfo(battler);
 
-                SetBattlerBobPause(FALSE);
-                SetBattlerPortraitVisibility(TRUE);
-                SetGpuReg(REG_OFFSET_BG0VOFS, 0);
-                SetGpuReg(REG_OFFSET_BG1VOFS, 0);
-                gTasks[taskId].func = Task_PlayerSelectAction;
+                    SetBattlerBobPause(FALSE);
+                    SetBattlerPortraitVisibility(TRUE);
+                    SetGpuReg(REG_OFFSET_BG0VOFS, 0);
+                    SetGpuReg(REG_OFFSET_BG1VOFS, 0);
+                    gTasks[taskId].func = Task_PlayerSelectAction;
+                }
             }
         }
         else
@@ -1015,7 +1030,19 @@ static void Task_HandleTurnEndEffects(u8 taskId)
 static void InitBattleStructData(void)
 {
     gDeckStruct.turns = 0;
-    ResetTurnValues();
+    for (enum BattleId battler = 0; battler < MAX_DECK_BATTLERS_COUNT; ++battler)
+    {
+        gDeckMons[battler].hasMoved = FALSE;
+        gDeckMons[battler].hasSwapped = FALSE;
+        gDeckMons[battler].initialPos = gDeckMons[battler].pos;
+        gDeckMons[battler].powerBoost = 0;
+        gDeckMons[battler].defBoost = 0;
+        gDeckMons[battler].swapCount = 0;
+    }
+
+    gDeckStruct.actionsCount = 0;
+    gDeckStruct.executedCount = 0;
+
     gDeckStruct.exp = 0;
     gDeckStruct.battlerCaught = MAX_DECK_BATTLERS_COUNT;
     gDeckStruct.selectedPos = GetLeftmostOccupiedPosition(B_SIDE_PLAYER);
@@ -1026,10 +1053,22 @@ static void ResetTurnValues(void)
 {
     for (enum BattleId battler = 0; battler < MAX_DECK_BATTLERS_COUNT; ++battler)
     {
-        gDeckMons[battler].hasMoved = FALSE;
+        // Check recharge.
+        if (gDeckMons[battler].rechargeTurns == 0)
+        {
+            gDeckMons[battler].hasMoved = FALSE;
+        }
+        else if (GetDeckBattlerSide(battler) == gDeckStruct.actingSide)
+        {
+            SetBattlerGrayscale(battler, TRUE);
+            StartBattlerAnim(battler, ANIM_PAUSED);
+            gDeckMons[battler].hasMoved = TRUE;
+        }
+
+        // Reset other data.
         gDeckMons[battler].hasSwapped = FALSE;
         gDeckMons[battler].initialPos = gDeckMons[battler].pos;
-        if (gDeckStruct.actingSide != GetDeckBattlerSide(battler) || gDeckStruct.turns == 0)
+        if (gDeckStruct.actingSide == GetDeckBattlerSide(battler))
         {
             gDeckMons[battler].powerBoost = 0;
             gDeckMons[battler].defBoost = 0;
@@ -1117,13 +1156,15 @@ void SwapBattlerPositions(u32 battler1, u32 battler2)
     GetBattlerSprite(battler2)->x = GetBattlerXCoord(battler2);
     gDeckMons[battler1].hasSwapped = TRUE;
     gDeckMons[battler2].hasSwapped = TRUE;
+    gDeckMons[battler1].swapCount += 1;
+    gDeckMons[battler2].swapCount += 1;
 }
 
 // Calculates power boosts from abilities (e.g., AGGRESSIVE, SOCIAL).
 s32 GetAbilityPowerBoost(u32 battlerAtk)
 {
     u32 power = gDeckMons[battlerAtk].power;
-    u32 boost = 0;
+    s32 boost = 0;
     u32 side = GetDeckBattlerSide(battlerAtk);
 
     switch (GetDeckBattlerAbility(battlerAtk))
@@ -1136,32 +1177,46 @@ s32 GetAbilityPowerBoost(u32 battlerAtk)
         if (gDeckStruct.executedCount == gDeckStruct.actionsCount)
             boost = (power * 50) / 100; // 1.5x
         break;
+    case DECK_ENERGETIC:
+        boost = (power * (20 * gDeckMons[battlerAtk].swapCount)) / 100; // 1.2x per
+        break;
+    case DECK_HEAVY:
+        boost = -(power * (20 * gDeckMons[battlerAtk].swapCount)) / 100; // 1.2x
+        break;
     case DECK_SOCIAL:
         if (side == B_SIDE_PLAYER)
         {
             for (u32 battler = B_PLAYER_0; battler <= B_PLAYER_5; ++battler)
-                if (battler != battlerAtk && GetDeckBattlerAbility(battler) == DECK_SOCIAL)
+            {
+                if (battler != battlerAtk && GetDeckBattlerAbility(battler) == DECK_SOCIAL && IsDeckBattlerAlive(battler))
                     boost += (power * 10) / 100; // 1.1x per
+            }
         }
         else
         {
             for (u32 battler = B_OPPONENT_0; battler <= B_OPPONENT_5; ++battler)
-                if (battler != battlerAtk && GetDeckBattlerAbility(battler) == DECK_SOCIAL)
+            {
+                if (battler != battlerAtk && GetDeckBattlerAbility(battler) == DECK_SOCIAL && IsDeckBattlerAlive(battler))
                     boost += (power * 10) / 100; // 1.1x per
+            }
         }
         break;
     case DECK_ALPHA:
         if (side == B_SIDE_PLAYER)
         {
             for (u32 battler = B_PLAYER_0; battler <= B_PLAYER_5; ++battler)
-                if (battler != battlerAtk && GetDeckBattlerAbility(battler) == DECK_ALPHA)
+            {
+                if (battler != battlerAtk && GetDeckBattlerAbility(battler) == DECK_ALPHA && IsDeckBattlerAlive(battler))
                     boost = -(power * 50) / 100; // 0.5x
+            }
         }
         else
         {
             for (u32 battler = B_OPPONENT_0; battler <= B_OPPONENT_5; ++battler)
-                if (battler != battlerAtk && GetDeckBattlerAbility(battler) == DECK_ALPHA)
+            {
+                if (battler != battlerAtk && GetDeckBattlerAbility(battler) == DECK_ALPHA && IsDeckBattlerAlive(battler))
                     boost += (power * 10) / 100; // 0.5x
+            }
         }
         break;
     default:

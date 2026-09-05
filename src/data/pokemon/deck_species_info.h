@@ -2,10 +2,10 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
 {
     [SPECIES_CATERPIE] = 
     { 
-        .baseHP = 100, 
-        .basePower = 100, 
-        .baseDef = 100, 
-        .move = DECK_TACKLE, 
+        .baseHP = 40, 
+        .basePower = 50, 
+        .baseDef = 35, 
+        .move = DECK_BUG_BITE, 
         .ability = DECK_AGGRESSIVE, 
     
         .playerIdle = gCaterpiePlayerIdleGfx, 
@@ -24,10 +24,10 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
 
     [SPECIES_METAPOD] = 
     { 
-        .baseHP = 100, 
-        .basePower = 100, 
-        .baseDef = 100, 
-        .move = DECK_TACKLE, 
+        .baseHP = 60, 
+        .basePower = 60, 
+        .baseDef = 60, 
+        .move = DECK_BUG_BITE, 
         .ability = DECK_AGGRESSIVE, 
     
         .playerIdle = gMetapodPlayerIdleGfx, 
@@ -46,11 +46,11 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
 
     [SPECIES_BUTTERFREE] = 
     { 
-        .baseHP = 100, 
-        .basePower = 100,
-        .baseDef = 100, 
-        .move = DECK_TACKLE, 
-        .ability = DECK_AGGRESSIVE, 
+        .baseHP = 60, 
+        .basePower = 90,
+        .baseDef = 60,
+        .move = DECK_SILVER_WIND,
+        .ability = DECK_ENERGETIC,
     
         .playerIdle = gButterfreePlayerIdleGfx, 
         .opponentIdle = gButterfreeOpponentIdleGfx, 
@@ -69,10 +69,10 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
     [SPECIES_RATTATA] =
     {
         .baseHP = 50,
-        .basePower = 75,
+        .basePower = 60,
         .baseDef = 35,
-        .move = DECK_TACKLE,
-        .ability = ABILITY_NONE,
+        .move = DECK_QUICK_ATTACK,
+        .ability = DECK_SOCIAL,
 
         .playerIdle = gRattataPlayerIdleGfx,
         .opponentIdle = gRattataOpponentIdleGfx,
@@ -90,11 +90,11 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
 
     [SPECIES_RATICATE] = 
     { 
-        .baseHP = 100, 
+        .baseHP = 80, 
         .basePower = 100, 
-        .baseDef = 100, 
-        .move = DECK_TACKLE, 
-        .ability = ABILITY_NONE, 
+        .baseDef = 50, 
+        .move = DECK_QUICK_ATTACK, 
+        .ability = DECK_SOCIAL, 
     
         .playerIdle = gRaticatePlayerIdleGfx, 
         .opponentIdle = gRaticateOpponentIdleGfx, 
@@ -112,11 +112,11 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
 
     [SPECIES_EKANS] = 
     { 
-        .baseHP = 100, 
-        .basePower = 100, 
-        .baseDef = 100, 
-        .move = DECK_TACKLE, 
-        .ability = ABILITY_NONE, 
+        .baseHP = 80, 
+        .basePower = 50, 
+        .baseDef = 60, 
+        .move = DECK_BITE, 
+        .ability = DECK_PATIENT, 
     
         .playerIdle = gEkansPlayerIdleGfx, 
         .opponentIdle = gEkansOpponentIdleGfx, 
@@ -135,10 +135,10 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
     [SPECIES_ARBOK] = 
     { 
         .baseHP = 100, 
-        .basePower = 100, 
+        .basePower = 70, 
         .baseDef = 100, 
-        .move = DECK_TACKLE, 
-        .ability = ABILITY_NONE, 
+        .move = DECK_CRUNCH, 
+        .ability = DECK_PATIENT, 
     
         .playerIdle = gArbokPlayerIdleGfx, 
         .opponentIdle = gArbokOpponentIdleGfx, 
@@ -157,10 +157,10 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
     [SPECIES_SPEAROW] =
     {
         .baseHP = 50,
-        .basePower = 75,
-        .baseDef = 35,
-        .move = DECK_TACKLE,
-        .ability = ABILITY_NONE,
+        .basePower = 60,
+        .baseDef = 50,
+        .move = DECK_QUICK_ATTACK,
+        .ability = DECK_AGGRESSIVE,
 
         .playerIdle = gSpearowPlayerIdleGfx,
         .opponentIdle = gSpearowOpponentIdleGfx,
@@ -178,11 +178,11 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
 
     [SPECIES_FEAROW] = 
     { 
-        .baseHP = 100, 
-        .basePower = 100, 
-        .baseDef = 100, 
-        .move = DECK_TACKLE, 
-        .ability = ABILITY_NONE, 
+        .baseHP = 90, 
+        .basePower = 90, 
+        .baseDef = 90, 
+        .move = DECK_QUICK_ATTACK, 
+        .ability = DECK_AGGRESSIVE,
     
         .playerIdle = gFearowPlayerIdleGfx, 
         .opponentIdle = gFearowOpponentIdleGfx, 
@@ -226,7 +226,7 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .basePower = 75,
         .baseDef = 35,
         .move = DECK_VINE_WHIP,
-        .ability = ABILITY_NONE,
+        .ability = DECK_PATIENT,
 
         .playerIdle = gBellsproutPlayerIdleGfx,
         .opponentIdle = gBellsproutOpponentIdleGfx,
@@ -244,11 +244,11 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
 
     [SPECIES_WEEPINBELL] = // lol typo
     { 
-        .baseHP = 100, 
-        .basePower = 100, 
-        .baseDef = 100, 
-        .move = DECK_TACKLE, 
-        .ability = ABILITY_NONE, 
+        .baseHP = 75, 
+        .basePower = 75, 
+        .baseDef = 55, 
+        .move = DECK_VINE_WHIP, 
+        .ability = DECK_PATIENT, 
     
         .playerIdle = gWeepingbellPlayerIdleGfx, 
         .opponentIdle = gWeepingbellOpponentIdleGfx, 
@@ -266,11 +266,11 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
 
     [SPECIES_VICTREEBEL] = 
     { 
-        .baseHP = 100, 
+        .baseHP = 90, 
         .basePower = 100, 
-        .baseDef = 100, 
-        .move = DECK_TACKLE, 
-        .ability = ABILITY_NONE, 
+        .baseDef = 90, 
+        .move = DECK_FRENZY_PLANT, 
+        .ability = DECK_PATIENT,
     
         .playerIdle = gVictreebelPlayerIdleGfx, 
         .opponentIdle = gVictreebelOpponentIdleGfx, 
@@ -376,11 +376,11 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
 
     [SPECIES_PONYTA] = 
     { 
-        .baseHP = 100, 
-        .basePower = 100, 
-        .baseDef = 100, 
-        .move = DECK_TACKLE, 
-        .ability = ABILITY_NONE, 
+        .baseHP = 40, 
+        .basePower = 70, 
+        .baseDef = 40, 
+        .move = DECK_FLAME_WHEEL, 
+        .ability = DECK_AGGRESSIVE, 
     
         .playerIdle = gPonytaPlayerIdleGfx, 
         .opponentIdle = gPonytaOpponentIdleGfx, 
@@ -398,11 +398,11 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
 
     [SPECIES_RAPIDASH] = 
     { 
-        .baseHP = 100, 
-        .basePower = 100, 
-        .baseDef = 100, 
-        .move = DECK_TACKLE, 
-        .ability = ABILITY_NONE, 
+        .baseHP = 70, 
+        .basePower = 110, 
+        .baseDef = 70, 
+        .move = DECK_FLARE_BLITZ, 
+        .ability = DECK_AGGRESSIVE, 
     
         .playerIdle = gRapidashPlayerIdleGfx, 
         .opponentIdle = gRapidashOpponentIdleGfx, 
@@ -420,11 +420,11 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
 
     [SPECIES_MAREEP] =
     {
-        .baseHP = 55,
+        .baseHP = 60,
         .basePower = 55,
         .baseDef = 45,
         .move = DECK_HELPING_HAND,
-        .ability = ABILITY_NONE,
+        .ability = DECK_ENERGETIC,
 
         .playerIdle = gMareepPlayerIdleGfx,
         .opponentIdle = gMareepOpponentIdleGfx,
@@ -442,11 +442,11 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
 
     [SPECIES_FLAAFFY] = 
     { 
-        .baseHP = 100, 
-        .basePower = 100, 
-        .baseDef = 100, 
-        .move = DECK_TACKLE, 
-        .ability = ABILITY_NONE, 
+        .baseHP = 80, 
+        .basePower = 65, 
+        .baseDef = 60, 
+        .move = DECK_CHARGE, 
+        .ability = DECK_ENERGETIC, 
     
         .playerIdle = gFlaaffyPlayerIdleGfx, 
         .opponentIdle = gFlaaffyOpponentIdleGfx, 
@@ -464,11 +464,11 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
 
     [SPECIES_AMPHAROS] = 
     { 
-        .baseHP = 100, 
-        .basePower = 100, 
-        .baseDef = 100, 
-        .move = DECK_TACKLE, 
-        .ability = ABILITY_NONE, 
+        .baseHP = 90, 
+        .basePower = 75, 
+        .baseDef = 90, 
+        .move = DECK_COTTON_GUARD, 
+        .ability = DECK_ENERGETIC, 
     
         .playerIdle = gAmpharosPlayerIdleGfx, 
         .opponentIdle = gAmpharosOpponentIdleGfx, 
@@ -486,11 +486,11 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
 
     [SPECIES_HOPPIP] = 
     { 
-        .baseHP = 100, 
-        .basePower = 100, 
-        .baseDef = 100, 
-        .move = DECK_TACKLE, 
-        .ability = ABILITY_NONE, 
+        .baseHP = 50, 
+        .basePower = 60, 
+        .baseDef = 30, 
+        .move = DECK_WHIRLWIND, 
+        .ability = DECK_ENERGETIC, 
     
         .playerIdle = gHoppipPlayerIdleGfx, 
         .opponentIdle = gHoppipOpponentIdleGfx, 
@@ -508,11 +508,11 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
 
     [SPECIES_SKIPLOOM] = 
     { 
-        .baseHP = 100, 
-        .basePower = 100, 
-        .baseDef = 100, 
-        .move = DECK_TACKLE, 
-        .ability = ABILITY_NONE, 
+        .baseHP = 60, 
+        .basePower = 90, 
+        .baseDef = 40, 
+        .move = DECK_WHIRLWIND, 
+        .ability = DECK_ENERGETIC, 
     
         .playerIdle = gSkiploomPlayerIdleGfx, 
         .opponentIdle = gSkiploomOpponentIdleGfx, 
@@ -530,11 +530,11 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
 
     [SPECIES_JUMPLUFF] = 
     { 
-        .baseHP = 100, 
+        .baseHP = 60, 
         .basePower = 100, 
-        .baseDef = 100, 
-        .move = DECK_TACKLE, 
-        .ability = ABILITY_NONE, 
+        .baseDef = 60, 
+        .move = DECK_WHIRLWIND, 
+        .ability = DECK_ENERGETIC, 
     
         .playerIdle = gJumpluffPlayerIdleGfx, 
         .opponentIdle = gJumpluffOpponentIdleGfx, 
@@ -599,8 +599,8 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .baseHP = 50,
         .basePower = 75,
         .baseDef = 35,
-        .move = DECK_TACKLE,
-        .ability = ABILITY_NONE,
+        .move = DECK_BITE,
+        .ability = DECK_ALPHA,
 
         .playerIdle = gPoochyenaPlayerIdleGfx,
         .opponentIdle = gPoochyenaOpponentIdleGfx,
@@ -621,8 +621,8 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .baseHP = 100, 
         .basePower = 100, 
         .baseDef = 100, 
-        .move = DECK_TACKLE, 
-        .ability = ABILITY_NONE, 
+        .move = DECK_CRUNCH,
+        .ability = DECK_ALPHA, 
     
         .playerIdle = gMightyenaPlayerIdleGfx, 
         .opponentIdle = gMightyenaOpponentIdleGfx, 
@@ -644,7 +644,7 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .basePower = 40,
         .baseDef = 70,
         .move = DECK_HELPING_HAND,
-        .ability = ABILITY_NONE,
+        .ability = DECK_ENDURING,
 
         .playerIdle = gSwabluPlayerIdleGfx,
         .opponentIdle = gSwabluOpponentIdleGfx,
@@ -662,11 +662,11 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
 
     [SPECIES_ALTARIA] = 
     { 
-        .baseHP = 100, 
-        .basePower = 100, 
-        .baseDef = 100, 
-        .move = DECK_TACKLE, 
-        .ability = ABILITY_NONE, 
+        .baseHP = 70, 
+        .basePower = 70, 
+        .baseDef = 120, 
+        .move = DECK_COTTON_GUARD, 
+        .ability = DECK_ENDURING, 
     
         .playerIdle = gAltariaPlayerIdleGfx, 
         .opponentIdle = gAltariaOpponentIdleGfx, 
@@ -731,8 +731,8 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .baseHP = 50,
         .basePower = 75,
         .baseDef = 35,
-        .move = DECK_HELPING_HAND,
-        .ability = ABILITY_NONE,
+        .move = DECK_HEAL_BELL,
+        .ability = DECK_HEAVY,
 
         .playerIdle = gChinglingPlayerIdleGfx,
         .opponentIdle = gChinglingOpponentIdleGfx,
@@ -750,11 +750,11 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
 
     [SPECIES_CHIMECHO] = 
     { 
-        .baseHP = 100, 
+        .baseHP = 90, 
         .basePower = 100, 
-        .baseDef = 100, 
-        .move = DECK_TACKLE, 
-        .ability = ABILITY_NONE, 
+        .baseDef = 70, 
+        .move = DECK_HEAL_BELL, 
+        .ability = DECK_HEAVY, 
     
         .playerIdle = gChimechoPlayerIdleGfx, 
         .opponentIdle = gChimechoOpponentIdleGfx, 
@@ -886,7 +886,7 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .basePower = 60, 
         .baseDef = 200, 
         .move = DECK_HARDEN, 
-        .ability = ABILITY_NONE, 
+        .ability = DECK_HEAVY, 
     
         .playerIdle = gShucklePlayerIdleGfx, 
         .opponentIdle = gShuckleOpponentIdleGfx, 

@@ -9,25 +9,25 @@ const struct DeckAbilityInfo gDeckAbilitiesInfo[DECK_ABILITIES_COUNT] =
     [DECK_AGGRESSIVE] =
     {
         .name = COMPOUND_STRING("AGGRESSIVE"),
-        .description = COMPOUND_STRING("Acting first increases PWR"),
+        .description = COMPOUND_STRING("Acting first increases PWR for turn"),
     },
 
     [DECK_PATIENT] =
     {
         .name = COMPOUND_STRING("PATIENT"),
-        .description = COMPOUND_STRING("Acting last increases PWR"),
+        .description = COMPOUND_STRING("Acting last increases PWR for turn"),
     },
 
-    [DECK_RESTLESS] =
+    [DECK_ENERGETIC] =
     {
-        .name = COMPOUND_STRING("RESTLESS"),
-        .description = COMPOUND_STRING("Swapping increases PWR"),
+        .name = COMPOUND_STRING("ENERGETIC"),
+        .description = COMPOUND_STRING("Swapping increases PWR for battle"),
     },
 
     [DECK_HEAVY] =
     {
         .name = COMPOUND_STRING("HEAVY"),
-        .description = COMPOUND_STRING("Swapping reduces PWR"),
+        .description = COMPOUND_STRING("Swapping reduces PWRfor battle"),
     },
 
     [DECK_SOCIAL] =
@@ -45,7 +45,7 @@ const struct DeckAbilityInfo gDeckAbilitiesInfo[DECK_ABILITIES_COUNT] =
     [DECK_INSPIRED] =
     {
         .name = COMPOUND_STRING("INSPIRED"),
-        .description = COMPOUND_STRING("Acting grants allies PWR"),
+        .description = COMPOUND_STRING("Acting grants allies PWR for turn"),
     },
 
     [DECK_ENDURING] =

@@ -39,12 +39,14 @@
 static void ExecuteHitEffect(void);
 static void ExecuteStatChangeEffect(void);
 static void ExecuteHealEffect(void);
+static void ExecuteSwapEffect(void);
 
 void (*const gMoveEffectFuncs[DECK_EFFECT_COUNT])(void) =
 {
     [DECK_EFFECT_HIT]       = ExecuteHitEffect,
     [DECK_EFFECT_POWER_UP]  = ExecuteStatChangeEffect,
     [DECK_EFFECT_HEAL]      = ExecuteHealEffect,
+    [DECK_EFFECT_SWAP]      = ExecuteSwapEffect,
 };
 
 #define tState  data[0]
@@ -97,9 +99,9 @@ static void ExecuteStatChangeEffect(void)
         {
             gBattlerTarget = targets[i];
             StartBattlerAnim(targets[i], ANIM_STAT_CHANGE);
-            if (gDeckMovesInfo[gCurrentMove].param == STAT_DEF)
+            if (gDeckMovesInfo[gCurrentMove].param == STAT_DEF || gDeckMovesInfo[gCurrentMove].param == 0xFF)
                 gDeckMons[targets[i]].defBoost += (gDeckMons[gBattlerAttacker].power * gDeckMovesInfo[gCurrentMove].power) / 100;
-            else
+            else if (gDeckMovesInfo[gCurrentMove].param != STAT_DEF)
                 gDeckMons[targets[i]].powerBoost += (gDeckMons[gBattlerAttacker].power * gDeckMovesInfo[gCurrentMove].power) / 100;
             aliveCount += 1;
         }
@@ -132,7 +134,7 @@ static void ExecuteHealEffect(void)
         {
             gBattlerTarget = targets[i];
             StartBattlerAnim(targets[i], ANIM_STAT_CHANGE);
-            gDeckStruct.lastHitDamage = damage = -(gDeckMons[targets[i]].maxHP * gDeckMovesInfo[gCurrentMove].power) / 100;
+            gDeckStruct.lastHitDamage = damage = -(gDeckMovesInfo[gCurrentMove].power * gDeckMons[gBattlerAttacker].power) / 100;
             UpdateBattlerHP(targets[i], damage);
             aliveCount += 1;
         }
@@ -147,6 +149,56 @@ static void ExecuteHealEffect(void)
     else
     {
         PrintStringToMessageBox(COMPOUND_STRING("But it failed…"));
+    }
+}
+
+static void ExecuteSwapEffect(void)
+{
+    u32 targetsCount = 0;
+    u32 aliveCount = 0;
+    enum BattleId targets[MAX_DECK_BATTLERS_COUNT] = {0};
+    PopulateTargetsList(targets, &targetsCount);
+
+    // Count living targets.
+    for (u32 i = 0; i < targetsCount; ++i)
+    {
+        if (IsDeckBattlerAlive(targets[i]))
+            aliveCount += 1;
+    }
+
+    // Execute effect.
+    if (aliveCount == 1 && targets[0] != gBattlerAttacker)
+    {
+        SwapBattlerPositions(gBattlerAttacker, targets[0]);
+        PlaySE(SE_M_DOUBLE_TEAM);
+        PrintMoveOutcomeString(aliveCount);
+        
+        if (gDeckMovesInfo[gCurrentMove].param == STAT_ATK || gDeckMovesInfo[gCurrentMove].param == 0xFF)
+            gDeckMons[targets[0]].powerBoost += (gDeckMons[gBattlerAttacker].power * gDeckMovesInfo[gCurrentMove].power) / 100;
+        if (gDeckMovesInfo[gCurrentMove].param == STAT_DEF || gDeckMovesInfo[gCurrentMove].param == 0xFF)
+            gDeckMons[targets[0]].defBoost += (gDeckMons[gBattlerAttacker].power * gDeckMovesInfo[gCurrentMove].power) / 100;
+    }
+    else if (aliveCount == 2)
+    {
+        SwapBattlerPositions(targets[0], targets[1]);
+        PlaySE(SE_M_DOUBLE_TEAM);
+        PrintMoveOutcomeString(aliveCount);
+        
+        if (gDeckMovesInfo[gCurrentMove].param == STAT_ATK || gDeckMovesInfo[gCurrentMove].param == 0xFF)
+        {
+            gDeckMons[targets[0]].powerBoost += (gDeckMons[gBattlerAttacker].power * gDeckMovesInfo[gCurrentMove].power) / 100;
+            gDeckMons[targets[1]].powerBoost += (gDeckMons[gBattlerAttacker].power * gDeckMovesInfo[gCurrentMove].power) / 100;
+        }
+        if (gDeckMovesInfo[gCurrentMove].param == STAT_DEF || gDeckMovesInfo[gCurrentMove].param == 0xFF)
+        {
+            gDeckMons[targets[0]].defBoost += (gDeckMons[gBattlerAttacker].power * gDeckMovesInfo[gCurrentMove].power) / 100;
+            gDeckMons[targets[1]].defBoost += (gDeckMons[gBattlerAttacker].power * gDeckMovesInfo[gCurrentMove].power) / 100;
+        }
+    }
+    else
+    {
+        PrintStringToMessageBox(COMPOUND_STRING("But it failed…"));
+        return;
     }
 }
 
@@ -172,7 +224,19 @@ void Task_ExecuteMove(u8 taskId)
         if (++gTasks[taskId].tTimer >= 60)
             ++gTasks[taskId].tState;
         break;
-    case 4: // Check for fainted battlers.
+    case 4: // Handle secondary effects.
+        switch (gDeckMovesInfo[gCurrentMove].secondary) // TODO: Move to separate func
+        {
+        case DECK_SECONDARY_RECHARGE:
+            if (gDeckMovesInfo[gCurrentMove].param != 0)
+                gDeckMons[gBattlerAttacker].rechargeTurns += 1 + gDeckMovesInfo[gCurrentMove].param;
+            else
+                gDeckMons[gBattlerAttacker].rechargeTurns += 2; // includes turn end
+            break;
+        }
+        ++gTasks[taskId].tState;
+        break;
+    case 5: // Check for fainted battlers.
         gTasks[taskId].tTimer = 0;
         gTasks[taskId].tState = 0;
         gTasks[taskId].func = Task_CheckFaintAndContinue;
