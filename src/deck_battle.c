@@ -909,7 +909,7 @@ static void Task_HandleTurnEndEffects(u8 taskId)
     switch (gTasks[taskId].tTurnEndState)
     {
     case TURN_END_CHECK_FATIGUE:
-        if (gDeckStruct.turns >= 10)
+        if (gDeckStruct.turns >= 10 && gDeckStruct.actingSide == B_SIDE_PLAYER)
         {
             PrintStringToMessageBox(COMPOUND_STRING("Battlers are weakened by\nfatigue…"));
             ++gTasks[taskId].tTurnEndState;

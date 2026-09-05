@@ -846,6 +846,8 @@ static void Task_TriggerOverworldEncounter(u8 taskId)
         {
             Free(sTrailMapTilemapPtr);
             sTrailMapTilemapPtr = NULL;
+            FreeAllWindowBuffers();
+            ResetSpriteData();
             SetMainCallback2(CB2_OpenDeckBattleCustom);
             DestroyTask(taskId);
         }
@@ -951,7 +953,7 @@ static void Task_TriggerDysentery(u8 taskId)
                 PlaySE(SE_FIELD_POISON);
                 break;
             case 2:
-                PlaySE(SE_WALL_HIT);
+                PlaySE(SE_NOT_EFFECTIVE);
                 break;
             }
         }
@@ -1132,7 +1134,6 @@ static const struct ListMenuItem sYesNoMenuItems[] =
 static u32 CreateYesNoBox(void)
 {
     struct ListMenuTemplate menuTemplate = {0};
-    LoadMessageBoxAndBorderGfx();
     DrawStdWindowFrame(WIN_YESNO, FALSE);
 
     menuTemplate.moveCursorFunc = ListMenuDefaultCursorMoveFunc;
