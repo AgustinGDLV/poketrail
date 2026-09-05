@@ -5,26 +5,50 @@
 #include "event_object_movement.h"
 #include "map_gen.h"
 #include "random.h"
+#include "trail_interface.h"
 #include "constants/songs.h"
 
 #include "data/encounters.h"
 
+static const u32 sCheckpointEncounterLevel[CHECKPOINT_COUNT] =
+{
+    5, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60
+};
+
+// Returns what level an encounter should be based on checkpoint status.
+u32 GetEncounterLevel(void)
+{
+    u32 checkpointsCount = 0;
+    for (u32 i = 0; i < 32; ++i)
+        if (gSaveBlock1Ptr->checkpoints & (1 << i))
+            ++checkpointsCount;
+
+    if (checkpointsCount >= CHECKPOINT_COUNT)
+        return 100;
+    else
+        return sCheckpointEncounterLevel[checkpointsCount];
+}
+
 // Returns the species of an overworld obj. event in a room using its local ID.
 u16 GetOverworldSpeciesInRoom(u32 index, u32 localId)
 {
-    u32 i;
     // Advance RNG to a repeatable state based on the local ID.
     // This is to allow for consistency between saves and seed.
     SeedFloorRng(GetRoomSeed(index));
-    for (i = 0; i < localId; ++i)
+    for (u32 i = 0; i < localId; ++i)
         RandomF();
 
-    return ChooseElementFromPool(GetCurrentTemplateRules()->encounterPool);
+    // Check for evolutions.
+    u32 species = ChooseElementFromPool(GetCurrentTemplateRules()->encounterPool);
+    while (gSpeciesInfo[species].evolutions[0].method == EVO_LEVEL && gSpeciesInfo[species].evolutions[0].param <= GetEncounterLevel())
+        species = gSpeciesInfo[species].evolutions[0].targetSpecies;
+
+    return species;    
 }
 
 void InitEnemyPartyFromEncounter(void) // used by callnative
 {
-    u32 level = 5; // TODO: Checkpoint-based levels
+    u32 level = GetEncounterLevel();
     for (u32 i = 0; i < PARTY_SIZE; ++i)
     {
         CreateMon(&gEnemyParty[i], gEncountersInfo[gSpecialVar_0x8000][i], level + (Random() % 2), USE_RANDOM_IVS, 0, 0, OT_ID_PLAYER_ID, 0);

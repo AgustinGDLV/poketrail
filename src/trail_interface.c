@@ -827,6 +827,11 @@ static void Task_TriggerOverworldEncounter(u8 taskId)
         PlaySE(SE_PIN);
         SeedFloorRng(Random());
         gSpecialVar_0x8000 = ChooseElementFromPool(GetCurrentTemplateRules()->encounterPool);
+
+        // Check for evolutions.
+        while (gSpeciesInfo[gSpecialVar_0x8000].evolutions[0].method == EVO_LEVEL && gSpeciesInfo[gSpecialVar_0x8000].evolutions[0].param <= GetEncounterLevel())
+            gSpecialVar_0x8000 = gSpeciesInfo[gSpecialVar_0x8000].evolutions[0].targetSpecies;
+
         InitEnemyPartyFromEncounter(); // uses gSpecialVar_0x8000
         StringCopy(gStringVar2, GetSpeciesName(gSpecialVar_0x8000));
         StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("A wild {STR_VAR_2} approaches…"));
