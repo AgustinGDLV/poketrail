@@ -88,6 +88,28 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .portraitPalette = gRattataPortraitPal,
     },
 
+    [SPECIES_RATICATE] = 
+    { 
+        .baseHP = 100, 
+        .basePower = 100, 
+        .baseDef = 100, 
+        .move = DECK_TACKLE, 
+        .ability = ABILITY_NONE, 
+    
+        .playerIdle = gRaticatePlayerIdleGfx, 
+        .opponentIdle = gRaticateOpponentIdleGfx, 
+        .playerAttack = gRaticatePlayerAttackGfx, 
+        .opponentAttack = gRaticateOpponentAttackGfx, 
+        .playerHurt = gRaticatePlayerHurtGfx, 
+        .opponentHurt = gRaticateOpponentHurtGfx, 
+        .objectPalette = gRaticateObjectPal, 
+        .playerYOffset = 0, 
+        .opponentYOffset = 0, 
+    
+        .portrait = gRaticatePortraitGfx, 
+        .portraitPalette = gRaticatePortraitPal, 
+    },
+
     [SPECIES_EKANS] = 
     { 
         .baseHP = 100, 
@@ -110,6 +132,28 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .portraitPalette = gEkansPortraitPal, 
     },
 
+    [SPECIES_ARBOK] = 
+    { 
+        .baseHP = 100, 
+        .basePower = 100, 
+        .baseDef = 100, 
+        .move = DECK_TACKLE, 
+        .ability = ABILITY_NONE, 
+    
+        .playerIdle = gArbokPlayerIdleGfx, 
+        .opponentIdle = gArbokOpponentIdleGfx, 
+        .playerAttack = gArbokPlayerAttackGfx, 
+        .opponentAttack = gArbokOpponentAttackGfx, 
+        .playerHurt = gArbokPlayerHurtGfx, 
+        .opponentHurt = gArbokOpponentHurtGfx, 
+        .objectPalette = gArbokObjectPal, 
+        .playerYOffset = -2, 
+        .opponentYOffset = -4, 
+    
+        .portrait = gArbokPortraitGfx, 
+        .portraitPalette = gArbokPortraitPal, 
+    },
+
     [SPECIES_SPEAROW] =
     {
         .baseHP = 50,
@@ -130,6 +174,28 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
 
         .portrait = gSpearowPortraitGfx,
         .portraitPalette = gSpearowPortraitPal,
+    },
+
+    [SPECIES_FEAROW] = 
+    { 
+        .baseHP = 100, 
+        .basePower = 100, 
+        .baseDef = 100, 
+        .move = DECK_TACKLE, 
+        .ability = ABILITY_NONE, 
+    
+        .playerIdle = gFearowPlayerIdleGfx, 
+        .opponentIdle = gFearowOpponentIdleGfx, 
+        .playerAttack = gFearowPlayerAttackGfx, 
+        .opponentAttack = gFearowOpponentAttackGfx, 
+        .playerHurt = gFearowPlayerHurtGfx, 
+        .opponentHurt = gFearowOpponentHurtGfx, 
+        .objectPalette = gFearowObjectPal, 
+        .playerYOffset = -6, 
+        .opponentYOffset = -6, 
+    
+        .portrait = gFearowPortraitGfx, 
+        .portraitPalette = gFearowPortraitPal, 
     },
 
     [SPECIES_VULPIX] =
@@ -174,6 +240,50 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
 
         .portrait = gBellsproutPortraitGfx,
         .portraitPalette = gBellsproutPortraitPal,
+    },
+
+    [SPECIES_WEEPINBELL] = // lol typo
+    { 
+        .baseHP = 100, 
+        .basePower = 100, 
+        .baseDef = 100, 
+        .move = DECK_TACKLE, 
+        .ability = ABILITY_NONE, 
+    
+        .playerIdle = gWeepingbellPlayerIdleGfx, 
+        .opponentIdle = gWeepingbellOpponentIdleGfx, 
+        .playerAttack = gWeepingbellPlayerAttackGfx, 
+        .opponentAttack = gWeepingbellOpponentAttackGfx, 
+        .playerHurt = gWeepingbellPlayerHurtGfx, 
+        .opponentHurt = gWeepingbellOpponentHurtGfx, 
+        .objectPalette = gWeepingbellObjectPal, 
+        .playerYOffset = -2, 
+        .opponentYOffset = -2, 
+    
+        .portrait = gWeepingbellPortraitGfx, 
+        .portraitPalette = gWeepingbellPortraitPal, 
+    },
+
+    [SPECIES_VICTREEBEL] = 
+    { 
+        .baseHP = 100, 
+        .basePower = 100, 
+        .baseDef = 100, 
+        .move = DECK_TACKLE, 
+        .ability = ABILITY_NONE, 
+    
+        .playerIdle = gVictreebelPlayerIdleGfx, 
+        .opponentIdle = gVictreebelOpponentIdleGfx, 
+        .playerAttack = gVictreebelPlayerAttackGfx, 
+        .opponentAttack = gVictreebelOpponentAttackGfx, 
+        .playerHurt = gVictreebelPlayerHurtGfx, 
+        .opponentHurt = gVictreebelOpponentHurtGfx, 
+        .objectPalette = gVictreebelObjectPal, 
+        .playerYOffset = -4, 
+        .opponentYOffset = -4, 
+    
+        .portrait = gVictreebelPortraitGfx, 
+        .portraitPalette = gVictreebelPortraitPal, 
     },
 
     [SPECIES_ZUBAT] =
@@ -286,6 +396,28 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .portraitPalette = gPonytaPortraitPal, 
     },
 
+    [SPECIES_RAPIDASH] = 
+    { 
+        .baseHP = 100, 
+        .basePower = 100, 
+        .baseDef = 100, 
+        .move = DECK_TACKLE, 
+        .ability = ABILITY_NONE, 
+    
+        .playerIdle = gRapidashPlayerIdleGfx, 
+        .opponentIdle = gRapidashOpponentIdleGfx, 
+        .playerAttack = gRapidashPlayerAttackGfx, 
+        .opponentAttack = gRapidashOpponentAttackGfx, 
+        .playerHurt = gRapidashPlayerHurtGfx, 
+        .opponentHurt = gRapidashOpponentHurtGfx, 
+        .objectPalette = gRapidashObjectPal, 
+        .playerYOffset = 0, 
+        .opponentYOffset = 0, 
+    
+        .portrait = gRapidashPortraitGfx, 
+        .portraitPalette = gRapidashPortraitPal, 
+    },
+
     [SPECIES_MAREEP] =
     {
         .baseHP = 55,
@@ -308,6 +440,50 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .portraitPalette = gMareepPortraitPal,
     },
 
+    [SPECIES_FLAAFFY] = 
+    { 
+        .baseHP = 100, 
+        .basePower = 100, 
+        .baseDef = 100, 
+        .move = DECK_TACKLE, 
+        .ability = ABILITY_NONE, 
+    
+        .playerIdle = gFlaaffyPlayerIdleGfx, 
+        .opponentIdle = gFlaaffyOpponentIdleGfx, 
+        .playerAttack = gFlaaffyPlayerAttackGfx, 
+        .opponentAttack = gFlaaffyOpponentAttackGfx, 
+        .playerHurt = gFlaaffyPlayerHurtGfx, 
+        .opponentHurt = gFlaaffyOpponentHurtGfx, 
+        .objectPalette = gFlaaffyObjectPal, 
+        .playerYOffset = 0, 
+        .opponentYOffset = 0, 
+    
+        .portrait = gFlaaffyPortraitGfx, 
+        .portraitPalette = gFlaaffyPortraitPal, 
+    },
+
+    [SPECIES_AMPHAROS] = 
+    { 
+        .baseHP = 100, 
+        .basePower = 100, 
+        .baseDef = 100, 
+        .move = DECK_TACKLE, 
+        .ability = ABILITY_NONE, 
+    
+        .playerIdle = gAmpharosPlayerIdleGfx, 
+        .opponentIdle = gAmpharosOpponentIdleGfx, 
+        .playerAttack = gAmpharosPlayerAttackGfx, 
+        .opponentAttack = gAmpharosOpponentAttackGfx, 
+        .playerHurt = gAmpharosPlayerHurtGfx, 
+        .opponentHurt = gAmpharosOpponentHurtGfx, 
+        .objectPalette = gAmpharosObjectPal, 
+        .playerYOffset = 0, 
+        .opponentYOffset = 0, 
+    
+        .portrait = gAmpharosPortraitGfx, 
+        .portraitPalette = gAmpharosPortraitPal, 
+    },
+
     [SPECIES_HOPPIP] = 
     { 
         .baseHP = 100, 
@@ -328,6 +504,50 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
     
         .portrait = gHoppipPortraitGfx, 
         .portraitPalette = gHoppipPortraitPal, 
+    },
+
+    [SPECIES_SKIPLOOM] = 
+    { 
+        .baseHP = 100, 
+        .basePower = 100, 
+        .baseDef = 100, 
+        .move = DECK_TACKLE, 
+        .ability = ABILITY_NONE, 
+    
+        .playerIdle = gSkiploomPlayerIdleGfx, 
+        .opponentIdle = gSkiploomOpponentIdleGfx, 
+        .playerAttack = gSkiploomPlayerAttackGfx, 
+        .opponentAttack = gSkiploomOpponentAttackGfx, 
+        .playerHurt = gSkiploomPlayerHurtGfx, 
+        .opponentHurt = gSkiploomOpponentHurtGfx, 
+        .objectPalette = gSkiploomObjectPal, 
+        .playerYOffset = 0, 
+        .opponentYOffset = 0, 
+    
+        .portrait = gSkiploomPortraitGfx, 
+        .portraitPalette = gSkiploomPortraitPal, 
+    },
+
+    [SPECIES_JUMPLUFF] = 
+    { 
+        .baseHP = 100, 
+        .basePower = 100, 
+        .baseDef = 100, 
+        .move = DECK_TACKLE, 
+        .ability = ABILITY_NONE, 
+    
+        .playerIdle = gJumpluffPlayerIdleGfx, 
+        .opponentIdle = gJumpluffOpponentIdleGfx, 
+        .playerAttack = gJumpluffPlayerAttackGfx, 
+        .opponentAttack = gJumpluffOpponentAttackGfx, 
+        .playerHurt = gJumpluffPlayerHurtGfx, 
+        .opponentHurt = gJumpluffOpponentHurtGfx, 
+        .objectPalette = gJumpluffObjectPal, 
+        .playerYOffset = 0, 
+        .opponentYOffset = 0, 
+    
+        .portrait = gJumpluffPortraitGfx, 
+        .portraitPalette = gJumpluffPortraitPal, 
     },
 
     [SPECIES_CLEFFA] =
@@ -396,6 +616,28 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .portraitPalette = gPoochyenaPortraitPal,
     },
 
+    [SPECIES_MIGHTYENA] = 
+    { 
+        .baseHP = 100, 
+        .basePower = 100, 
+        .baseDef = 100, 
+        .move = DECK_TACKLE, 
+        .ability = ABILITY_NONE, 
+    
+        .playerIdle = gMightyenaPlayerIdleGfx, 
+        .opponentIdle = gMightyenaOpponentIdleGfx, 
+        .playerAttack = gMightyenaPlayerAttackGfx, 
+        .opponentAttack = gMightyenaOpponentAttackGfx, 
+        .playerHurt = gMightyenaPlayerHurtGfx, 
+        .opponentHurt = gMightyenaOpponentHurtGfx, 
+        .objectPalette = gMightyenaObjectPal, 
+        .playerYOffset = -3, 
+        .opponentYOffset = -3, 
+    
+        .portrait = gMightyenaPortraitGfx, 
+        .portraitPalette = gMightyenaPortraitPal, 
+    },
+
     [SPECIES_SWABLU] =
     {
         .baseHP = 45,
@@ -416,6 +658,28 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
 
         .portrait = gSwabluPortraitGfx,
         .portraitPalette = gSwabluPortraitPal,
+    },
+
+    [SPECIES_ALTARIA] = 
+    { 
+        .baseHP = 100, 
+        .basePower = 100, 
+        .baseDef = 100, 
+        .move = DECK_TACKLE, 
+        .ability = ABILITY_NONE, 
+    
+        .playerIdle = gAltariaPlayerIdleGfx, 
+        .opponentIdle = gAltariaOpponentIdleGfx, 
+        .playerAttack = gAltariaPlayerAttackGfx, 
+        .opponentAttack = gAltariaOpponentAttackGfx, 
+        .playerHurt = gAltariaPlayerHurtGfx, 
+        .opponentHurt = gAltariaOpponentHurtGfx, 
+        .objectPalette = gAltariaObjectPal, 
+        .playerYOffset = -3, 
+        .opponentYOffset = -3, 
+    
+        .portrait = gAltariaPortraitGfx, 
+        .portraitPalette = gAltariaPortraitPal, 
     },
 
     [SPECIES_BALTOY] =
@@ -482,6 +746,28 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
 
         .portrait = gChinglingPortraitGfx,
         .portraitPalette = gChinglingPortraitPal,
+    },
+
+    [SPECIES_CHIMECHO] = 
+    { 
+        .baseHP = 100, 
+        .basePower = 100, 
+        .baseDef = 100, 
+        .move = DECK_TACKLE, 
+        .ability = ABILITY_NONE, 
+    
+        .playerIdle = gChimechoPlayerIdleGfx, 
+        .opponentIdle = gChimechoOpponentIdleGfx, 
+        .playerAttack = gChimechoPlayerAttackGfx, 
+        .opponentAttack = gChimechoOpponentAttackGfx, 
+        .playerHurt = gChimechoPlayerHurtGfx, 
+        .opponentHurt = gChimechoOpponentHurtGfx, 
+        .objectPalette = gChimechoObjectPal, 
+        .playerYOffset = -4, 
+        .opponentYOffset = -4, 
+    
+        .portrait = gChimechoPortraitGfx, 
+        .portraitPalette = gChimechoPortraitPal, 
     },
 
     [SPECIES_DEINO] =
