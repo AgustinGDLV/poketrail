@@ -428,7 +428,8 @@ static void Task_HandleBattleVictory(u8 taskId)
             CalculateMonStats(&gPlayerParty[gDeckMons[gDeckStruct.battlerExp].partyIndex]);
             if (expAfterGain >= nextLevelExp)
             {
-                gDeckMons[gDeckStruct.battlerExp].hp += GetMonData(&gPlayerParty[gDeckMons[gDeckStruct.battlerExp].partyIndex], MON_DATA_MAX_HP) - gDeckMons[gDeckStruct.battlerExp].maxHP;
+                if (gDeckMons[gDeckStruct.battlerExp].hp != 0)
+                    gDeckMons[gDeckStruct.battlerExp].hp += GetMonData(&gPlayerParty[gDeckMons[gDeckStruct.battlerExp].partyIndex], MON_DATA_MAX_HP) - gDeckMons[gDeckStruct.battlerExp].maxHP;
                 gTasks[taskId].tState = 3;
             }
             else
@@ -579,7 +580,7 @@ void Task_CloseDeckBattle(u8 taskId)
     // Update battler health.
     for (u32 battler = B_PLAYER_0; battler < B_PLAYER_5; ++battler)
     {
-        if (IsDeckBattlerAlive(battler))
+        if (gDeckMons[battler].species != SPECIES_NONE)
             SetMonData(&gPlayerParty[gDeckMons[battler].partyIndex], MON_DATA_HP, &gDeckMons[battler].hp);
     }
 
@@ -789,7 +790,7 @@ static void Task_SelectPartyMemberToReplace(u8 taskId)
         }
         if (JOY_NEW(A_BUTTON))
         {
-            StringCopy(gStringVar2, GetSpeciesName(gDeckMons[GetDeckBattlerAtPos(B_SIDE_PLAYER, gDeckStruct.selectedPos)].species));
+            StringCopy(gStringVar2, GetSpeciesName(gDeckMons[GetDeckBattlerAtPosUnsafe(B_SIDE_PLAYER, gDeckStruct.selectedPos)].species));
             StringCopy(gStringVar3, GetSpeciesName(gDeckMons[gDeckStruct.battlerCaught].species));
             StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Swap {STR_VAR_2} with {STR_VAR_3}?"));
             PrintStringToMessageBox(gStringVar1);
@@ -868,7 +869,7 @@ static void Task_SelectPartyMemberToReplace(u8 taskId)
     }
     case 5: // Update party data.
     {
-        u32 battler = GetDeckBattlerAtPos(B_SIDE_PLAYER, gDeckStruct.selectedPos);
+        u32 battler = GetDeckBattlerAtPosUnsafe(B_SIDE_PLAYER, gDeckStruct.selectedPos);
         StringCopy(gStringVar2, GetSpeciesName(gDeckMons[battler].species));
         StringCopy(gStringVar3, GetSpeciesName(gDeckMons[gDeckStruct.battlerCaught].species));
         StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("You recruited {STR_VAR_2} and sent {STR_VAR_3} home."));
@@ -876,6 +877,7 @@ static void Task_SelectPartyMemberToReplace(u8 taskId)
 
         CpuCopy32(&gEnemyParty[gDeckMons[gDeckStruct.battlerCaught].partyIndex], &gPlayerParty[gDeckMons[battler].partyIndex], sizeof(struct Pokemon));
         gDeckMons[battler].species = gDeckMons[gDeckStruct.battlerCaught].species;
+        gDeckMons[battler].hp = gDeckMons[gDeckStruct.battlerCaught].maxHP;
         SetMonData(&gPlayerParty[gDeckMons[battler].partyIndex], MON_DATA_POSITION, &gDeckStruct.selectedPos);
         UpdateBattlerSelection(battler, FALSE);
         LoadBattlerObjectSprite(battler);

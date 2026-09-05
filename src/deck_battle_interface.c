@@ -499,6 +499,7 @@ void LoadBattlerObjectSprite(enum BattleId battler)
         gSprites[gDeckGraphics.battlerSpriteIds[battler]].oam.paletteNum = index;
         gSprites[gDeckGraphics.battlerSpriteIds[battler]].x = GetBattlerXCoord(battler);
         gSprites[gDeckGraphics.battlerSpriteIds[battler]].y = GetBattlerYCoord(battler);
+        gSprites[gDeckGraphics.battlerSpriteIds[battler]].invisible = FALSE;
     }
     else
     {

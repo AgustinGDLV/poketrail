@@ -43,6 +43,25 @@ u32 GetDeckBattlerAtPos(u32 side, enum BattlePosition position)
     return MAX_DECK_BATTLERS_COUNT; // no luck
 }
 
+u32 GetDeckBattlerAtPosUnsafe(u32 side, enum BattlePosition position) // no alive check
+{
+    if (side == B_SIDE_PLAYER)
+    {
+        for (enum BattleId battler = B_PLAYER_0; battler < B_OPPONENT_0; ++battler)
+        {
+            if (gDeckMons[battler].pos == position)
+                return battler;
+        }
+    }
+    else
+    {
+        for (enum BattleId battler = B_OPPONENT_0; battler < MAX_DECK_BATTLERS_COUNT; ++battler)
+            if (gDeckMons[battler].pos == position)
+                return battler;
+    }
+    return MAX_DECK_BATTLERS_COUNT; // no luck
+}
+
 enum BattlePosition GetLeftmostOccupiedPosition(u32 side)
 {
     enum BattleId battler;

@@ -3,6 +3,7 @@
 
 u32 GetDeckBattlerSide(enum BattleId battler);
 u32 GetDeckBattlerAtPos(u32 side, enum BattlePosition position);
+u32 GetDeckBattlerAtPosUnsafe(u32 side, enum BattlePosition position);
 
 enum BattlePosition GetLeftmostOccupiedPosition(u32 side);
 enum BattlePosition GetLeftmostPositionToMove(u32 side);
