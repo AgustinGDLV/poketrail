@@ -370,7 +370,11 @@ static void Task_TrailMapWaitForKeypress(u8 taskId);
 static void Task_SaveAndExit(u8 taskId);
 static void Task_GoToOverworldCamp(u8 taskId);
 static void Task_GoToCheckpoint(u8 taskId);
+static void TryTriggerEvent(u8 taskId);
 static void Task_TriggerOverworldEncounter(u8 taskId);
+static void Task_TriggerHealEvent(u8 taskId);
+static void Task_TriggerDysentery(u8 taskId);
+
 static void LoadMapGraphics(u32 characterId);
 static void IncrementTime(u32 minutes);
 static void PrintTime(void);
@@ -523,9 +527,9 @@ static void Task_TrailMapWaitForKeypress(u8 taskId)
         gTasks[taskId].func = Task_GoToCheckpoint;
     }
     // Check for encounter.
-    else if ((JOY_NEW(DPAD_ANY) || (JOY_HELD(DPAD_ANY) && gTrailInterface.keyHeldTimer % 12 == 0)) && (Random() % 10) == 0)
+    else if ((JOY_NEW(DPAD_ANY) || (JOY_HELD(DPAD_ANY) && gTrailInterface.keyHeldTimer % 12 == 0)))
     {
-        gTasks[taskId].func = Task_TriggerOverworldEncounter;
+        TryTriggerEvent(taskId);
     }
 
     // Save and exit.
@@ -791,6 +795,23 @@ static void Task_GoToCheckpoint(u8 taskId)
     }
 }
 
+static void TryTriggerEvent(u8 taskId)
+{
+    u32 rand = Random() % 100;
+    if (rand < 3)
+    {
+        gTasks[taskId].func = Task_TriggerHealEvent;
+    }
+    else if (rand < 6)
+    {
+        gTasks[taskId].func = Task_TriggerDysentery;
+    }
+    else if (rand < 15)
+    {
+        gTasks[taskId].func = Task_TriggerOverworldEncounter;
+    }
+}
+
 static void Task_TriggerOverworldEncounter(u8 taskId)
 {
     switch (gTasks[taskId].data[0])
@@ -827,6 +848,123 @@ static void Task_TriggerOverworldEncounter(u8 taskId)
             sTrailMapTilemapPtr = NULL;
             SetMainCallback2(CB2_OpenDeckBattleCustom);
             DestroyTask(taskId);
+        }
+        break;
+    }
+}
+
+static void Task_TriggerHealEvent(u8 taskId)
+{
+    switch (gTasks[taskId].data[0])
+    {
+    case 0: // Heal party by 50%.
+        CalculatePlayerPartyCount();
+        for (u32 i = 0; i < gPlayerPartyCount; ++i)
+        {
+            u32 maxHP = GetMonData(&gPlayerParty[i], MON_DATA_MAX_HP);
+            u32 hp = GetMonData(&gPlayerParty[i], MON_DATA_HP) + ((maxHP * 50) / 100);
+            if (hp > maxHP)
+                hp = maxHP;
+            SetMonData(&gPlayerParty[i], MON_DATA_HP, &hp);
+        }
+        ++gTasks[taskId].data[0];
+        break;
+    case 1: // Print message.
+        PlaySE(SE_PIN);
+        PrintTextToMessageBox(COMPOUND_STRING("You encountered a nurse!"));
+        ++gTasks[taskId].data[0];
+        break;
+    case 2: // Wait for input and update HP.
+        if (JOY_NEW(A_BUTTON))
+        {
+            PrintTextToMessageBox(COMPOUND_STRING("The nurse heals your party a bit!"));
+            PlayFanfare(MUS_HEAL);
+            ++gTasks[taskId].data[0];
+        }
+        break;
+    case 3: // Return to trail interface.
+        if (JOY_NEW(A_BUTTON))
+        {
+            ClearWindow(WIN_MESSAGE);
+            ClearWindow(WIN_YESNO);
+            gTasks[taskId].func = Task_TrailMapWaitForKeypress;
+            gTasks[taskId].data[0] = 0;
+            gTasks[taskId].data[2] = 0;
+            gTasks[taskId].data[3] = 0;
+        }
+        break;
+    }
+}
+
+static void Task_TriggerDysentery(u8 taskId)
+{
+    switch (gTasks[taskId].data[0])
+    {
+    case 0: // Choose party member.
+        CalculatePlayerPartyCount();
+        gTasks[taskId].data[2] = Random() % gPlayerPartyCount;
+        while (GetMonData(&gPlayerParty[gTasks[taskId].data[2]], MON_DATA_HP) == 0)
+            gTasks[taskId].data[2] = Random() % gPlayerPartyCount;
+        ++gTasks[taskId].data[0];
+        break;
+    case 1: // Print message.
+        PlaySE(SE_PIN);
+        StringCopy(gStringVar2, GetSpeciesName(GetMonData(&gPlayerParty[gTasks[taskId].data[2]], MON_DATA_SPECIES)));
+        switch (gTasks[taskId].data[3] = Random() % 3)
+        {
+        case 0:
+            StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Your {STR_VAR_2} tripped on a rock…"));
+            break;
+        case 1:
+            StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Your {STR_VAR_2} got dysentery…"));
+            break;
+        case 2:
+            if (gSaveBlock1Ptr->currentTemplateType == TEMPLATES_DEEP_DESERT)
+                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Your {STR_VAR_2} ran into a cactus…"));
+            else if (gSaveBlock1Ptr->currentTemplateType == TEMPLATES_SWEATY_SUMMIT || gSaveBlock1Ptr->currentTemplateType == TEMPLATES_TERRIBLE_TUNNEL)
+                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Your {STR_VAR_2} ran into a wall…"));
+            else
+                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Your {STR_VAR_2} ran into a tree…"));
+            break;
+        }
+        PrintTextToMessageBox(gStringVar1);
+        ++gTasks[taskId].data[0];
+        break;
+    case 2: // Wait for input and update HP.
+        if (JOY_NEW(A_BUTTON))
+        {
+            u32 hp = (GetMonData(&gPlayerParty[gTasks[taskId].data[2]], MON_DATA_HP) * 50) / 100;
+            SetMonData(&gPlayerParty[gTasks[taskId].data[2]], MON_DATA_HP, &hp);
+
+            StringCopy(gStringVar2, GetSpeciesName(GetMonData(&gPlayerParty[gTasks[taskId].data[2]], MON_DATA_SPECIES)));
+            ConvertIntToDecimalStringN(gStringVar3, hp, STR_CONV_MODE_LEFT_ALIGN, 3);
+            StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Your {STR_VAR_2} lost {STR_VAR_3} HP!"));
+            PrintTextToMessageBox(gStringVar1);
+            ++gTasks[taskId].data[0];
+
+            switch (gTasks[taskId].data[3])
+            {
+            case 0:
+                PlaySE(SE_BALL_THROW);
+                break;
+            case 1:
+                PlaySE(SE_FIELD_POISON);
+                break;
+            case 2:
+                PlaySE(SE_WALL_HIT);
+                break;
+            }
+        }
+        break;
+    case 3: // Return to trail interface.
+        if (JOY_NEW(A_BUTTON))
+        {
+            ClearWindow(WIN_MESSAGE);
+            ClearWindow(WIN_YESNO);
+            gTasks[taskId].func = Task_TrailMapWaitForKeypress;
+            gTasks[taskId].data[0] = 0;
+            gTasks[taskId].data[2] = 0;
+            gTasks[taskId].data[3] = 0;
         }
         break;
     }
