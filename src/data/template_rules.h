@@ -431,6 +431,13 @@ const struct TemplateRules gTemplateRules[TEMPLATE_TYPES_COUNT] =
         .itemPools = gDefaultItemPools,
         .encounterPool = {
             {SPECIES_CATERPIE, 100},
+            {SPECIES_SLAKOTH, 100},
+            {SPECIES_TANGELA, 100},
+            {SPECIES_SHROOMISH, 100},
+            {SPECIES_PARAS, 100},
+            {SPECIES_BUDEW, 50},
+            {SPECIES_GASTLY, 50},
+            {SPECIES_RATTATA, 50},
         }
     },
 

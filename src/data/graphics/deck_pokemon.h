@@ -490,3 +490,147 @@ const u16 gShuckleObjectPal[] = INCBIN_U16("graphics/deck_pokemon/shuckle/player
  
 const u8 gShucklePortraitGfx[] = INCBIN_U8("graphics/deck_pokemon/shuckle/portrait_normal.4bpp"); 
 const u16 gShucklePortraitPal[] = INCBIN_U16("graphics/deck_pokemon/shuckle/portrait_normal.gbapal");
+
+// Gastly
+const u8 gGastlyPlayerIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/gastly/player_idle.4bpp"); 
+const u8 gGastlyOpponentIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/gastly/opponent_idle.4bpp"); 
+const u8 gGastlyPlayerAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/gastly/player_attack.4bpp"); 
+const u8 gGastlyOpponentAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/gastly/opponent_attack.4bpp"); 
+const u8 gGastlyPlayerHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/gastly/player_hurt.4bpp"); 
+const u8 gGastlyOpponentHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/gastly/opponent_hurt.4bpp"); 
+const u16 gGastlyObjectPal[] = INCBIN_U16("graphics/deck_pokemon/gastly/player_idle.gbapal"); 
+ 
+const u8 gGastlyPortraitGfx[] = INCBIN_U8("graphics/deck_pokemon/gastly/portrait_normal.4bpp"); 
+const u16 gGastlyPortraitPal[] = INCBIN_U16("graphics/deck_pokemon/gastly/portrait_normal.gbapal");
+
+// Haunter
+const u8 gHaunterPlayerIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/haunter/player_idle.4bpp"); 
+const u8 gHaunterOpponentIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/haunter/opponent_idle.4bpp"); 
+const u8 gHaunterPlayerAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/haunter/player_attack.4bpp"); 
+const u8 gHaunterOpponentAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/haunter/opponent_attack.4bpp"); 
+const u8 gHaunterPlayerHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/haunter/player_hurt.4bpp"); 
+const u8 gHaunterOpponentHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/haunter/opponent_hurt.4bpp"); 
+const u16 gHaunterObjectPal[] = INCBIN_U16("graphics/deck_pokemon/haunter/player_idle.gbapal"); 
+ 
+const u8 gHaunterPortraitGfx[] = INCBIN_U8("graphics/deck_pokemon/haunter/portrait_normal.4bpp"); 
+const u16 gHaunterPortraitPal[] = INCBIN_U16("graphics/deck_pokemon/haunter/portrait_normal.gbapal");
+
+// Gengar
+const u8 gGengarPlayerIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/gengar/player_idle.4bpp"); 
+const u8 gGengarOpponentIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/gengar/opponent_idle.4bpp"); 
+const u8 gGengarPlayerAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/gengar/player_attack.4bpp"); 
+const u8 gGengarOpponentAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/gengar/opponent_attack.4bpp"); 
+const u8 gGengarPlayerHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/gengar/player_hurt.4bpp"); 
+const u8 gGengarOpponentHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/gengar/opponent_hurt.4bpp"); 
+const u16 gGengarObjectPal[] = INCBIN_U16("graphics/deck_pokemon/gengar/player_idle.gbapal"); 
+ 
+const u8 gGengarPortraitGfx[] = INCBIN_U8("graphics/deck_pokemon/gengar/portrait_normal.4bpp"); 
+const u16 gGengarPortraitPal[] = INCBIN_U16("graphics/deck_pokemon/gengar/portrait_normal.gbapal");
+
+// Paras
+const u8 gParasPlayerIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/paras/player_idle.4bpp"); 
+const u8 gParasOpponentIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/paras/opponent_idle.4bpp"); 
+const u8 gParasPlayerAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/paras/player_attack.4bpp"); 
+const u8 gParasOpponentAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/paras/opponent_attack.4bpp"); 
+const u8 gParasPlayerHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/paras/player_hurt.4bpp"); 
+const u8 gParasOpponentHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/paras/opponent_hurt.4bpp"); 
+const u16 gParasObjectPal[] = INCBIN_U16("graphics/deck_pokemon/paras/player_idle.gbapal"); 
+ 
+const u8 gParasPortraitGfx[] = INCBIN_U8("graphics/deck_pokemon/paras/portrait_normal.4bpp"); 
+const u16 gParasPortraitPal[] = INCBIN_U16("graphics/deck_pokemon/paras/portrait_normal.gbapal");
+
+// Parasect
+const u8 gParasectPlayerIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/parasect/player_idle.4bpp"); 
+const u8 gParasectOpponentIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/parasect/opponent_idle.4bpp"); 
+const u8 gParasectPlayerAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/parasect/player_attack.4bpp"); 
+const u8 gParasectOpponentAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/parasect/opponent_attack.4bpp"); 
+const u8 gParasectPlayerHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/parasect/player_hurt.4bpp"); 
+const u8 gParasectOpponentHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/parasect/opponent_hurt.4bpp"); 
+const u16 gParasectObjectPal[] = INCBIN_U16("graphics/deck_pokemon/parasect/player_idle.gbapal"); 
+ 
+const u8 gParasectPortraitGfx[] = INCBIN_U8("graphics/deck_pokemon/parasect/portrait_normal.4bpp"); 
+const u16 gParasectPortraitPal[] = INCBIN_U16("graphics/deck_pokemon/parasect/portrait_normal.gbapal");
+
+// Shroomish
+const u8 gShroomishPlayerIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/shroomish/player_idle.4bpp"); 
+const u8 gShroomishOpponentIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/shroomish/opponent_idle.4bpp"); 
+const u8 gShroomishPlayerAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/shroomish/player_attack.4bpp"); 
+const u8 gShroomishOpponentAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/shroomish/opponent_attack.4bpp"); 
+const u8 gShroomishPlayerHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/shroomish/player_hurt.4bpp"); 
+const u8 gShroomishOpponentHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/shroomish/opponent_hurt.4bpp"); 
+const u16 gShroomishObjectPal[] = INCBIN_U16("graphics/deck_pokemon/shroomish/player_idle.gbapal"); 
+ 
+const u8 gShroomishPortraitGfx[] = INCBIN_U8("graphics/deck_pokemon/shroomish/portrait_normal.4bpp"); 
+const u16 gShroomishPortraitPal[] = INCBIN_U16("graphics/deck_pokemon/shroomish/portrait_normal.gbapal");
+
+// Breloom
+const u8 gBreloomPlayerIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/breloom/player_idle.4bpp"); 
+const u8 gBreloomOpponentIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/breloom/opponent_idle.4bpp"); 
+const u8 gBreloomPlayerAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/breloom/player_attack.4bpp"); 
+const u8 gBreloomOpponentAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/breloom/opponent_attack.4bpp"); 
+const u8 gBreloomPlayerHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/breloom/player_hurt.4bpp"); 
+const u8 gBreloomOpponentHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/breloom/opponent_hurt.4bpp"); 
+const u16 gBreloomObjectPal[] = INCBIN_U16("graphics/deck_pokemon/breloom/player_idle.gbapal"); 
+ 
+const u8 gBreloomPortraitGfx[] = INCBIN_U8("graphics/deck_pokemon/breloom/portrait_normal.4bpp"); 
+const u16 gBreloomPortraitPal[] = INCBIN_U16("graphics/deck_pokemon/breloom/portrait_normal.gbapal");
+
+// Tangela
+const u8 gTangelaPlayerIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/tangela/player_idle.4bpp"); 
+const u8 gTangelaOpponentIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/tangela/opponent_idle.4bpp"); 
+const u8 gTangelaPlayerAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/tangela/player_attack.4bpp"); 
+const u8 gTangelaOpponentAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/tangela/opponent_attack.4bpp"); 
+const u8 gTangelaPlayerHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/tangela/player_hurt.4bpp"); 
+const u8 gTangelaOpponentHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/tangela/opponent_hurt.4bpp"); 
+const u16 gTangelaObjectPal[] = INCBIN_U16("graphics/deck_pokemon/tangela/player_idle.gbapal"); 
+ 
+const u8 gTangelaPortraitGfx[] = INCBIN_U8("graphics/deck_pokemon/tangela/portrait_normal.4bpp"); 
+const u16 gTangelaPortraitPal[] = INCBIN_U16("graphics/deck_pokemon/tangela/portrait_normal.gbapal");
+
+// Tangrowth
+const u8 gTangrowthPlayerIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/tangrowth/player_idle.4bpp"); 
+const u8 gTangrowthOpponentIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/tangrowth/opponent_idle.4bpp"); 
+const u8 gTangrowthPlayerAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/tangrowth/player_attack.4bpp"); 
+const u8 gTangrowthOpponentAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/tangrowth/opponent_attack.4bpp"); 
+const u8 gTangrowthPlayerHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/tangrowth/player_hurt.4bpp"); 
+const u8 gTangrowthOpponentHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/tangrowth/opponent_hurt.4bpp"); 
+const u16 gTangrowthObjectPal[] = INCBIN_U16("graphics/deck_pokemon/tangrowth/player_idle.gbapal"); 
+ 
+const u8 gTangrowthPortraitGfx[] = INCBIN_U8("graphics/deck_pokemon/tangrowth/portrait_normal.4bpp"); 
+const u16 gTangrowthPortraitPal[] = INCBIN_U16("graphics/deck_pokemon/tangrowth/portrait_normal.gbapal");
+
+// Slakoth
+const u8 gSlakothPlayerIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/slakoth/player_idle.4bpp"); 
+const u8 gSlakothOpponentIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/slakoth/opponent_idle.4bpp"); 
+const u8 gSlakothPlayerAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/slakoth/player_attack.4bpp"); 
+const u8 gSlakothOpponentAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/slakoth/opponent_attack.4bpp"); 
+const u8 gSlakothPlayerHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/slakoth/player_hurt.4bpp"); 
+const u8 gSlakothOpponentHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/slakoth/opponent_hurt.4bpp"); 
+const u16 gSlakothObjectPal[] = INCBIN_U16("graphics/deck_pokemon/slakoth/player_idle.gbapal"); 
+ 
+const u8 gSlakothPortraitGfx[] = INCBIN_U8("graphics/deck_pokemon/slakoth/portrait_normal.4bpp"); 
+const u16 gSlakothPortraitPal[] = INCBIN_U16("graphics/deck_pokemon/slakoth/portrait_normal.gbapal");
+
+// Vigoroth
+const u8 gVigorothPlayerIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/vigoroth/player_idle.4bpp"); 
+const u8 gVigorothOpponentIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/vigoroth/opponent_idle.4bpp"); 
+const u8 gVigorothPlayerAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/vigoroth/player_attack.4bpp"); 
+const u8 gVigorothOpponentAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/vigoroth/opponent_attack.4bpp"); 
+const u8 gVigorothPlayerHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/vigoroth/player_hurt.4bpp"); 
+const u8 gVigorothOpponentHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/vigoroth/opponent_hurt.4bpp"); 
+const u16 gVigorothObjectPal[] = INCBIN_U16("graphics/deck_pokemon/vigoroth/player_idle.gbapal"); 
+ 
+const u8 gVigorothPortraitGfx[] = INCBIN_U8("graphics/deck_pokemon/vigoroth/portrait_normal.4bpp"); 
+const u16 gVigorothPortraitPal[] = INCBIN_U16("graphics/deck_pokemon/vigoroth/portrait_normal.gbapal");
+
+// Slaking
+const u8 gSlakingPlayerIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/slaking/player_idle.4bpp"); 
+const u8 gSlakingOpponentIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/slaking/opponent_idle.4bpp"); 
+const u8 gSlakingPlayerAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/slaking/player_attack.4bpp"); 
+const u8 gSlakingOpponentAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/slaking/opponent_attack.4bpp"); 
+const u8 gSlakingPlayerHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/slaking/player_hurt.4bpp"); 
+const u8 gSlakingOpponentHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/slaking/opponent_hurt.4bpp"); 
+const u16 gSlakingObjectPal[] = INCBIN_U16("graphics/deck_pokemon/slaking/player_idle.gbapal"); 
+ 
+const u8 gSlakingPortraitGfx[] = INCBIN_U8("graphics/deck_pokemon/slaking/portrait_normal.4bpp"); 
+const u16 gSlakingPortraitPal[] = INCBIN_U16("graphics/deck_pokemon/slaking/portrait_normal.gbapal");

@@ -53,4 +53,10 @@ const struct DeckAbilityInfo gDeckAbilitiesInfo[DECK_ABILITIES_COUNT] =
         .name = COMPOUND_STRING("ENDURING"),
         .description = COMPOUND_STRING("Takes reduced fatigue"),
     },
+
+    [DECK_TRICKY] =
+    {
+        .name = COMPOUND_STRING("TRICKY"),
+        .description = COMPOUND_STRING("Gains random PWR each turn"),
+    },
 };

@@ -1181,7 +1181,7 @@ s32 GetAbilityPowerBoost(u32 battlerAtk)
         boost = (power * (20 * gDeckMons[battlerAtk].swapCount)) / 100; // 1.2x per
         break;
     case DECK_HEAVY:
-        boost = -(power * (20 * gDeckMons[battlerAtk].swapCount)) / 100; // 1.2x
+        boost = -1 * (s32) ((power * (10 * gDeckMons[battlerAtk].swapCount)) / 100); // 1.1x per
         break;
     case DECK_SOCIAL:
         if (side == B_SIDE_PLAYER)
@@ -1207,7 +1207,7 @@ s32 GetAbilityPowerBoost(u32 battlerAtk)
             for (u32 battler = B_PLAYER_0; battler <= B_PLAYER_5; ++battler)
             {
                 if (battler != battlerAtk && GetDeckBattlerAbility(battler) == DECK_ALPHA && IsDeckBattlerAlive(battler))
-                    boost = -(power * 50) / 100; // 0.5x
+                    boost = -1 * (s32) ((power * 50) / 100); // 0.5x
             }
         }
         else
@@ -1218,6 +1218,9 @@ s32 GetAbilityPowerBoost(u32 battlerAtk)
                     boost += (power * 10) / 100; // 0.5x
             }
         }
+        break;
+    case DECK_TRICKY:
+        boost += (power * 10 * (Random() % 6)) / 100; // 1.0x - 1.5x
         break;
     default:
         break;

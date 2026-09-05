@@ -988,7 +988,7 @@ void PrintBattlerMoveInfo(enum BattleId battler)
     StringCopy(gStringVar1, gDeckMovesInfo[gDeckSpeciesInfo[gDeckMons[battler].species].move].name);
     StringAppend(gStringVar1, COMPOUND_STRING(": "));
     StringAppend(gStringVar1, gDeckMovesInfo[gDeckSpeciesInfo[gDeckMons[battler].species].move].description);
-    BreakStringAutomatic(gStringVar1, 180, 2, FONT_NORMAL, SHOW_SCROLL_PROMPT);
+    BreakStringAutomatic(gStringVar1, 176, 2, FONT_NORMAL, SHOW_SCROLL_PROMPT);
 
     FillWindowPixelBuffer(WINDOW_BATTLER_INFO, PIXEL_FILL(0));
     AddTextPrinterParameterized3(WINDOW_BATTLER_INFO, FONT_NORMAL, 4, 1, sTextColorNormal, TEXT_SKIP_DRAW, gStringVar1);

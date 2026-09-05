@@ -1281,8 +1281,7 @@ void RestAtCampsite(void) // callnative
             IncrementTrailTime(360);
             break;
         case 2:
-            if (hp != 0)
-                hp = maxHP;
+            hp = maxHP;
             IncrementTrailTime(720);
             break;
         }

@@ -31,7 +31,7 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
     {
         .name = COMPOUND_STRING("FRENZY PLANT"),
         .description = COMPOUND_STRING("Damages opponents, recharges."),
-        .power = 120,
+        .power = 100,
         .target = TARGET_ALL_OPPONENTS,
         .effect = DECK_EFFECT_HIT,
         .secondary = DECK_SECONDARY_RECHARGE,
@@ -170,7 +170,7 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
     {
         .name = COMPOUND_STRING("AROMATHERAPY"),
         .description = COMPOUND_STRING("Heals allies."),
-        .power = 40,
+        .power = 25,
         .target = TARGET_ALL_ALLIES,
         .effect = DECK_EFFECT_HEAL,
     },
@@ -201,5 +201,54 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
         .power = 40,
         .target = TARGET_ALL_OPPONENTS,
         .effect = DECK_EFFECT_HIT,
+    },
+
+    [DECK_LICK] =
+    {
+        .name = COMPOUND_STRING("LICK"),
+        .description = COMPOUND_STRING("Damages one opponent."),
+        .power = 40,
+        .target = TARGET_SINGLE_OPPONENT,
+        .effect = DECK_EFFECT_HIT,
+    },
+
+    [DECK_HEADBUTT] =
+    {
+        .name = COMPOUND_STRING("HEADBUTT"),
+        .description = COMPOUND_STRING("Damages opposite opponent."),
+        .power = 60,
+        .target = TARGET_OPPOSITE,
+        .effect = DECK_EFFECT_HIT,
+    },
+
+    [DECK_FOCUS_PUNCH] =
+    {
+        .name = COMPOUND_STRING("FOCUS PUNCH"),
+        .description = COMPOUND_STRING("Damages one opponent, recharges."),
+        .power = 150,
+        .target = TARGET_SINGLE_OPPONENT,
+        .effect = DECK_EFFECT_HIT,
+        .secondary = DECK_SECONDARY_RECHARGE,
+    },
+
+    [DECK_TWIST] =
+    {
+        .name = COMPOUND_STRING("TWIST"),
+        .description = COMPOUND_STRING("Swaps allies, boosts PWR."),
+        .power = 40,
+        .target = TARGET_LEFT_ALLY | TARGET_RIGHT_ALLY,
+        .effect = DECK_EFFECT_SWAP,
+        .param = STAT_ATK,
+    },
+
+    [DECK_GIGA_IMPACT] =
+    {
+        .name = COMPOUND_STRING("GIGA IMPACT"),
+        .description = COMPOUND_STRING("Damages 3 opposite, recharges 2."),
+        .power = 150,
+        .target = TARGET_OPPOSITE_LEFT | TARGET_OPPOSITE | TARGET_OPPOSITE_RIGHT,
+        .effect = DECK_EFFECT_HIT,
+        .secondary = DECK_SECONDARY_RECHARGE,
+        .param = 2,
     },
 };

@@ -521,8 +521,8 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .playerHurt = gSkiploomPlayerHurtGfx, 
         .opponentHurt = gSkiploomOpponentHurtGfx, 
         .objectPalette = gSkiploomObjectPal, 
-        .playerYOffset = 0, 
-        .opponentYOffset = 0, 
+        .playerYOffset = -4, 
+        .opponentYOffset = -4, 
     
         .portrait = gSkiploomPortraitGfx, 
         .portraitPalette = gSkiploomPortraitPal, 
@@ -543,8 +543,8 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .playerHurt = gJumpluffPlayerHurtGfx, 
         .opponentHurt = gJumpluffOpponentHurtGfx, 
         .objectPalette = gJumpluffObjectPal, 
-        .playerYOffset = 0, 
-        .opponentYOffset = 0, 
+        .playerYOffset = -4, 
+        .opponentYOffset = -4, 
     
         .portrait = gJumpluffPortraitGfx, 
         .portraitPalette = gJumpluffPortraitPal, 
@@ -900,5 +900,269 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
     
         .portrait = gShucklePortraitGfx, 
         .portraitPalette = gShucklePortraitPal, 
+    },
+
+    [SPECIES_GASTLY] = 
+    { 
+        .baseHP = 40, 
+        .basePower = 70, 
+        .baseDef = 40, 
+        .move = DECK_LICK, 
+        .ability = DECK_TRICKY, 
+    
+        .playerIdle = gGastlyPlayerIdleGfx, 
+        .opponentIdle = gGastlyOpponentIdleGfx, 
+        .playerAttack = gGastlyPlayerAttackGfx, 
+        .opponentAttack = gGastlyOpponentAttackGfx, 
+        .playerHurt = gGastlyPlayerHurtGfx, 
+        .opponentHurt = gGastlyOpponentHurtGfx, 
+        .objectPalette = gGastlyObjectPal, 
+        .playerYOffset = -5, 
+        .opponentYOffset = -5, 
+    
+        .portrait = gGastlyPortraitGfx, 
+        .portraitPalette = gGastlyPortraitPal, 
+    },
+
+    [SPECIES_HAUNTER] = 
+    { 
+        .baseHP = 60, 
+        .basePower = 100, 
+        .baseDef = 40, 
+        .move = DECK_LICK, 
+        .ability = DECK_TRICKY, 
+    
+        .playerIdle = gHaunterPlayerIdleGfx, 
+        .opponentIdle = gHaunterOpponentIdleGfx, 
+        .playerAttack = gHaunterPlayerAttackGfx, 
+        .opponentAttack = gHaunterOpponentAttackGfx, 
+        .playerHurt = gHaunterPlayerHurtGfx, 
+        .opponentHurt = gHaunterOpponentHurtGfx, 
+        .objectPalette = gHaunterObjectPal, 
+        .playerYOffset = -3, 
+        .opponentYOffset = -3, 
+    
+        .portrait = gHaunterPortraitGfx, 
+        .portraitPalette = gHaunterPortraitPal, 
+    },
+
+    [SPECIES_GENGAR] = 
+    { 
+        .baseHP = 90, 
+        .basePower = 140, 
+        .baseDef = 50, 
+        .move = DECK_LICK,
+        .ability = DECK_TRICKY, 
+    
+        .playerIdle = gGengarPlayerIdleGfx, 
+        .opponentIdle = gGengarOpponentIdleGfx, 
+        .playerAttack = gGengarPlayerAttackGfx, 
+        .opponentAttack = gGengarOpponentAttackGfx, 
+        .playerHurt = gGengarPlayerHurtGfx, 
+        .opponentHurt = gGengarOpponentHurtGfx, 
+        .objectPalette = gGengarObjectPal, 
+        .playerYOffset = 0, 
+        .opponentYOffset = 0, 
+    
+        .portrait = gGengarPortraitGfx, 
+        .portraitPalette = gGengarPortraitPal, 
+    },
+
+    [SPECIES_PARAS] = 
+    { 
+        .baseHP = 60, 
+        .basePower = 60, 
+        .baseDef = 60, 
+        .move = DECK_AROMATHERAPY, 
+        .ability = DECK_PATIENT, 
+    
+        .playerIdle = gParasPlayerIdleGfx, 
+        .opponentIdle = gParasOpponentIdleGfx, 
+        .playerAttack = gParasPlayerAttackGfx, 
+        .opponentAttack = gParasOpponentAttackGfx, 
+        .playerHurt = gParasPlayerHurtGfx, 
+        .opponentHurt = gParasOpponentHurtGfx, 
+        .objectPalette = gParasObjectPal, 
+        .playerYOffset = 2, 
+        .opponentYOffset = 2, 
+    
+        .portrait = gParasPortraitGfx, 
+        .portraitPalette = gParasPortraitPal, 
+    },
+
+    [SPECIES_PARASECT] = 
+    { 
+        .baseHP = 90, 
+        .basePower = 70, 
+        .baseDef = 90, 
+        .move = DECK_AROMATHERAPY, 
+        .ability = DECK_PATIENT, 
+    
+        .playerIdle = gParasectPlayerIdleGfx, 
+        .opponentIdle = gParasectOpponentIdleGfx, 
+        .playerAttack = gParasectPlayerAttackGfx, 
+        .opponentAttack = gParasectOpponentAttackGfx, 
+        .playerHurt = gParasectPlayerHurtGfx, 
+        .opponentHurt = gParasectOpponentHurtGfx, 
+        .objectPalette = gParasectObjectPal, 
+        .playerYOffset = 0, 
+        .opponentYOffset = 0, 
+    
+        .portrait = gParasectPortraitGfx, 
+        .portraitPalette = gParasectPortraitPal, 
+    },
+
+    [SPECIES_SHROOMISH] = 
+    { 
+        .baseHP = 60, 
+        .basePower = 60, 
+        .baseDef = 60,
+        .move = DECK_HEADBUTT,
+        .ability = DECK_PATIENT, 
+    
+        .playerIdle = gShroomishPlayerIdleGfx, 
+        .opponentIdle = gShroomishOpponentIdleGfx, 
+        .playerAttack = gShroomishPlayerAttackGfx, 
+        .opponentAttack = gShroomishOpponentAttackGfx, 
+        .playerHurt = gShroomishPlayerHurtGfx, 
+        .opponentHurt = gShroomishOpponentHurtGfx, 
+        .objectPalette = gShroomishObjectPal, 
+        .playerYOffset = 0, 
+        .opponentYOffset = 0, 
+    
+        .portrait = gShroomishPortraitGfx, 
+        .portraitPalette = gShroomishPortraitPal, 
+    },
+
+    [SPECIES_BRELOOM] = 
+    { 
+        .baseHP = 80, 
+        .basePower = 90, 
+        .baseDef = 80, 
+        .move = MOVE_TACKLE, 
+        .ability = ABILITY_NONE, 
+    
+        .playerIdle = gBreloomPlayerIdleGfx, 
+        .opponentIdle = gBreloomOpponentIdleGfx, 
+        .playerAttack = gBreloomPlayerAttackGfx, 
+        .opponentAttack = gBreloomOpponentAttackGfx, 
+        .playerHurt = gBreloomPlayerHurtGfx, 
+        .opponentHurt = gBreloomOpponentHurtGfx, 
+        .objectPalette = gBreloomObjectPal, 
+        .playerYOffset = 0, 
+        .opponentYOffset = 0, 
+    
+        .portrait = gBreloomPortraitGfx, 
+        .portraitPalette = gBreloomPortraitPal, 
+    },
+
+    [SPECIES_TANGELA] = 
+    { 
+        .baseHP = 50, 
+        .basePower = 60, 
+        .baseDef = 100, 
+        .move = DECK_TWIST,
+        .ability = DECK_ENDURING, 
+    
+        .playerIdle = gTangelaPlayerIdleGfx, 
+        .opponentIdle = gTangelaOpponentIdleGfx, 
+        .playerAttack = gTangelaPlayerAttackGfx, 
+        .opponentAttack = gTangelaOpponentAttackGfx, 
+        .playerHurt = gTangelaPlayerHurtGfx, 
+        .opponentHurt = gTangelaOpponentHurtGfx, 
+        .objectPalette = gTangelaObjectPal, 
+        .playerYOffset = 0, 
+        .opponentYOffset = 0, 
+    
+        .portrait = gTangelaPortraitGfx, 
+        .portraitPalette = gTangelaPortraitPal, 
+    },
+
+    [SPECIES_TANGROWTH] = 
+    { 
+        .baseHP = 60, 
+        .basePower = 80, 
+        .baseDef = 120, 
+        .move = DECK_TWIST, 
+        .ability = DECK_ENDURING, 
+    
+        .playerIdle = gTangrowthPlayerIdleGfx, 
+        .opponentIdle = gTangrowthOpponentIdleGfx, 
+        .playerAttack = gTangrowthPlayerAttackGfx, 
+        .opponentAttack = gTangrowthOpponentAttackGfx, 
+        .playerHurt = gTangrowthPlayerHurtGfx, 
+        .opponentHurt = gTangrowthOpponentHurtGfx, 
+        .objectPalette = gTangrowthObjectPal, 
+        .playerYOffset = -4, 
+        .opponentYOffset = -4, 
+    
+        .portrait = gTangrowthPortraitGfx, 
+        .portraitPalette = gTangrowthPortraitPal, 
+    },
+
+    [SPECIES_SLAKOTH] = 
+    { 
+        .baseHP = 70, 
+        .basePower = 70, 
+        .baseDef = 50, 
+        .move = DECK_HEADBUTT, 
+        .ability = DECK_HEAVY, 
+    
+        .playerIdle = gSlakothPlayerIdleGfx, 
+        .opponentIdle = gSlakothOpponentIdleGfx, 
+        .playerAttack = gSlakothPlayerAttackGfx, 
+        .opponentAttack = gSlakothOpponentAttackGfx, 
+        .playerHurt = gSlakothPlayerHurtGfx, 
+        .opponentHurt = gSlakothOpponentHurtGfx, 
+        .objectPalette = gSlakothObjectPal, 
+        .playerYOffset = 4, 
+        .opponentYOffset = 4, 
+    
+        .portrait = gSlakothPortraitGfx, 
+        .portraitPalette = gSlakothPortraitPal, 
+    },
+
+    [SPECIES_VIGOROTH] = 
+    { 
+        .baseHP = 90, 
+        .basePower = 80, 
+        .baseDef = 70, 
+        .move = DECK_HEADBUTT, 
+        .ability = DECK_ENERGETIC, 
+    
+        .playerIdle = gVigorothPlayerIdleGfx, 
+        .opponentIdle = gVigorothOpponentIdleGfx, 
+        .playerAttack = gVigorothPlayerAttackGfx, 
+        .opponentAttack = gVigorothOpponentAttackGfx, 
+        .playerHurt = gVigorothPlayerHurtGfx, 
+        .opponentHurt = gVigorothOpponentHurtGfx, 
+        .objectPalette = gVigorothObjectPal, 
+        .playerYOffset = 0, 
+        .opponentYOffset = 0, 
+    
+        .portrait = gVigorothPortraitGfx, 
+        .portraitPalette = gVigorothPortraitPal, 
+    },
+
+    [SPECIES_SLAKING] = 
+    { 
+        .baseHP = 100, 
+        .basePower = 120, 
+        .baseDef = 100, 
+        .move = DECK_GIGA_IMPACT, 
+        .ability = DECK_HEAVY, 
+    
+        .playerIdle = gSlakingPlayerIdleGfx, 
+        .opponentIdle = gSlakingOpponentIdleGfx, 
+        .playerAttack = gSlakingPlayerAttackGfx, 
+        .opponentAttack = gSlakingOpponentAttackGfx, 
+        .playerHurt = gSlakingPlayerHurtGfx, 
+        .opponentHurt = gSlakingOpponentHurtGfx, 
+        .objectPalette = gSlakingObjectPal, 
+        .playerYOffset = 0, 
+        .opponentYOffset = 0, 
+    
+        .portrait = gSlakingPortraitGfx, 
+        .portraitPalette = gSlakingPortraitPal, 
     },
 };
