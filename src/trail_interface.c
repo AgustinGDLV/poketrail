@@ -1,9 +1,9 @@
 #include "global.h"
 #include "battle.h"
+#include "bag_list_menu.h"
 #include "bg.h"
 #include "title_screen.h"
 #include "sprite.h"
-#include "gba/m4a_internal.h"
 #include "clear_save_data_menu.h"
 #include "decompress.h"
 #include "deck_battle.h"
@@ -52,6 +52,7 @@
 #include "constants/rgb.h"
 #include "constants/songs.h"
 #include "constants/flags.h"
+#include "gba/m4a_internal.h"
 
 // sprite tags
 enum
@@ -107,9 +108,9 @@ static const struct BgTemplate sTrailMapBgTemplates[] =
 enum
 {
     WIN_TIME,
+    WIN_LOCATION,
     WIN_MESSAGE,
     WIN_YESNO,
-    WIN_LOCATION,
     WINDOW_COUNT,
 };
 
@@ -125,6 +126,16 @@ static const struct WindowTemplate sTrailInterfaceWinTemplates[WINDOW_COUNT + 1]
         .paletteNum = 15,
         .baseBlock = 1,
     },
+    [WIN_LOCATION] =
+    {
+        .bg = 1,
+        .tilemapLeft = 0,
+        .tilemapTop = 0,
+        .width = 14,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 1 + 14*2,
+    },
     [WIN_MESSAGE] =
     {
         .bg = 1,
@@ -133,7 +144,7 @@ static const struct WindowTemplate sTrailInterfaceWinTemplates[WINDOW_COUNT + 1]
         .width = 28,
         .height = 4,
         .paletteNum = 15,
-        .baseBlock = 1 + 14*2,
+        .baseBlock = 1 + 14*2 + 14*2,
     },
     [WIN_YESNO] =
     {
@@ -143,19 +154,9 @@ static const struct WindowTemplate sTrailInterfaceWinTemplates[WINDOW_COUNT + 1]
         .width = 5,
         .height = 4,
         .paletteNum = 15,
-        .baseBlock = 1 + 14*2 + 28*4,
+        .baseBlock = 1 + 14*2 + 14*2 + 28*4,
     },
-    [WIN_LOCATION] =
-    {
-        .bg = 1,
-        .tilemapLeft = 0,
-        .tilemapTop = 0,
-        .width = 14,
-        .height = 2,
-        .paletteNum = 15,
-        .baseBlock = 1 + 14*2 + 28*4 + 5*4,
-    },
-    DUMMY_WIN_TEMPLATE
+    DUMMY_WIN_TEMPLATE,
 };
 
 // graphics data
@@ -544,6 +545,13 @@ static void Task_TrailMapWaitForKeypress(u8 taskId)
     {
         PlaySE(SE_SELECT);
         gTasks[taskId].func = Task_GoToOverworldCamp;
+    }
+
+    // Camp in overworld.
+    if (JOY_NEW(L_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+        SwitchTaskToBagListMenu(taskId, 1);
     }
 }
 

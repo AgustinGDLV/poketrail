@@ -2,6 +2,7 @@
 #include "battle_pike.h"
 #include "battle_pyramid.h"
 #include "battle_pyramid_bag.h"
+#include "bag_list_menu.h"
 #include "bg.h"
 #include "debug.h"
 #include "event_data.h"
@@ -650,6 +651,7 @@ static bool8 HandleStartMenuInput(void)
         gMenuCallback = sStartMenuItems[sCurrentStartMenuActions[sStartMenuCursorPos]].func.u8_void;
 
         if (gMenuCallback != StartMenuSaveCallback
+            && gMenuCallback != StartMenuBagCallback
             && gMenuCallback != StartMenuExitCallback
             && gMenuCallback != StartMenuDebugCallback
             && gMenuCallback != StartMenuSafariZoneRetireCallback
@@ -702,19 +704,20 @@ static bool8 StartMenuPokemonCallback(void)
     return FALSE;
 }
 
+static void Task_UnlockPlayerAfterStartMenu(u8 taskId)
+{
+    ScriptUnfreezeObjectEvents();
+    UnlockPlayerFieldControls();
+    DestroyTask(taskId);
+}
+
 static bool8 StartMenuBagCallback(void)
 {
-    if (!gPaletteFade.active)
-    {
-        PlayRainStoppingSoundEffect();
-        RemoveExtraStartMenuWindows();
-        CleanupOverworldWindowsAndTilemaps();
-        SetMainCallback2(CB2_BagMenuFromStartMenu); // Display bag menu
-
-        return TRUE;
-    }
-
-    return FALSE;
+    u8 taskId = CreateTask(Task_UnlockPlayerAfterStartMenu, 0);
+    ClearStdWindowAndFrame(GetStartMenuWindowId(), TRUE);
+    RemoveStartMenuWindow();
+    SwitchTaskToBagListMenu(taskId, 0);
+    return TRUE;
 }
 
 static bool8 StartMenuPokeNavCallback(void)
@@ -1078,7 +1081,6 @@ static u8 SaveConfirmInputCallback(void)
         }
     case MENU_B_PRESSED:
     case 1: // No
-        HideSaveInfoWindow();
         HideSaveMessageWindow();
         return SAVE_CANCELED;
     }

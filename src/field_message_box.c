@@ -67,6 +67,7 @@ static void DestroyTask_DrawFieldMessage(void)
 
 bool8 ShowFieldMessage(const u8 *str)
 {
+    DebugPrintf("msg box mode: %d, sFieldMessageBoxMode");
     if (sFieldMessageBoxMode != FIELD_MESSAGE_BOX_HIDDEN)
         return FALSE;
     ExpandStringAndStartDrawFieldMessage(str, TRUE);
