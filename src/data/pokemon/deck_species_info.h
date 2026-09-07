@@ -1181,8 +1181,8 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .playerHurt = gHippopotasPlayerHurtGfx, 
         .opponentHurt = gHippopotasOpponentHurtGfx, 
         .objectPalette = gHippopotasObjectPal, 
-        .playerYOffset = 0, 
-        .opponentYOffset = 0, 
+        .playerYOffset = 1, 
+        .opponentYOffset = 1, 
     
         .portrait = gHippopotasPortraitGfx, 
         .portraitPalette = gHippopotasPortraitPal, 
@@ -1203,7 +1203,7 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .playerHurt = gHippowdonPlayerHurtGfx, 
         .opponentHurt = gHippowdonOpponentHurtGfx, 
         .objectPalette = gHippowdonObjectPal, 
-        .playerYOffset = 0, 
+        .playerYOffset = -3, 
         .opponentYOffset = 0, 
     
         .portrait = gHippowdonPortraitGfx, 
