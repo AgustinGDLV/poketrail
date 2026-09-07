@@ -1313,3 +1313,12 @@ void RestAtCampsite(void) // callnative
         }
     }
 }
+
+u32 GetCheckpointsCount(void)
+{
+    u32 checkpointsCount = 0;
+    for (u32 i = 0; i < 32; ++i)
+        if (gSaveBlock1Ptr->checkpoints & (1 << i))
+            ++checkpointsCount;
+    return checkpointsCount;
+}

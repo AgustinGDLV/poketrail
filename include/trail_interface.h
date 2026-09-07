@@ -3,6 +3,7 @@
 
 void CB2_InitTrailInterface(void);
 void IncrementTrailTime(u32 minutes);
+u32 GetCheckpointsCount(void);
 
 #define TRAIL_MAP_WIDTH     28
 #define TRAIL_MAP_HEIGHT    17

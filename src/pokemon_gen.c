@@ -18,10 +18,7 @@ static const u32 sCheckpointEncounterLevel[CHECKPOINT_COUNT] =
 // Returns what level an encounter should be based on checkpoint status.
 u32 GetEncounterLevel(void)
 {
-    u32 checkpointsCount = 0;
-    for (u32 i = 0; i < 32; ++i)
-        if (gSaveBlock1Ptr->checkpoints & (1 << i))
-            ++checkpointsCount;
+    u32 checkpointsCount = GetCheckpointsCount();
 
     if (checkpointsCount >= CHECKPOINT_COUNT)
         return 100;

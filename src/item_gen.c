@@ -6,6 +6,7 @@
 #include "random.h"
 #include "util.h"
 #include "test_runner.h"
+#include "trail_interface.h"
 #include "event_data.h"
 
 // Returns the pool of items for a given tier and item type.
@@ -117,30 +118,36 @@ void GenerateKecleonShopList(void)
 // Chooses an item for an item ball. This is called within a script.
 void ChooseOverworldItem(void)
 {
-    u32 i, rand, tier;
+    u32 checkpointsCount = GetCheckpointsCount();
     u32 ballId = gObjectEvents[gSelectedObjectEvent].localId;
 
     // Advance RNG to a repeatable state based on the ball ID.
     // This is to allow for consistency between saves and seed.
     SetRNGToRoomSeed();
-    for (i = 0; i < ballId; ++i)
+    for (u32 i = 0; i < ballId; ++i)
         RandomF();
 
-    rand = RandomF();
-    tier = ITEM_TIER_1;
-    // 30% chance of item being a Poke Ball
-    if (rand % 100 < 30)
-        gSpecialVar_0x8000 = ITEM_POKE_BALL;
-    // 30% chance of item being Medicine
-    else if (rand % 10 < 60)
-        gSpecialVar_0x8000 = ChooseElementFromPool(GetItemPool(TYPE_MEDICINE, tier));
-    // 10% chance of item being Battle Item
-    else if (rand % 10 < 70)
-        gSpecialVar_0x8000 = ChooseElementFromPool(GetItemPool(TYPE_BATTLE_ITEM, tier));
-    // 10% chance of item being Hold Item
-    else if (rand % 10 < 80)
-        gSpecialVar_0x8000 = ChooseElementFromPool(GetItemPool(TYPE_HOLD_ITEM, tier));
-    // 20% chance of item being Upgrade
+    u32 rand = RandomF();
+    u32 tier = ITEM_TIER_1;
+
+    if (rand % 100 < 70)
+    {
+        if (checkpointsCount < 3)
+            gSpecialVar_0x8000 = ITEM_POTION;
+        if (checkpointsCount < 6)
+            gSpecialVar_0x8000 = ITEM_SUPER_POTION;
+        else
+            gSpecialVar_0x8000 = ITEM_HYPER_POTION;
+    }
+    else if (rand % 100 < 90)
+    {
+        if (checkpointsCount < 3)
+            gSpecialVar_0x8000 = ITEM_SUPER_POTION;
+        else
+            gSpecialVar_0x8000 = ITEM_HYPER_POTION;
+    }
     else
-        gSpecialVar_0x8000 = ChooseElementFromPool(GetItemPool(TYPE_UPGRADE, tier));
+    {
+        gSpecialVar_0x8000 = ITEM_REVIVE;
+    }
 }
