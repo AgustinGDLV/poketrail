@@ -634,3 +634,27 @@ const u16 gSlakingObjectPal[] = INCBIN_U16("graphics/deck_pokemon/slaking/player
  
 const u8 gSlakingPortraitGfx[] = INCBIN_U8("graphics/deck_pokemon/slaking/portrait_normal.4bpp"); 
 const u16 gSlakingPortraitPal[] = INCBIN_U16("graphics/deck_pokemon/slaking/portrait_normal.gbapal");
+
+// Hippopotas
+const u8 gHippopotasPlayerIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/hippopotas/player_idle.4bpp"); 
+const u8 gHippopotasOpponentIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/hippopotas/opponent_idle.4bpp"); 
+const u8 gHippopotasPlayerAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/hippopotas/player_attack.4bpp"); 
+const u8 gHippopotasOpponentAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/hippopotas/opponent_attack.4bpp"); 
+const u8 gHippopotasPlayerHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/hippopotas/player_hurt.4bpp"); 
+const u8 gHippopotasOpponentHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/hippopotas/opponent_hurt.4bpp"); 
+const u16 gHippopotasObjectPal[] = INCBIN_U16("graphics/deck_pokemon/hippopotas/player_idle.gbapal"); 
+ 
+const u8 gHippopotasPortraitGfx[] = INCBIN_U8("graphics/deck_pokemon/hippopotas/portrait_normal.4bpp"); 
+const u16 gHippopotasPortraitPal[] = INCBIN_U16("graphics/deck_pokemon/hippopotas/portrait_normal.gbapal");
+
+// Hippowdon
+const u8 gHippowdonPlayerIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/hippowdon/player_idle.4bpp"); 
+const u8 gHippowdonOpponentIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/hippowdon/opponent_idle.4bpp"); 
+const u8 gHippowdonPlayerAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/hippowdon/player_attack.4bpp"); 
+const u8 gHippowdonOpponentAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/hippowdon/opponent_attack.4bpp"); 
+const u8 gHippowdonPlayerHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/hippowdon/player_hurt.4bpp"); 
+const u8 gHippowdonOpponentHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/hippowdon/opponent_hurt.4bpp"); 
+const u16 gHippowdonObjectPal[] = INCBIN_U16("graphics/deck_pokemon/hippowdon/player_idle.gbapal"); 
+ 
+const u8 gHippowdonPortraitGfx[] = INCBIN_U8("graphics/deck_pokemon/hippowdon/portrait_normal.4bpp"); 
+const u16 gHippowdonPortraitPal[] = INCBIN_U16("graphics/deck_pokemon/hippowdon/portrait_normal.gbapal");

@@ -1165,4 +1165,48 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .portrait = gSlakingPortraitGfx, 
         .portraitPalette = gSlakingPortraitPal, 
     },
+
+    [SPECIES_HIPPOPOTAS] = 
+    { 
+        .baseHP = 80, 
+        .basePower = 60, 
+        .baseDef = 60, 
+        .move = DECK_EARTHQUAKE, 
+        .ability = DECK_SOCIAL, 
+    
+        .playerIdle = gHippopotasPlayerIdleGfx, 
+        .opponentIdle = gHippopotasOpponentIdleGfx, 
+        .playerAttack = gHippopotasPlayerAttackGfx, 
+        .opponentAttack = gHippopotasOpponentAttackGfx, 
+        .playerHurt = gHippopotasPlayerHurtGfx, 
+        .opponentHurt = gHippopotasOpponentHurtGfx, 
+        .objectPalette = gHippopotasObjectPal, 
+        .playerYOffset = 0, 
+        .opponentYOffset = 0, 
+    
+        .portrait = gHippopotasPortraitGfx, 
+        .portraitPalette = gHippopotasPortraitPal, 
+    },
+
+    [SPECIES_HIPPOWDON] = 
+    { 
+        .baseHP = 100, 
+        .basePower = 80, 
+        .baseDef = 80, 
+        .move = DECK_EARTHQUAKE, 
+        .ability = DECK_SOCIAL, 
+    
+        .playerIdle = gHippowdonPlayerIdleGfx, 
+        .opponentIdle = gHippowdonOpponentIdleGfx, 
+        .playerAttack = gHippowdonPlayerAttackGfx, 
+        .opponentAttack = gHippowdonOpponentAttackGfx, 
+        .playerHurt = gHippowdonPlayerHurtGfx, 
+        .opponentHurt = gHippowdonOpponentHurtGfx, 
+        .objectPalette = gHippowdonObjectPal, 
+        .playerYOffset = 0, 
+        .opponentYOffset = 0, 
+    
+        .portrait = gHippowdonPortraitGfx, 
+        .portraitPalette = gHippowdonPortraitPal, 
+    },
 };

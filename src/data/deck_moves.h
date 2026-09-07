@@ -55,15 +55,6 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
         .effect = DECK_EFFECT_HIT,
     },
 
-    [DECK_EARTHQUAKE] =
-    {
-        .name = COMPOUND_STRING("EARTHQUAKE"),
-        .description = COMPOUND_STRING("Damages all opponents."),
-        .power = 60,
-        .target = TARGET_LEFT_ALLY | TARGET_RIGHT_ALLY | TARGET_ALL_OPPONENTS,
-        .effect = DECK_EFFECT_HIT,
-    },
-
     [DECK_CRABHAMMER] =
     {
         .name = COMPOUND_STRING("CRABHAMMER"),
@@ -250,5 +241,16 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
         .effect = DECK_EFFECT_HIT,
         .secondary = DECK_SECONDARY_RECHARGE,
         .param = 2,
+    },
+
+    [DECK_EARTHQUAKE] =
+    {
+        .name = COMPOUND_STRING("Earthquakes"),
+        .description = COMPOUND_STRING("Damages all opponents, recharges."),
+        .power = 100,
+        .target = TARGET_ALL_OPPONENTS,
+        .effect = DECK_EFFECT_HIT,
+        .secondary = DECK_SECONDARY_RECHARGE,
+        .param = 1,
     },
 };
