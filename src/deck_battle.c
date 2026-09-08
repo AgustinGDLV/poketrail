@@ -902,18 +902,23 @@ static void Task_SelectPartyMemberToReplace(u8 taskId)
 }
 
 // Calculate end of turn fatigue damage.
-static u32 GetTurnEndFatigueDamage(u32 turns)
+static u32 GetTurnEndFatigueDamage(u32 turns, u32 battler)
 {
+    // Get damage percent.
+    uq4_12_t mult = UQ_4_12(0.0);
     if (turns < 10)
-        return 0;
-    if (turns < 12)
-        return 10;
-    if (turns < 14)
-        return 20;
-    if (turns < 18)
-        return 50;
+        mult = UQ_4_12(0.0);
+    else if (turns < 14)
+        mult = UQ_4_12(0.25);
     else
-        return 100;
+        mult = UQ_4_12(0.5);
+
+    // Apply relevant abilities.
+    if (GetDeckBattlerAbility(battler) == DECK_RESILIENT)
+        mult = uq4_12_multiply(mult, UQ_4_12(0.5));
+
+    // Return damage.
+    return UQ_4_12_TO_INT(uq4_12_multiply(mult, UQ_4_12(gDeckMons[battler].hp)));
 }
 
 // Execute any turn end effects (e.g., poison, fatigue, sleep).
@@ -937,12 +942,12 @@ static void Task_HandleTurnEndEffects(u8 taskId)
     case TURN_END_FATIGUE:
         if (++gTasks[taskId].tTimer > 10 && JOY_NEW(A_BUTTON))
         {
-            for (u32 battler = 0; battler < MAX_DECK_BATTLERS_COUNT; ++battler)
+            for (enum BattleId battler = B_PLAYER_0; battler < MAX_DECK_BATTLERS_COUNT; ++battler)
             {
                 if (IsDeckBattlerAlive(battler))
                 {
                     StartBattlerAnim(battler, ANIM_HURT);
-                    damage = GetTurnEndFatigueDamage(gDeckStruct.turns);
+                    damage = GetTurnEndFatigueDamage(gDeckStruct.turns, battler);
                     UpdateBattlerHP(battler, damage);
                 }
             }
@@ -962,11 +967,19 @@ static void Task_HandleTurnEndEffects(u8 taskId)
     case TURN_END_RESET_STATUS: // TODO
         ++gTasks[taskId].tTurnEndState;
         break;
+    case TURN_END_REGENERATIVE:
+        for (enum BattleId battler = B_PLAYER_0; battler < MAX_DECK_BATTLERS_COUNT; ++battler)
+        {
+            if (GetDeckBattlerAbility(battler) == DECK_REGENERATIVE)
+                gDeckMons[battler].rechargeTurns -= 1;
+        }
+        ++gTasks[taskId].tTurnEndState;
+        break;
     case TURN_END_RECHARGE:
         for (enum BattleId battler = B_PLAYER_0; battler < MAX_DECK_BATTLERS_COUNT; ++battler)
         {
             if (GetDeckBattlerSide(battler) == gDeckStruct.actingSide && gDeckMons[battler].rechargeTurns > 0)
-                gDeckMons[battler].rechargeTurns -= 1;
+                UpdateBattlerHP(battler, -1 * (s32) ((gDeckMons[battler].hp * 10)/100));
         }
         ++gTasks[taskId].tTurnEndState;
         break;
@@ -1222,6 +1235,12 @@ s32 GetAbilityPowerBoost(u32 battlerAtk)
     case DECK_TRICKY:
         boost += (power * 10 * (Random() % 6)) / 100; // 1.0x - 1.5x
         break;
+    case DECK_SHORT_TEMPERED:
+        boost += -1 * (s32) (power * 10 * gDeckStruct.turns/2); // -0.9x per turn
+        break;
+    case DECK_ADAPTIVE:
+        boost += (power * 10 * gDeckStruct.turns/2); // 1.1x per turn
+        break;
     default:
         break;
     }
@@ -1234,9 +1253,23 @@ s32 CalculateDamage(u32 battlerAtk, u32 battlerDef, u32 move)
 {
     u32 movePower = gDeckMovesInfo[move].power;
     u32 level = gDeckMons[battlerAtk].lvl;
-    u32 power = gDeckMons[battlerAtk].power + gDeckMons[battlerAtk].powerBoost + GetAbilityPowerBoost(battlerAtk);
-    u32 defense = gDeckMons[battlerDef].def + gDeckMons[battlerDef].defBoost;
+    u32 power = gDeckMons[battlerAtk].power;
+    s32 powerBoost = gDeckMons[battlerAtk].powerBoost + GetAbilityPowerBoost(battlerAtk);
+    u32 defense = gDeckMons[battlerDef].def;
+    s32 defenseBoost = gDeckMons[battlerDef].defBoost;
 
+    // Avoid underflow.
+    if (power < powerBoost)
+        power = 0;
+    else
+        power += powerBoost;
+
+    if (defense < defenseBoost)
+        defenseBoost = 0;
+    else
+        defense += defenseBoost;
+
+    // Calculate damage.
     s32 dmg = movePower * power * (2 * level / 5 + 2) / defense / 50 + 2;
     dmg *= DMG_ROLL_PERCENT_HI - RandomUniform(RNG_DAMAGE_MODIFIER, 0, DMG_ROLL_PERCENT_HI - DMG_ROLL_PERCENT_LO);
     dmg /= 100;

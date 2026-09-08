@@ -67,8 +67,8 @@ struct DeckBattlePokemon
     u8 swapCount;
     u8 rechargeTurns;
 
-    u16 powerBoost; // flat power boost
-    u16 defBoost;   // flat defense boost
+    s16 powerBoost; // flat power boost
+    s16 defBoost;   // flat defense boost
 };
 
 // action constants
@@ -103,9 +103,10 @@ struct BattleAction
 #define TURN_END_POISON         2
 #define TURN_END_SLEEP          3
 #define TURN_END_RESET_STATUS   4
-#define TURN_END_RECHARGE       5
-#define TURN_END_COMPLETED      6
-#define TURN_END_PAUSE          7
+#define TURN_END_REGENERATIVE   5
+#define TURN_END_RECHARGE       6
+#define TURN_END_COMPLETED      7
+#define TURN_END_PAUSE          8
 
 // move data
 
@@ -164,8 +165,12 @@ enum DeckAbility
     DECK_SOCIAL,
     DECK_ALPHA,
     DECK_INSPIRED,
-    DECK_ENDURING,
+    DECK_RESILIENT,
     DECK_TRICKY,
+    DECK_VAMPIRIC,
+    DECK_REGENERATIVE,
+    DECK_SHORT_TEMPERED,
+    DECK_ADAPTIVE,
     DECK_ABILITIES_COUNT,
 };
 

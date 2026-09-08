@@ -68,9 +68,18 @@ static void ExecuteHitEffect(void)
             gBattlerTarget = targets[i];
             StartBattlerAnim(targets[i], ANIM_HURT);
             gDeckStruct.lastHitDamage = damage = CalculateDamage(gBattlerAttacker, targets[i], gCurrentMove);
+            if (targets[i] == gBattlerAttacker) // recoil
+                damage /= 3;
             UpdateBattlerHP(targets[i], damage);
             aliveCount += 1;
         }
+    }
+
+    // Apply relevant abilities.
+    if (GetDeckBattlerAbility(gBattlerAttacker) == DECK_VAMPIRIC)
+    {
+        s32 heal = -1 * (s32) (gDeckStruct.lastHitDamage / 3);
+        UpdateBattlerHP(gBattlerAttacker, heal);
     }
 
     // Print string.
@@ -85,10 +94,29 @@ static void ExecuteHitEffect(void)
     }
 }
 
+static void ApplyStatChange(u32 attacker, u32 target, u32 stat)
+{
+    if (stat == STAT_ATK || stat == 0xFF)
+    {
+        if (GetDeckBattlerSide(attacker) != GetDeckBattlerSide(target))
+            gDeckMons[target].defBoost -= (gDeckMons[gBattlerAttacker].power * gDeckMovesInfo[gCurrentMove].power) / 100;
+        else
+            gDeckMons[target].defBoost += (gDeckMons[gBattlerAttacker].power * gDeckMovesInfo[gCurrentMove].power) / 100;
+    }
+    if (stat == STAT_DEF || stat == 0xFF)
+    {
+        if (GetDeckBattlerSide(attacker) != GetDeckBattlerSide(target))
+            gDeckMons[target].powerBoost -= (gDeckMons[gBattlerAttacker].power * gDeckMovesInfo[gCurrentMove].power) / 100;
+        else
+            gDeckMons[target].powerBoost += (gDeckMons[gBattlerAttacker].power * gDeckMovesInfo[gCurrentMove].power) / 100;
+    }
+}
+
 static void ExecuteStatChangeEffect(void)
 {
     u32 targetsCount = 0;
     u32 aliveCount = 0;
+    u32 negative = FALSE;
     enum BattleId targets[MAX_DECK_BATTLERS_COUNT] = {0};
     PopulateTargetsList(targets, &targetsCount);
 
@@ -99,10 +127,7 @@ static void ExecuteStatChangeEffect(void)
         {
             gBattlerTarget = targets[i];
             StartBattlerAnim(targets[i], ANIM_STAT_CHANGE);
-            if (gDeckMovesInfo[gCurrentMove].param == STAT_DEF || gDeckMovesInfo[gCurrentMove].param == 0xFF)
-                gDeckMons[targets[i]].defBoost += (gDeckMons[gBattlerAttacker].power * gDeckMovesInfo[gCurrentMove].power) / 100;
-            else if (gDeckMovesInfo[gCurrentMove].param != STAT_DEF)
-                gDeckMons[targets[i]].powerBoost += (gDeckMons[gBattlerAttacker].power * gDeckMovesInfo[gCurrentMove].power) / 100;
+            ApplyStatChange(gBattlerAttacker, gBattlerTarget, gDeckMovesInfo[gCurrentMove].param);
             aliveCount += 1;
         }
     }

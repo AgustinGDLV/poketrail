@@ -270,7 +270,7 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .basePower = 100, 
         .baseDef = 90, 
         .move = DECK_FRENZY_PLANT, 
-        .ability = DECK_PATIENT,
+        .ability = DECK_VAMPIRIC,
     
         .playerIdle = gVictreebelPlayerIdleGfx, 
         .opponentIdle = gVictreebelOpponentIdleGfx, 
@@ -644,7 +644,7 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .basePower = 40,
         .baseDef = 70,
         .move = DECK_HELPING_HAND,
-        .ability = DECK_ENDURING,
+        .ability = DECK_RESILIENT,
 
         .playerIdle = gSwabluPlayerIdleGfx,
         .opponentIdle = gSwabluOpponentIdleGfx,
@@ -666,7 +666,7 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .basePower = 70, 
         .baseDef = 120, 
         .move = DECK_COTTON_GUARD, 
-        .ability = DECK_ENDURING, 
+        .ability = DECK_RESILIENT, 
     
         .playerIdle = gAltariaPlayerIdleGfx, 
         .opponentIdle = gAltariaOpponentIdleGfx, 
@@ -1018,7 +1018,7 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .basePower = 60, 
         .baseDef = 60,
         .move = DECK_HEADBUTT,
-        .ability = DECK_PATIENT, 
+        .ability = DECK_REGENERATIVE, 
     
         .playerIdle = gShroomishPlayerIdleGfx, 
         .opponentIdle = gShroomishOpponentIdleGfx, 
@@ -1039,8 +1039,8 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .baseHP = 80, 
         .basePower = 90, 
         .baseDef = 80, 
-        .move = MOVE_TACKLE, 
-        .ability = ABILITY_NONE, 
+        .move = DECK_FOCUS_PUNCH, 
+        .ability = DECK_REGENERATIVE, 
     
         .playerIdle = gBreloomPlayerIdleGfx, 
         .opponentIdle = gBreloomOpponentIdleGfx, 
@@ -1062,7 +1062,7 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .basePower = 60, 
         .baseDef = 100, 
         .move = DECK_TANGLE,
-        .ability = DECK_ENDURING, 
+        .ability = DECK_REGENERATIVE, 
     
         .playerIdle = gTangelaPlayerIdleGfx, 
         .opponentIdle = gTangelaOpponentIdleGfx, 
@@ -1084,7 +1084,7 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .basePower = 80, 
         .baseDef = 120, 
         .move = DECK_TANGLE, 
-        .ability = DECK_ENDURING, 
+        .ability = DECK_REGENERATIVE, 
     
         .playerIdle = gTangrowthPlayerIdleGfx, 
         .opponentIdle = gTangrowthOpponentIdleGfx, 

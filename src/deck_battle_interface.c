@@ -988,7 +988,7 @@ void PrintBattlerMoveInfo(enum BattleId battler)
     StringCopy(gStringVar1, gDeckMovesInfo[gDeckSpeciesInfo[gDeckMons[battler].species].move].name);
     StringAppend(gStringVar1, COMPOUND_STRING(": "));
     StringAppend(gStringVar1, gDeckMovesInfo[gDeckSpeciesInfo[gDeckMons[battler].species].move].description);
-    BreakStringAutomatic(gStringVar1, 176, 2, FONT_NORMAL, SHOW_SCROLL_PROMPT);
+    BreakStringAutomatic(gStringVar1, 164, 2, FONT_NORMAL, HIDE_SCROLL_PROMPT);
 
     FillWindowPixelBuffer(WINDOW_BATTLER_INFO, PIXEL_FILL(0));
     AddTextPrinterParameterized3(WINDOW_BATTLER_INFO, FONT_NORMAL, 4, 1, sTextColorNormal, TEXT_SKIP_DRAW, gStringVar1);
@@ -1025,6 +1025,7 @@ void PrintMoveUseString(void)
     StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2} used {STR_VAR_3}!"));
 
     FillWindowPixelBuffer(WINDOW_MESSAGE, PIXEL_FILL(0));
+    BreakStringAutomatic(gStringVar1, 196, 2, FONT_NORMAL, HIDE_SCROLL_PROMPT);
     AddTextPrinterParameterized3(WINDOW_MESSAGE, FONT_NORMAL, 4, 1, sTextColorNormal, TEXT_SKIP_DRAW, gStringVar1);
     CopyWindowToVram(WINDOW_MESSAGE, COPYWIN_FULL);
 }
@@ -1056,21 +1057,27 @@ void PrintMoveOutcomeString(u32 targets) // *TODO: refactor
     case DECK_EFFECT_POWER_UP:
         if (gDeckMovesInfo[gCurrentMove].param == 0xFF)
         {
-            if (targets == 1)
+            if (GetDeckBattlerSide(gBattlerTarget) != GetDeckBattlerSide(gBattlerAttacker))
+                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Opponent's stats were lowered!"));
+            else if (targets == 1)
                 StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2}'s stats were boosted!"));
             else
                 StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Allies had their stats boosted!"));
         }
         else if (gDeckMovesInfo[gCurrentMove].param == STAT_DEF)
         {
-            if (targets == 1)
+            if (GetDeckBattlerSide(gBattlerTarget) != GetDeckBattlerSide(gBattlerAttacker))
+                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Opponent's DEF was lowered!"));
+            else if (targets == 1)
                 StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2}'s DEF was boosted!"));
             else
                 StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Allies had their DEF boosted!"));
         }
         else
         {
-            if (targets == 1)
+            if (GetDeckBattlerSide(gBattlerTarget) != GetDeckBattlerSide(gBattlerAttacker))
+                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Opponent's PWR was lowered!"));
+            else if (targets == 1)
                 StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2}'s PWR was boosted!"));
             else
                 StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Allies had their DEF boosted!"));
@@ -1089,7 +1096,7 @@ void PrintMoveOutcomeString(u32 targets) // *TODO: refactor
 
     // Print strings.
     FillWindowPixelBuffer(WINDOW_MESSAGE, PIXEL_FILL(0));
-    BreakStringAutomatic(gStringVar1, 196, 2, FONT_NORMAL, SHOW_SCROLL_PROMPT);
+    BreakStringAutomatic(gStringVar1, 196, 2, FONT_NORMAL, HIDE_SCROLL_PROMPT);
     AddTextPrinterParameterized3(WINDOW_MESSAGE, FONT_NORMAL, 4, 1, sTextColorNormal, TEXT_SKIP_DRAW, gStringVar1);
     CopyWindowToVram(WINDOW_MESSAGE, COPYWIN_FULL);
 }
@@ -1117,7 +1124,7 @@ void PrintSwapString(enum BattleId battler1, enum BattleId battler2)
     StringCopy(gStringVar2, GetSpeciesName(gDeckMons[battler1].species));
     StringCopy(gStringVar3, GetSpeciesName(gDeckMons[battler2].species));
     StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2} and {STR_VAR_3} swapped places!"));
-    BreakStringAutomatic(gStringVar1, 196, 2, FONT_NORMAL, SHOW_SCROLL_PROMPT);
+    BreakStringAutomatic(gStringVar1, 196, 2, FONT_NORMAL, HIDE_SCROLL_PROMPT);
 
     FillWindowPixelBuffer(WINDOW_MESSAGE, PIXEL_FILL(0));
     AddTextPrinterParameterized3(WINDOW_MESSAGE, FONT_NORMAL, 4, 1, sTextColorNormal, TEXT_SKIP_DRAW, gStringVar1);
@@ -1128,7 +1135,7 @@ void PrintStringToMessageBox(const u8 *str)
 {
     StringCopy(gStringVar1, str);
     FillWindowPixelBuffer(WINDOW_MESSAGE, PIXEL_FILL(0));
-    BreakStringAutomatic(gStringVar1, 196, 2, FONT_NORMAL, SHOW_SCROLL_PROMPT);
+    BreakStringAutomatic(gStringVar1, 196, 2, FONT_NORMAL, HIDE_SCROLL_PROMPT);
     AddTextPrinterParameterized3(WINDOW_MESSAGE, FONT_NORMAL, 4, 1, sTextColorNormal, 1, gStringVar1);
     CopyWindowToVram(WINDOW_MESSAGE, COPYWIN_FULL);
 }

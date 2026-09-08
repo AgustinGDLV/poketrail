@@ -48,15 +48,39 @@ const struct DeckAbilityInfo gDeckAbilitiesInfo[DECK_ABILITIES_COUNT] =
         .description = COMPOUND_STRING("Acting grants allies PWR for turn"),
     },
 
-    [DECK_ENDURING] =
+    [DECK_RESILIENT] =
     {
-        .name = COMPOUND_STRING("ENDURING"),
-        .description = COMPOUND_STRING("Takes reduced fatigue"),
+        .name = COMPOUND_STRING("RESILIENT"),
+        .description = COMPOUND_STRING("Takes reduced fatigue damage"),
     },
 
     [DECK_TRICKY] =
     {
         .name = COMPOUND_STRING("TRICKY"),
-        .description = COMPOUND_STRING("Gains random PWR each turn"),
+        .description = COMPOUND_STRING("Gains random PWR for turn"),
+    },
+
+    [DECK_VAMPIRIC] =
+    {
+        .name = COMPOUND_STRING("VAMPIRIC"),
+        .description = COMPOUND_STRING("Heals percent of damage"),
+    },
+
+    [DECK_REGENERATIVE] =
+    {
+        .name = COMPOUND_STRING("REGENERATIVE"),
+        .description = COMPOUND_STRING("Heals each turn"),
+    },
+
+    [DECK_SHORT_TEMPERED] =
+    {
+        .name = COMPOUND_STRING("SHORT TEMPERED"),
+        .description = COMPOUND_STRING("Less PWR with each turn"),
+    },
+
+    [DECK_ADAPTIVE] =
+    {
+        .name = COMPOUND_STRING("ADAPTIVE"),
+        .description = COMPOUND_STRING("More PWR with each turn"),
     },
 };
