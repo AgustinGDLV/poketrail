@@ -28,6 +28,7 @@
 #include "naming_screen.h"
 #include "overworld.h"
 #include "palette.h"
+#include "party_menu_custom.h"
 #include "play_time.h"
 #include "pokemon.h"
 #include "pokemon_gen.h"
@@ -368,6 +369,7 @@ static void MainCB2_TrailMap(void);
 static void VBlankCB2_TrailMap(void);
 static void Task_OpenTrailMap(u8 taskId);
 static void Task_TrailMapWaitForKeypress(u8 taskId);
+static void Task_GoToPartyMenu(u8 taskId);
 static void Task_SaveAndExit(u8 taskId);
 static void Task_GoToOverworldCamp(u8 taskId);
 static void Task_GoToCheckpoint(u8 taskId);
@@ -547,11 +549,18 @@ static void Task_TrailMapWaitForKeypress(u8 taskId)
         gTasks[taskId].func = Task_GoToOverworldCamp;
     }
 
-    // Camp in overworld.
+    // Open bag.
     if (JOY_NEW(L_BUTTON))
     {
         PlaySE(SE_SELECT);
         SwitchTaskToBagListMenu(taskId, 1);
+    }
+
+    // Open party menu.
+    if (JOY_NEW(R_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+        gTasks[taskId].func = Task_GoToPartyMenu;
     }
 }
 
@@ -602,6 +611,28 @@ static void Task_SaveAndExit(u8 taskId)
             gTasks[taskId].func = Task_TrailMapWaitForKeypress;
             gTasks[taskId].data[0] = 0;
             break;
+    }
+}
+
+static void Task_GoToPartyMenu(u8 taskId)
+{
+    switch (gTasks[taskId].data[0])
+    {
+    case 0:
+        FadeScreen(FADE_TO_BLACK, 0);
+        ++gTasks[taskId].data[0];
+        break;
+    case 1:
+        if (!gPaletteFade.active)
+        {
+            Free(sTrailMapTilemapPtr);
+            sTrailMapTilemapPtr = NULL;
+            FreeAllWindowBuffers();
+            ResetSpriteData();
+            DestroyTask(taskId);
+            SetMainCallback2(CB2_OpenPartyMenuCustom);
+        }
+        break;
     }
 }
 

@@ -12,6 +12,7 @@
 #include "graphics.h"
 #include "item.h"
 #include "line_break.h"
+#include "load_save.h"
 #include "m4a.h"
 #include "main.h"
 #include "malloc.h"
@@ -39,6 +40,7 @@
 #include "text_window.h"
 #include "title_screen.h"
 #include "trainer_pokemon_sprites.h"
+#include "trail_interface.h"
 #include "util.h"
 #include "window.h"
 #include "constants/event_objects.h"
@@ -575,7 +577,10 @@ static void Task_ClosePartyMenu(u8 taskId)
         // Return to overworld.
         CopyPartyDataToMonData();
         m4aMPlayVolumeControl(&gMPlayInfo_BGM, TRACKS_ALL, 0x100);
-        SetMainCallback2(CB2_ReturnToFieldWithOpenMenu);
+        if (UseContinueGameWarp())
+            SetMainCallback2(CB2_ReturnToFieldWithOpenMenu);
+        else
+            SetMainCallback2(CB2_InitTrailInterface);
     }
 }
 

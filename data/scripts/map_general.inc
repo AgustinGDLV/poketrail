@@ -138,7 +138,7 @@ EventScript_Campfire::
 	dynmultipush EventScript_Rest_Text, 0
 	dynmultipush EventScript_Resume_Text, 1
 	dynmultipush EventScript_Stay_Text, 2
-	dynmultistack 21, 6, TRUE, 3, FALSE, 0, NULL
+	dynmultistack 21, 6, FALSE, 3, FALSE, 0, NULL
 	releaseall
 	switch VAR_RESULT
 	case 0, EventScript_Campfire_Rest
