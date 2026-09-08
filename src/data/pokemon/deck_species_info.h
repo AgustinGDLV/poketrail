@@ -1061,7 +1061,7 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .baseHP = 50, 
         .basePower = 60, 
         .baseDef = 100, 
-        .move = DECK_TWIST,
+        .move = DECK_TANGLE,
         .ability = DECK_ENDURING, 
     
         .playerIdle = gTangelaPlayerIdleGfx, 
@@ -1083,7 +1083,7 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .baseHP = 60, 
         .basePower = 80, 
         .baseDef = 120, 
-        .move = DECK_TWIST, 
+        .move = DECK_TANGLE, 
         .ability = DECK_ENDURING, 
     
         .playerIdle = gTangrowthPlayerIdleGfx, 

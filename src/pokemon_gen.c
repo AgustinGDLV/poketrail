@@ -75,6 +75,10 @@ void InitBossPartyFromEncounter(void) // used by callnative
             level = 20;
             gDeckStruct.bossHPMult = UQ_4_12(2.0);
             break;
+        case SPECIES_HIPPOWDON:
+            level = 28;
+            gDeckStruct.bossHPMult = UQ_4_12(2.0);
+            break;
         case SPECIES_LOTAD:
             level = 20;
             gDeckStruct.musicOverride = MUS_VS_CHAMPION;

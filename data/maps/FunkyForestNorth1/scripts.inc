@@ -30,14 +30,7 @@ FunkyForestNorth1_End:
 FunkyForestNorth1_BugCatcher1::
 	lockall
 	faceplayer
-	callnative GetCharacterId
-	call_if_eq VAR_RESULT, 0, FunkyForestNorth1_BugCatcher1_Alt
 	msgbox FunkyForestNorth1_BugCatcher1_Text
-	releaseall
-	end
-
-FunkyForestNorth1_BugCatcher1_Alt::
-	msgbox FunkyForestNorth1_BugCatcher1_Text_Alt
 	releaseall
 	end
 
@@ -66,14 +59,10 @@ FunkyForestNorth1_RattataText:
 	.string "way. Fight?$"
 
 FunkyForestNorth1_BugCatcher1_Text:
-	.string "Are you on your way\n"
-	.string "to Orchid City?\p"
-	.string "I think only bug catchers\n"
-	.string "can handle this forest!$"
-
-FunkyForestNorth1_BugCatcher1_Text_Alt:
-	.string "You're a bug catcher?\n"
-	.string "Isn't this forest cool!$"
+	.string "Did you know you can\n"
+	.string "swap POKéMON in battle\p"
+	.string "by pressing START?\n"
+	.string "Pretty cool!$"
 
 FunkyForestNorth1_BugCatcher2_Text:
 	.string "These mushrooms are\n"

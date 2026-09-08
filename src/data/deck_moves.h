@@ -222,9 +222,9 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
         .secondary = DECK_SECONDARY_RECHARGE,
     },
 
-    [DECK_TWIST] =
+    [DECK_TANGLE] =
     {
-        .name = COMPOUND_STRING("TWIST"),
+        .name = COMPOUND_STRING("TANGLE"),
         .description = COMPOUND_STRING("Swaps allies, boosts PWR."),
         .power = 40,
         .target = TARGET_LEFT_ALLY | TARGET_RIGHT_ALLY,

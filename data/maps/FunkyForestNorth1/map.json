@@ -119,7 +119,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(APPLIN)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(SPEAROW)",
       "x": 15,
       "y": 28,
       "elevation": 0,
@@ -132,7 +132,7 @@
       "flag": "FLAG_FUNKY_FOREST_NORTH_ENCOUNTER_1"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(BELLSPROUT)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(HOPPIP)",
       "x": 38,
       "y": 11,
       "elevation": 0,
