@@ -1000,6 +1000,8 @@ void PrintTargetBattlerPrompt(enum BattleId battler)
     StringCopy(gStringVar2, GetSpeciesName(gDeckMons[battler].species));
     if (gDeckMovesInfo[gDeckSpeciesInfo[gDeckMons[gBattlerAttacker].species].move].effect == DECK_EFFECT_POWER_UP)
         StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Boost {STR_VAR_2}?"));
+    else if (gDeckMovesInfo[gDeckSpeciesInfo[gDeckMons[gBattlerAttacker].species].move].effect == DECK_EFFECT_HEAL)
+        StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Heal {STR_VAR_2}?"));
     else
         StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Attack {STR_VAR_2}?"));
 

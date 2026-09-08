@@ -347,6 +347,11 @@ const struct TemplateRules gTemplateRules[TEMPLATE_TYPES_COUNT] =
         .encounterPool = {
             {SPECIES_VULPIX, 100},
             {SPECIES_SLUGMA, 100},
+            {SPECIES_KOFFING, 100},
+            {SPECIES_GRIMER, 100},
+            {SPECIES_ZUBAT, 100},
+            {SPECIES_DIGLETT, 50},
+            {SPECIES_HITMONTOP, 50},
         }
     },
 
@@ -375,6 +380,7 @@ const struct TemplateRules gTemplateRules[TEMPLATE_TYPES_COUNT] =
             {SPECIES_CLEFFA, 100},
             {SPECIES_ZUBAT, 100},
             {SPECIES_DIGLETT, 100},
+            {SPECIES_WHISMUR, 100},
         }
     },
 
@@ -403,8 +409,11 @@ const struct TemplateRules gTemplateRules[TEMPLATE_TYPES_COUNT] =
             {SPECIES_BALTOY, 100},
             {SPECIES_CACNEA, 100},
             {SPECIES_HIPPOPOTAS, 100},
-            {SPECIES_SKORUPI, 100},
             {SPECIES_TRAPINCH, 100},
+            {SPECIES_GLIGAR, 100},
+            {SPECIES_SPEAROW, 100},
+            {SPECIES_SANDSHREW, 100},
+            {SPECIES_PINSIR, 100},
         }
     },
 
@@ -437,7 +446,7 @@ const struct TemplateRules gTemplateRules[TEMPLATE_TYPES_COUNT] =
             {SPECIES_PARAS, 100},
             {SPECIES_BUDEW, 50},
             {SPECIES_GASTLY, 50},
-            {SPECIES_RATTATA, 50},
+            {SPECIES_PINSIR, 50},
         }
     },
 

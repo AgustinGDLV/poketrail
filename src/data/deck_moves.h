@@ -246,11 +246,182 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
     [DECK_EARTHQUAKE] =
     {
         .name = COMPOUND_STRING("Earthquakes"),
-        .description = COMPOUND_STRING("Damages all opponents, recharges."),
+        .description = COMPOUND_STRING("Damages all opponents, allies."),
+        .power = 100,
+        .target = TARGET_ALL_OPPONENTS | TARGET_LEFT_ALLY | TARGET_RIGHT_ALLY,
+        .effect = DECK_EFFECT_HIT,
+    },
+
+    [DECK_BULLDOZE] =
+    {
+        .name = COMPOUND_STRING("BULLDOZE"),
+        .description = COMPOUND_STRING("Damages one opponent."),
+        .power = 60,
+        .target = TARGET_SINGLE_OPPONENT,
+        .effect = DECK_EFFECT_HIT,
+    },
+
+    [DECK_PSYCHO_SHIFT] =
+    {
+        .name = COMPOUND_STRING("PSYCHO SHIFT"),
+        .description = COMPOUND_STRING("Swaps allies and boosts PWR."),
+        .power = 50,
+        .target = TARGET_LEFT_ALLY | TARGET_RIGHT_ALLY,
+        .effect = DECK_EFFECT_SWAP,
+        .param = STAT_ATK,
+    },
+
+    [DECK_HURRICANE] =
+    {
+        .name = COMPOUND_STRING("HURRICANE"),
+        .description = COMPOUND_STRING("Damages all opponents."),
+        .power = 70,
+        .target = TARGET_ALL_OPPONENTS,
+        .effect = DECK_EFFECT_HIT,
+    },
+
+    [DECK_SANDSTORM] =
+    {
+        .name = COMPOUND_STRING("SANDSTORM"),
+        .description = COMPOUND_STRING("Lowers opponent stats."),
+        .power = 40,
+        .target = TARGET_ALL_OPPONENTS,
+        .effect = DECK_EFFECT_POWER_UP,
+        .param = 0xFF, // PWR + DEF
+    },
+
+    [DECK_RAIN_DANCE] =
+    {
+        .name = COMPOUND_STRING("RAIN DANCE"),
+        .description = COMPOUND_STRING("Boosts ally stats."),
+        .power = 40,
+        .target = TARGET_ALL_ALLIES,
+        .effect = DECK_EFFECT_POWER_UP,
+        .param = 0xFF, // PWR + DEF
+    },
+
+    [DECK_HYPER_VOICE] =
+    {
+        .name = COMPOUND_STRING("RAIN DANCE"),
+        .description = COMPOUND_STRING("Boosts ally stats."),
+        .power = 70,
+        .target = TARGET_OPPOSITE_LEFT | TARGET_OPPOSITE | TARGET_OPPOSITE_RIGHT,
+        .effect = DECK_EFFECT_HIT,
+    },
+
+    [DECK_BOOMBURST] =
+    {
+        .name = COMPOUND_STRING("RAIN DANCE"),
+        .description = COMPOUND_STRING("Damages all opponents, recharges"),
         .power = 100,
         .target = TARGET_ALL_OPPONENTS,
         .effect = DECK_EFFECT_HIT,
         .secondary = DECK_SECONDARY_RECHARGE,
         .param = 1,
+    },
+
+    [DECK_SAND_ATTACK] =
+    {
+        .name = COMPOUND_STRING("SAND ATTACK"),
+        .description = COMPOUND_STRING("Lowers opponent DEF."),
+        .power = 40,
+        .target = TARGET_OPPOSITE_LEFT | TARGET_OPPOSITE | TARGET_OPPOSITE_RIGHT,
+        .effect = DECK_EFFECT_POWER_UP,
+        .param = STAT_DEF,
+    },
+
+    [DECK_SCARY_FACE] =
+    {
+        .name = COMPOUND_STRING("SCARY FACE"),
+        .description = COMPOUND_STRING("Lowers opponent DEF."),
+        .power = 40,
+        .target = TARGET_ALL_OPPONENTS,
+        .effect = DECK_EFFECT_POWER_UP,
+        .param = STAT_DEF,
+    },
+
+    [DECK_IRON_DEFENSE] =
+    {
+        .name = COMPOUND_STRING("IRON DEFENSE"),
+        .description = COMPOUND_STRING("Boosts ally DEF."),
+        .power = 70,
+        .target = TARGET_LEFT_ALLY | TARGET_USER | TARGET_RIGHT_ALLY,
+        .effect = DECK_EFFECT_POWER_UP,
+        .param = STAT_DEF,
+    },
+
+    [DECK_SMOKESCREEN] =
+    {
+        .name = COMPOUND_STRING("SMOKESCREEN"),
+        .description = COMPOUND_STRING("Lowers opponent PWR."),
+        .power = 40,
+        .target = TARGET_ALL_OPPONENTS,
+        .effect = DECK_EFFECT_POWER_UP,
+        .param = STAT_ATK,
+    },
+
+    [DECK_LAVA_PLUME] =
+    {
+        .name = COMPOUND_STRING("LAVA PLUME"),
+        .description = COMPOUND_STRING("Attacks 3 opposite opponents."),
+        .power = 70,
+        .target = TARGET_OPPOSITE_LEFT | TARGET_OPPOSITE | TARGET_OPPOSITE_RIGHT,
+        .effect = DECK_EFFECT_HIT,
+    },
+
+    [DECK_OVERHEAT] =
+    {
+        .name = COMPOUND_STRING("OVERHEAT"),
+        .description = COMPOUND_STRING("Attacks opponents with recoil."),
+        .power = 90,
+        .target = TARGET_ALL_OPPONENTS | TARGET_USER,
+        .effect = DECK_EFFECT_HIT,
+    },
+
+    [DECK_RAPID_SPIN] =
+    {
+        .name = COMPOUND_STRING("RAPID SPIN"),
+        .description = COMPOUND_STRING("Swaps with an ally, boosts PWR."),
+        .power = 40,
+        .target = TARGET_SINGLE_ALLY,
+        .effect = DECK_EFFECT_SWAP,
+        .param = STAT_ATK
+    },
+
+    [DECK_SLUDGE_BOMB] =
+    {
+        .name = COMPOUND_STRING("SLUDGE BOMB"),
+        .description = COMPOUND_STRING("Damages one opponent."),
+        .power = 70,
+        .target = TARGET_SINGLE_OPPONENT,
+        .effect = DECK_EFFECT_HIT,
+    },
+
+    [DECK_GUNK_SHOT] =
+    {
+        .name = COMPOUND_STRING("GUNK SHOT"),
+        .description = COMPOUND_STRING("Damages one opponent, recharges."),
+        .power = 150,
+        .target = TARGET_SINGLE_OPPONENT,
+        .effect = DECK_EFFECT_HIT,
+        .secondary = DECK_SECONDARY_RECHARGE,
+        .param = 1,
+    },
+
+    [DECK_MORNING_SUN] =
+    {
+        .name = COMPOUND_STRING("MORNING SUN"),
+        .description = COMPOUND_STRING("Heals one ally."),
+        .power = 60,
+        .target = TARGET_SINGLE_ALLY,
+        .effect = DECK_EFFECT_HEAL,
+    },
+
+    [DECK_MAGICAL_LEAF] =
+    {
+        .name = COMPOUND_STRING("MAGICAL LEAF"),
+        .description = COMPOUND_STRING("Damages all opponents."),
+        .power = 70,
+        .target = TARGET_ALL_OPPONENTS,
     },
 };

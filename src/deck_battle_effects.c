@@ -69,7 +69,9 @@ static void ExecuteHitEffect(void)
             StartBattlerAnim(targets[i], ANIM_HURT);
             gDeckStruct.lastHitDamage = damage = CalculateDamage(gBattlerAttacker, targets[i], gCurrentMove);
             if (targets[i] == gBattlerAttacker) // recoil
-                damage /= 3;
+                damage = (damage * 33) / 100;
+            else if (GetDeckBattlerSide(targets[i]) == GetDeckBattlerSide(gBattlerAttacker))
+                damage = (damage * 50) / 100;
             UpdateBattlerHP(targets[i], damage);
             aliveCount += 1;
         }
@@ -116,7 +118,6 @@ static void ExecuteStatChangeEffect(void)
 {
     u32 targetsCount = 0;
     u32 aliveCount = 0;
-    u32 negative = FALSE;
     enum BattleId targets[MAX_DECK_BATTLERS_COUNT] = {0};
     PopulateTargetsList(targets, &targetsCount);
 
