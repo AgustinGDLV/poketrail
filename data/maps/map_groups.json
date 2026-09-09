@@ -103,7 +103,13 @@
     "DesertTemplates_TreasureRoom",
     "DesertTemplates_ChallengeRoom",
     "DesertTemplates_Room1",
-    "DesertTemplates_Room2"
+    "DesertTemplates_Room2",
+    "DesertTemplates_Room3",
+    "DesertTemplates_Room4",
+    "DesertTemplates_Room5",
+    "DesertTemplates_Room6",
+    "DesertTemplates_Room7",
+    "DesertTemplates_Room8"
   ],
   "gMapGroup_FieldsTemplates": [
     "FieldsTemplates_Connections",

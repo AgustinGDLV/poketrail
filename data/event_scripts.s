@@ -1311,3 +1311,15 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/SwampTemplates_Room8/scripts.inc"
 
 	.include "data/maps/SwampTemplates_Room9/scripts.inc"
+
+	.include "data/maps/DesertTemplates_Room3/scripts.inc"
+
+	.include "data/maps/DesertTemplates_Room4/scripts.inc"
+
+	.include "data/maps/DesertTemplates_Room5/scripts.inc"
+
+	.include "data/maps/DesertTemplates_Room6/scripts.inc"
+
+	.include "data/maps/DesertTemplates_Room7/scripts.inc"
+
+	.include "data/maps/DesertTemplates_Room8/scripts.inc"

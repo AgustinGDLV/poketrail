@@ -5280,6 +5280,66 @@
       "secondary_tileset": "gTileset_Unused1",
       "border_filepath": "data/layouts/SwampTemplates_Room9/border.bin",
       "blockdata_filepath": "data/layouts/SwampTemplates_Room9/map.bin"
+    },
+    {
+      "id": "LAYOUT_DESERT_TEMPLATES_ROOM3",
+      "name": "DesertTemplates_Room3_Layout",
+      "width": 21,
+      "height": 20,
+      "primary_tileset": "gTileset_Desert",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/DesertTemplates_Room3/border.bin",
+      "blockdata_filepath": "data/layouts/DesertTemplates_Room3/map.bin"
+    },
+    {
+      "id": "LAYOUT_DESERT_TEMPLATES_ROOM4",
+      "name": "DesertTemplates_Room4_Layout",
+      "width": 21,
+      "height": 20,
+      "primary_tileset": "gTileset_Desert",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/DesertTemplates_Room4/border.bin",
+      "blockdata_filepath": "data/layouts/DesertTemplates_Room4/map.bin"
+    },
+    {
+      "id": "LAYOUT_DESERT_TEMPLATES_ROOM5",
+      "name": "DesertTemplates_Room5_Layout",
+      "width": 21,
+      "height": 20,
+      "primary_tileset": "gTileset_Desert",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/DesertTemplates_Room5/border.bin",
+      "blockdata_filepath": "data/layouts/DesertTemplates_Room5/map.bin"
+    },
+    {
+      "id": "LAYOUT_DESERT_TEMPLATES_ROOM6",
+      "name": "DesertTemplates_Room6_Layout",
+      "width": 21,
+      "height": 20,
+      "primary_tileset": "gTileset_Desert",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/DesertTemplates_Room6/border.bin",
+      "blockdata_filepath": "data/layouts/DesertTemplates_Room6/map.bin"
+    },
+    {
+      "id": "LAYOUT_DESERT_TEMPLATES_ROOM7",
+      "name": "DesertTemplates_Room7_Layout",
+      "width": 21,
+      "height": 20,
+      "primary_tileset": "gTileset_Desert",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/DesertTemplates_Room7/border.bin",
+      "blockdata_filepath": "data/layouts/DesertTemplates_Room7/map.bin"
+    },
+    {
+      "id": "LAYOUT_DESERT_TEMPLATES_ROOM8",
+      "name": "DesertTemplates_Room8_Layout",
+      "width": 21,
+      "height": 20,
+      "primary_tileset": "gTileset_Desert",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/DesertTemplates_Room8/border.bin",
+      "blockdata_filepath": "data/layouts/DesertTemplates_Room8/map.bin"
     }
   ]
 }

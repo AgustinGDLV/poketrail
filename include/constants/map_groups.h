@@ -63,6 +63,12 @@
 #define MAP_DESERT_TEMPLATES_CHALLENGE_ROOM (4 | (5 << 8))
 #define MAP_DESERT_TEMPLATES_ROOM1          (5 | (5 << 8))
 #define MAP_DESERT_TEMPLATES_ROOM2          (6 | (5 << 8))
+#define MAP_DESERT_TEMPLATES_ROOM3          (7 | (5 << 8))
+#define MAP_DESERT_TEMPLATES_ROOM4          (8 | (5 << 8))
+#define MAP_DESERT_TEMPLATES_ROOM5          (9 | (5 << 8))
+#define MAP_DESERT_TEMPLATES_ROOM6          (10 | (5 << 8))
+#define MAP_DESERT_TEMPLATES_ROOM7          (11 | (5 << 8))
+#define MAP_DESERT_TEMPLATES_ROOM8          (12 | (5 << 8))
 
 // gMapGroup_FieldsTemplates
 #define MAP_FIELDS_TEMPLATES_CONNECTIONS (0 | (6 << 8))
