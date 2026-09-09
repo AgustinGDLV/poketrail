@@ -98,14 +98,14 @@ static void ExecuteHitEffect(void)
 
 static void ApplyStatChange(u32 attacker, u32 target, u32 stat)
 {
-    if (stat == STAT_ATK || stat == 0xFF)
+    if (stat == STAT_DEF || stat == 0xFF)
     {
         if (GetDeckBattlerSide(attacker) != GetDeckBattlerSide(target))
             gDeckMons[target].defBoost -= ((gDeckMons[gBattlerAttacker].power + gDeckMons[gBattlerAttacker].powerBoost) * gDeckMovesInfo[gCurrentMove].power) / 100;
         else
             gDeckMons[target].defBoost += ((gDeckMons[gBattlerAttacker].power + gDeckMons[gBattlerAttacker].powerBoost) * gDeckMovesInfo[gCurrentMove].power) / 100;
     }
-    if (stat == STAT_DEF || stat == 0xFF)
+    if (stat == STAT_ATK || stat == 0xFF)
     {
         if (GetDeckBattlerSide(attacker) != GetDeckBattlerSide(target))
             gDeckMons[target].powerBoost -= ((gDeckMons[gBattlerAttacker].power + gDeckMons[gBattlerAttacker].powerBoost) * gDeckMovesInfo[gCurrentMove].power) / 100;

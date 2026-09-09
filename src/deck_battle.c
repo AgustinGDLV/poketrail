@@ -1253,21 +1253,20 @@ s32 CalculateDamage(u32 battlerAtk, u32 battlerDef, u32 move)
 {
     u32 movePower = gDeckMovesInfo[move].power;
     u32 level = gDeckMons[battlerAtk].lvl;
-    u32 power = gDeckMons[battlerAtk].power;
+    s32 power = gDeckMons[battlerAtk].power;
     s32 powerBoost = gDeckMons[battlerAtk].powerBoost + GetAbilityPowerBoost(battlerAtk);
-    u32 defense = gDeckMons[battlerDef].def;
+    s32 defense = gDeckMons[battlerDef].def;
     s32 defenseBoost = gDeckMons[battlerDef].defBoost;
 
-    // Avoid underflow.
-    if (power < powerBoost)
-        power = 0;
-    else
-        power += powerBoost;
+    power += powerBoost;
+    defense += defenseBoost;
 
-    if (defense < defenseBoost)
-        defenseBoost = 0;
-    else
-        defense += defenseBoost;
+    DebugPrintf("def %d / def boost %d", defense, defenseBoost);
+    if (power <= 1)
+        power = 1;
+    if (defense <= 1)
+        defense = 1;
+    DebugPrintf("def %d / def boost %d", defense, defenseBoost);
 
     // Calculate damage.
     s32 dmg = movePower * power * (2 * level / 5 + 2) / defense / 50 + 2;

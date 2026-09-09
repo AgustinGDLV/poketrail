@@ -41,7 +41,7 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
     {
         .name = COMPOUND_STRING("HELPING HAND"),
         .description = COMPOUND_STRING("Boosts right ally power."),
-        .power = 50,
+        .power = 40,
         .target = TARGET_RIGHT_ALLY,
         .effect = DECK_EFFECT_POWER_UP,
     },
@@ -77,7 +77,7 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
     {
         .name = COMPOUND_STRING("HARDEN"),
         .description = COMPOUND_STRING("Boosts defense of adjacent allies."),
-        .power = 50,
+        .power = 30,
         .target = TARGET_LEFT_ALLY | TARGET_USER | TARGET_RIGHT_ALLY,
         .effect = DECK_EFFECT_POWER_UP,
         .param = STAT_DEF,
@@ -105,7 +105,7 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
     {
         .name = COMPOUND_STRING("CHARGE"),
         .description = COMPOUND_STRING("Boosts power of adjacent allies."),
-        .power = 50,
+        .power = 30,
         .target = TARGET_LEFT_ALLY | TARGET_RIGHT_ALLY,
         .effect = DECK_EFFECT_POWER_UP,
     },
@@ -114,7 +114,7 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
     {
         .name = COMPOUND_STRING("COTTON GUARD"),
         .description = COMPOUND_STRING("Boosts adjacent ally stats."),
-        .power = 50,
+        .power = 30,
         .target = TARGET_LEFT_ALLY | TARGET_RIGHT_ALLY,
         .effect = DECK_EFFECT_POWER_UP,
         .param = 0xFF,
@@ -284,7 +284,7 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
     {
         .name = COMPOUND_STRING("SANDSTORM"),
         .description = COMPOUND_STRING("Lowers opponent stats."),
-        .power = 40,
+        .power = 20,
         .target = TARGET_ALL_OPPONENTS,
         .effect = DECK_EFFECT_POWER_UP,
         .param = 0xFF, // PWR + DEF
@@ -294,7 +294,7 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
     {
         .name = COMPOUND_STRING("RAIN DANCE"),
         .description = COMPOUND_STRING("Boosts ally stats."),
-        .power = 40,
+        .power = 20,
         .target = TARGET_ALL_ALLIES,
         .effect = DECK_EFFECT_POWER_UP,
         .param = 0xFF, // PWR + DEF
@@ -334,7 +334,7 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
     {
         .name = COMPOUND_STRING("SCARY FACE"),
         .description = COMPOUND_STRING("Lowers opponent DEF."),
-        .power = 40,
+        .power = 20,
         .target = TARGET_ALL_OPPONENTS,
         .effect = DECK_EFFECT_POWER_UP,
         .param = STAT_DEF,
@@ -354,7 +354,7 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
     {
         .name = COMPOUND_STRING("SMOKESCREEN"),
         .description = COMPOUND_STRING("Lowers opponent PWR."),
-        .power = 40,
+        .power = 20,
         .target = TARGET_ALL_OPPONENTS,
         .effect = DECK_EFFECT_POWER_UP,
         .param = STAT_ATK,
@@ -397,15 +397,14 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
         .effect = DECK_EFFECT_HIT,
     },
 
-    [DECK_GUNK_SHOT] =
+    [DECK_ACID_SPRAY] =
     {
-        .name = COMPOUND_STRING("GUNK SHOT"),
-        .description = COMPOUND_STRING("Damages one opponent, recharges."),
-        .power = 150,
-        .target = TARGET_SINGLE_OPPONENT,
+        .name = COMPOUND_STRING("ACID SPRAY"),
+        .description = COMPOUND_STRING("Lowers opposite's DEF."),
+        .power = 50,
+        .target = TARGET_OPPOSITE,
         .effect = DECK_EFFECT_HIT,
-        .secondary = DECK_SECONDARY_RECHARGE,
-        .param = 1,
+        .param = STAT_DEF,
     },
 
     [DECK_MORNING_SUN] =

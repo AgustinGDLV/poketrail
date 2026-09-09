@@ -1721,7 +1721,7 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .baseHP = 70, 
         .basePower = 90, 
         .baseDef = 100, 
-        .move = DECK_GUNK_SHOT, 
+        .move = DECK_ACID_SPRAY, 
         .ability = DECK_TRICKY, 
     
         .playerIdle = gMukPlayerIdleGfx, 
