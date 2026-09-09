@@ -83,6 +83,14 @@
 #define MAP_FOREST_TEMPLATES_CONNECTIONS (0 | (7 << 8))
 #define MAP_FOREST_TEMPLATES_BOSS_ROOM   (1 | (7 << 8))
 #define MAP_FOREST_TEMPLATES_ROOM1       (2 | (7 << 8))
+#define MAP_FOREST_TEMPLATES_ROOM2       (3 | (7 << 8))
+#define MAP_FOREST_TEMPLATES_ROOM3       (4 | (7 << 8))
+#define MAP_FOREST_TEMPLATES_ROOM4       (5 | (7 << 8))
+#define MAP_FOREST_TEMPLATES_ROOM5       (6 | (7 << 8))
+#define MAP_FOREST_TEMPLATES_ROOM6       (7 | (7 << 8))
+#define MAP_FOREST_TEMPLATES_ROOM7       (8 | (7 << 8))
+#define MAP_FOREST_TEMPLATES_ROOM8       (9 | (7 << 8))
+#define MAP_FOREST_TEMPLATES_ROOM9       (10 | (7 << 8))
 
 // gMapGroup_SwampTemplates
 

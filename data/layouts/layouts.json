@@ -5090,6 +5090,86 @@
       "secondary_tileset": "gTileset_Unused1",
       "border_filepath": "data/layouts/FieldsTemplates_Room12/border.bin",
       "blockdata_filepath": "data/layouts/FieldsTemplates_Room12/map.bin"
+    },
+    {
+      "id": "LAYOUT_FOREST_TEMPLATES_ROOM2",
+      "name": "ForestTemplates_Room2_Layout",
+      "width": 20,
+      "height": 20,
+      "primary_tileset": "gTileset_Forest",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/ForestTemplates_Room2/border.bin",
+      "blockdata_filepath": "data/layouts/ForestTemplates_Room2/map.bin"
+    },
+    {
+      "id": "LAYOUT_FOREST_TEMPLATES_ROOM3",
+      "name": "ForestTemplates_Room3_Layout",
+      "width": 20,
+      "height": 20,
+      "primary_tileset": "gTileset_Forest",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/ForestTemplates_Room3/border.bin",
+      "blockdata_filepath": "data/layouts/ForestTemplates_Room3/map.bin"
+    },
+    {
+      "id": "LAYOUT_FOREST_TEMPLATES_ROOM4",
+      "name": "ForestTemplates_Room4_Layout",
+      "width": 20,
+      "height": 20,
+      "primary_tileset": "gTileset_Forest",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/ForestTemplates_Room4/border.bin",
+      "blockdata_filepath": "data/layouts/ForestTemplates_Room4/map.bin"
+    },
+    {
+      "id": "LAYOUT_FOREST_TEMPLATES_ROOM5",
+      "name": "ForestTemplates_Room5_Layout",
+      "width": 20,
+      "height": 20,
+      "primary_tileset": "gTileset_Forest",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/ForestTemplates_Room5/border.bin",
+      "blockdata_filepath": "data/layouts/ForestTemplates_Room5/map.bin"
+    },
+    {
+      "id": "LAYOUT_FOREST_TEMPLATES_ROOM6",
+      "name": "ForestTemplates_Room6_Layout",
+      "width": 20,
+      "height": 20,
+      "primary_tileset": "gTileset_Forest",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/ForestTemplates_Room6/border.bin",
+      "blockdata_filepath": "data/layouts/ForestTemplates_Room6/map.bin"
+    },
+    {
+      "id": "LAYOUT_FOREST_TEMPLATES_ROOM7",
+      "name": "ForestTemplates_Room7_Layout",
+      "width": 20,
+      "height": 20,
+      "primary_tileset": "gTileset_Forest",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/ForestTemplates_Room7/border.bin",
+      "blockdata_filepath": "data/layouts/ForestTemplates_Room7/map.bin"
+    },
+    {
+      "id": "LAYOUT_FOREST_TEMPLATES_ROOM8",
+      "name": "ForestTemplates_Room8_Layout",
+      "width": 20,
+      "height": 20,
+      "primary_tileset": "gTileset_Forest",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/ForestTemplates_Room8/border.bin",
+      "blockdata_filepath": "data/layouts/ForestTemplates_Room8/map.bin"
+    },
+    {
+      "id": "LAYOUT_FOREST_TEMPLATES_ROOM9",
+      "name": "ForestTemplates_Room9_Layout",
+      "width": 20,
+      "height": 20,
+      "primary_tileset": "gTileset_Forest",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/ForestTemplates_Room9/border.bin",
+      "blockdata_filepath": "data/layouts/ForestTemplates_Room9/map.bin"
     }
   ]
 }

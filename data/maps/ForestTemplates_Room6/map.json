@@ -1,7 +1,7 @@
 {
-  "id": "MAP_FOREST_TEMPLATES_ROOM1",
-  "name": "ForestTemplates_Room1",
-  "layout": "LAYOUT_FOREST_TEMPLATES_ROOM1",
+  "id": "MAP_FOREST_TEMPLATES_ROOM6",
+  "name": "ForestTemplates_Room6",
+  "layout": "LAYOUT_FOREST_TEMPLATES_ROOM6",
   "music": "MUS_DUMMY",
   "region_map_section": "MAPSEC_ABANDONED_SHIP",
   "requires_flash": false,
@@ -16,8 +16,8 @@
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
-      "x": 4,
-      "y": 15,
+      "x": 5,
+      "y": 13,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_NONE",
       "movement_range_x": 0,
@@ -25,12 +25,12 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "EventScript_ItemBall",
-      "flag": "FLAG_ITEM_1"
+      "flag": "FLAG_ITEM_5"
     },
     {
       "graphics_id": "OBJ_EVENT_MON",
-      "x": 14,
-      "y": 14,
+      "x": 12,
+      "y": 11,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_ENCOUNTER_TRACK_PLAYER",
       "movement_range_x": 0,
@@ -38,13 +38,13 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "4",
       "script": "NULL",
-      "flag": "FLAG_ENCOUNTER_1"
+      "flag": "FLAG_ENCOUNTER_9"
     }
   ],
   "warp_events": [
     {
       "x": 10,
-      "y": 9,
+      "y": 8,
       "elevation": 0,
       "dest_map": "MAP_FOREST_TEMPLATES_ROOM1",
       "dest_warp_id": "0"

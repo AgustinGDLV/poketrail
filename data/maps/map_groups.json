@@ -123,7 +123,15 @@
   "gMapGroup_ForestTemplates": [
     "ForestTemplates_Connections",
     "ForestTemplates_BossRoom",
-    "ForestTemplates_Room1"
+    "ForestTemplates_Room1",
+    "ForestTemplates_Room2",
+    "ForestTemplates_Room3",
+    "ForestTemplates_Room4",
+    "ForestTemplates_Room5",
+    "ForestTemplates_Room6",
+    "ForestTemplates_Room7",
+    "ForestTemplates_Room8",
+    "ForestTemplates_Room9"
   ],
   "gMapGroup_SwampTemplates": [
 

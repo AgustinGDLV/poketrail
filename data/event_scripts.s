@@ -1273,3 +1273,19 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/FieldsTemplates_Room11/scripts.inc"
 
 	.include "data/maps/FieldsTemplates_Room12/scripts.inc"
+
+	.include "data/maps/ForestTemplates_Room2/scripts.inc"
+
+	.include "data/maps/ForestTemplates_Room3/scripts.inc"
+
+	.include "data/maps/ForestTemplates_Room4/scripts.inc"
+
+	.include "data/maps/ForestTemplates_Room5/scripts.inc"
+
+	.include "data/maps/ForestTemplates_Room6/scripts.inc"
+
+	.include "data/maps/ForestTemplates_Room7/scripts.inc"
+
+	.include "data/maps/ForestTemplates_Room8/scripts.inc"
+
+	.include "data/maps/ForestTemplates_Room9/scripts.inc"
