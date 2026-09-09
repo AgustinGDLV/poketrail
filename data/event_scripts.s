@@ -1289,3 +1289,25 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/ForestTemplates_Room8/scripts.inc"
 
 	.include "data/maps/ForestTemplates_Room9/scripts.inc"
+
+	.include "data/maps/SwampTemplates_Connections/scripts.inc"
+
+	.include "data/maps/SwampTemplates_BossRoom/scripts.inc"
+
+	.include "data/maps/SwampTemplates_Room1/scripts.inc"
+
+	.include "data/maps/SwampTemplates_Room2/scripts.inc"
+
+	.include "data/maps/SwampTemplates_Room3/scripts.inc"
+
+	.include "data/maps/SwampTemplates_Room4/scripts.inc"
+
+	.include "data/maps/SwampTemplates_Room5/scripts.inc"
+
+	.include "data/maps/SwampTemplates_Room6/scripts.inc"
+
+	.include "data/maps/SwampTemplates_Room7/scripts.inc"
+
+	.include "data/maps/SwampTemplates_Room8/scripts.inc"
+
+	.include "data/maps/SwampTemplates_Room9/scripts.inc"

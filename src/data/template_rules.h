@@ -235,6 +235,20 @@ static const u8 sForestNormalRooms[] =
     MAP_NUM(FOREST_TEMPLATES_ROOM9),
 };
 
+// Swamp Template Pools
+static const u8 sSwampNormalRooms[] =
+{
+    MAP_NUM(SWAMP_TEMPLATES_ROOM1),
+    MAP_NUM(SWAMP_TEMPLATES_ROOM2),
+    MAP_NUM(SWAMP_TEMPLATES_ROOM3),
+    MAP_NUM(SWAMP_TEMPLATES_ROOM4),
+    MAP_NUM(SWAMP_TEMPLATES_ROOM5),
+    MAP_NUM(SWAMP_TEMPLATES_ROOM6),
+    MAP_NUM(SWAMP_TEMPLATES_ROOM7),
+    MAP_NUM(SWAMP_TEMPLATES_ROOM8),
+    MAP_NUM(SWAMP_TEMPLATES_ROOM9),
+};
+
 // Fields Template Pools
 static const u8 sFieldsNormalRooms[] =
 {
@@ -488,9 +502,9 @@ const struct TemplateRules gTemplateRules[TEMPLATE_TYPES_COUNT] =
             {SPECIES_POOCHYENA,     100},
             {SPECIES_PONYTA,        100},
             {SPECIES_SPEAROW,       100},
-            {SPECIES_BELLSPROUT,    100},
             {SPECIES_EKANS,         100},
             {SPECIES_HOPPIP,        100},
+            {SPECIES_PHANPY,        100},
             {SPECIES_SWABLU,        50},
             {SPECIES_MAREEP,        50},
             {SPECIES_CHINGLING,     50},
@@ -551,8 +565,8 @@ const struct TemplateRules gTemplateRules[TEMPLATE_TYPES_COUNT] =
     [TEMPLATES_SMELLY_SWAMP] =
     {
         .name = COMPOUND_STRING("Smelly Swamp"),
-        .mapGroup = MAP_GROUP(FOREST_TEMPLATES_CONNECTIONS),
-        .bgm = MUS_RG_VIRIDIAN_FOREST,
+        .mapGroup = MAP_GROUP(SWAMP_TEMPLATES_CONNECTIONS),
+        .bgm = MUS_DP_GREAT_MARSH,
         .background = BG_FOREST,
         .connectionType = CONNECTION_TYPE_SEAMLESS,
         .offsets = {
@@ -561,17 +575,24 @@ const struct TemplateRules gTemplateRules[TEMPLATE_TYPES_COUNT] =
             [DIR_EAST] = {1, -2, 3, 4},
             [DIR_WEST] = {-3, -1, 3, 4},
         },
-        .numNormalRooms = ARRAY_COUNT(sForestNormalRooms),
-        .normalRoomIds = sForestNormalRooms,
+        .numNormalRooms = ARRAY_COUNT(sSwampNormalRooms),
+        .normalRoomIds = sSwampNormalRooms,
         .specialRoomIds = {
-            [BOSS_ROOM] = MAP_NUM(FOREST_TEMPLATES_BOSS_ROOM),
-            [TREASURE_ROOM] = MAP_NUM(FOREST_TEMPLATES_BOSS_ROOM),
-            [SHOP_ROOM] = MAP_NUM(FOREST_TEMPLATES_BOSS_ROOM),
+            [BOSS_ROOM] = MAP_NUM(SWAMP_TEMPLATES_BOSS_ROOM),
+            [TREASURE_ROOM] = MAP_NUM(SWAMP_TEMPLATES_BOSS_ROOM),
+            [SHOP_ROOM] = MAP_NUM(SWAMP_TEMPLATES_BOSS_ROOM),
         },
         .itemPools = gDefaultItemPools,
         .encounterPool = {
-            {SPECIES_APPLIN, 100},
-            {SPECIES_SPEAROW, 100},
+            {SPECIES_SLOWPOKE, 100},
+            {SPECIES_WOOPER, 100},
+            {SPECIES_ZUBAT, 100},
+            {SPECIES_GRIMER, 100},
+            {SPECIES_LOTAD, 100},
+            {SPECIES_BELLSPROUT, 100},
+            {SPECIES_AZURILL, 100},
+            {SPECIES_TANGELA, 50},
+            {SPECIES_BUDEW, 50},
         }
     },
 

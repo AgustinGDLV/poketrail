@@ -134,7 +134,17 @@
     "ForestTemplates_Room9"
   ],
   "gMapGroup_SwampTemplates": [
-
+    "SwampTemplates_Connections",
+    "SwampTemplates_BossRoom",
+    "SwampTemplates_Room1",
+    "SwampTemplates_Room2",
+    "SwampTemplates_Room3",
+    "SwampTemplates_Room4",
+    "SwampTemplates_Room5",
+    "SwampTemplates_Room6",
+    "SwampTemplates_Room7",
+    "SwampTemplates_Room8",
+    "SwampTemplates_Room9"
   ],
   "gMapGroup_TundraTemplates": [
 

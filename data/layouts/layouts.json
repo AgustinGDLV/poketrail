@@ -5170,6 +5170,116 @@
       "secondary_tileset": "gTileset_Unused1",
       "border_filepath": "data/layouts/ForestTemplates_Room9/border.bin",
       "blockdata_filepath": "data/layouts/ForestTemplates_Room9/map.bin"
+    },
+    {
+      "id": "LAYOUT_SWAMP_TEMPLATES_CONNECTIONS",
+      "name": "SwampTemplates_Connections_Layout",
+      "width": 8,
+      "height": 24,
+      "primary_tileset": "gTileset_Swamp",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/SwampTemplates_Connections/border.bin",
+      "blockdata_filepath": "data/layouts/SwampTemplates_Connections/map.bin"
+    },
+    {
+      "id": "LAYOUT_SWAMP_TEMPLATES_BOSS_ROOM",
+      "name": "SwampTemplates_BossRoom_Layout",
+      "width": 20,
+      "height": 20,
+      "primary_tileset": "gTileset_Swamp",
+      "secondary_tileset": "gTileset_OverworldSecondary",
+      "border_filepath": "data/layouts/SwampTemplates_BossRoom/border.bin",
+      "blockdata_filepath": "data/layouts/SwampTemplates_BossRoom/map.bin"
+    },
+    {
+      "id": "LAYOUT_SWAMP_TEMPLATES_ROOM1",
+      "name": "SwampTemplates_Room1_Layout",
+      "width": 20,
+      "height": 20,
+      "primary_tileset": "gTileset_Swamp",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/SwampTemplates_Room1/border.bin",
+      "blockdata_filepath": "data/layouts/SwampTemplates_Room1/map.bin"
+    },
+    {
+      "id": "LAYOUT_SWAMP_TEMPLATES_ROOM2",
+      "name": "SwampTemplates_Room2_Layout",
+      "width": 20,
+      "height": 20,
+      "primary_tileset": "gTileset_Swamp",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/SwampTemplates_Room2/border.bin",
+      "blockdata_filepath": "data/layouts/SwampTemplates_Room2/map.bin"
+    },
+    {
+      "id": "LAYOUT_SWAMP_TEMPLATES_ROOM3",
+      "name": "SwampTemplates_Room3_Layout",
+      "width": 20,
+      "height": 20,
+      "primary_tileset": "gTileset_Swamp",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/SwampTemplates_Room3/border.bin",
+      "blockdata_filepath": "data/layouts/SwampTemplates_Room3/map.bin"
+    },
+    {
+      "id": "LAYOUT_SWAMP_TEMPLATES_ROOM4",
+      "name": "SwampTemplates_Room4_Layout",
+      "width": 20,
+      "height": 20,
+      "primary_tileset": "gTileset_Swamp",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/SwampTemplates_Room4/border.bin",
+      "blockdata_filepath": "data/layouts/SwampTemplates_Room4/map.bin"
+    },
+    {
+      "id": "LAYOUT_SWAMP_TEMPLATES_ROOM5",
+      "name": "SwampTemplates_Room5_Layout",
+      "width": 20,
+      "height": 20,
+      "primary_tileset": "gTileset_Swamp",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/SwampTemplates_Room5/border.bin",
+      "blockdata_filepath": "data/layouts/SwampTemplates_Room5/map.bin"
+    },
+    {
+      "id": "LAYOUT_SWAMP_TEMPLATES_ROOM6",
+      "name": "SwampTemplates_Room6_Layout",
+      "width": 20,
+      "height": 20,
+      "primary_tileset": "gTileset_Swamp",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/SwampTemplates_Room6/border.bin",
+      "blockdata_filepath": "data/layouts/SwampTemplates_Room6/map.bin"
+    },
+    {
+      "id": "LAYOUT_SWAMP_TEMPLATES_ROOM7",
+      "name": "SwampTemplates_Room7_Layout",
+      "width": 20,
+      "height": 20,
+      "primary_tileset": "gTileset_Swamp",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/SwampTemplates_Room7/border.bin",
+      "blockdata_filepath": "data/layouts/SwampTemplates_Room7/map.bin"
+    },
+    {
+      "id": "LAYOUT_SWAMP_TEMPLATES_ROOM8",
+      "name": "SwampTemplates_Room8_Layout",
+      "width": 20,
+      "height": 20,
+      "primary_tileset": "gTileset_Swamp",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/SwampTemplates_Room8/border.bin",
+      "blockdata_filepath": "data/layouts/SwampTemplates_Room8/map.bin"
+    },
+    {
+      "id": "LAYOUT_SWAMP_TEMPLATES_ROOM9",
+      "name": "SwampTemplates_Room9_Layout",
+      "width": 20,
+      "height": 20,
+      "primary_tileset": "gTileset_Swamp",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/SwampTemplates_Room9/border.bin",
+      "blockdata_filepath": "data/layouts/SwampTemplates_Room9/map.bin"
     }
   ]
 }

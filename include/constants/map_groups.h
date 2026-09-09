@@ -93,6 +93,17 @@
 #define MAP_FOREST_TEMPLATES_ROOM9       (10 | (7 << 8))
 
 // gMapGroup_SwampTemplates
+#define MAP_SWAMP_TEMPLATES_CONNECTIONS (0 | (8 << 8))
+#define MAP_SWAMP_TEMPLATES_BOSS_ROOM   (1 | (8 << 8))
+#define MAP_SWAMP_TEMPLATES_ROOM1       (2 | (8 << 8))
+#define MAP_SWAMP_TEMPLATES_ROOM2       (3 | (8 << 8))
+#define MAP_SWAMP_TEMPLATES_ROOM3       (4 | (8 << 8))
+#define MAP_SWAMP_TEMPLATES_ROOM4       (5 | (8 << 8))
+#define MAP_SWAMP_TEMPLATES_ROOM5       (6 | (8 << 8))
+#define MAP_SWAMP_TEMPLATES_ROOM6       (7 | (8 << 8))
+#define MAP_SWAMP_TEMPLATES_ROOM7       (8 | (8 << 8))
+#define MAP_SWAMP_TEMPLATES_ROOM8       (9 | (8 << 8))
+#define MAP_SWAMP_TEMPLATES_ROOM9       (10 | (8 << 8))
 
 // gMapGroup_TundraTemplates
 

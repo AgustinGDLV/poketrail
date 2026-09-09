@@ -1,0 +1,100 @@
+{
+  "id": "MAP_SWAMP_TEMPLATES_ROOM8",
+  "name": "SwampTemplates_Room8",
+  "layout": "LAYOUT_SWAMP_TEMPLATES_ROOM8",
+  "music": "MUS_DUMMY",
+  "region_map_section": "MAPSEC_ABANDONED_SHIP",
+  "requires_flash": false,
+  "weather": "WEATHER_NONE",
+  "map_type": "MAP_TYPE_ROUTE",
+  "allow_cycling": false,
+  "allow_escaping": false,
+  "allow_running": true,
+  "show_map_name": false,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": 0,
+  "object_events": [
+    {
+      "graphics_id": "OBJ_EVENT_MON",
+      "x": 5,
+      "y": 15,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_ENCOUNTER_TRACK_PLAYER",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "4",
+      "script": "NULL",
+      "flag": "FLAG_ENCOUNTER_11"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
+      "x": 8,
+      "y": 12,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "EventScript_ItemBall",
+      "flag": "FLAG_ITEM_7"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_MON",
+      "x": 15,
+      "y": 4,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_ENCOUNTER_TRACK_PLAYER",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "4",
+      "script": "NULL",
+      "flag": "FLAG_ENCOUNTER_12"
+    }
+  ],
+  "warp_events": [
+    {
+      "x": 10,
+      "y": 6,
+      "elevation": 0,
+      "dest_map": "MAP_SWAMP_TEMPLATES_ROOM1",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 9,
+      "y": 3,
+      "elevation": 0,
+      "dest_map": "MAP_SWAMP_TEMPLATES_ROOM1",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 9,
+      "y": 16,
+      "elevation": 0,
+      "dest_map": "MAP_SWAMP_TEMPLATES_ROOM1",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 16,
+      "y": 8,
+      "elevation": 0,
+      "dest_map": "MAP_SWAMP_TEMPLATES_ROOM1",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 3,
+      "y": 8,
+      "elevation": 0,
+      "dest_map": "MAP_SWAMP_TEMPLATES_ROOM1",
+      "dest_warp_id": "0"
+    }
+  ],
+  "coord_events": [
+
+  ],
+  "bg_events": [
+
+  ]
+}
