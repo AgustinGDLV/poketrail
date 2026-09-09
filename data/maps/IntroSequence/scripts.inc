@@ -85,9 +85,8 @@ IntroSequence_BugCatcherChooseStarter:
 	message IntroSequence_AskStarterText2
 	waitmessage
 	dynmultipush IntroSequence_Caterpie, 0
-	dynmultipush IntroSequence_Kricketot, 1
 	dynmultipush IntroSequence_Ledyba, 2
-	dynmultistack 9, 3, TRUE, 4, FALSE, 0, NULL
+	dynmultistack 9, 2, TRUE, 4, FALSE, 0, NULL
 	callnative AssignStarterToPlayer
 	goto IntroSequence_StartJourney
 	end
@@ -95,10 +94,9 @@ IntroSequence_BugCatcherChooseStarter:
 IntroSequence_BreederChooseStarter:
 	message IntroSequence_AskStarterText2
 	waitmessage
-	dynmultipush IntroSequence_Mareep, 0
 	dynmultipush IntroSequence_Swinub, 1
 	dynmultipush IntroSequence_Budew, 2
-	dynmultistack 10, 3, TRUE, 4, FALSE, 0, NULL
+	dynmultistack 10, 2, TRUE, 4, FALSE, 0, NULL
 	callnative AssignStarterToPlayer
 	goto IntroSequence_StartJourney
 	end
@@ -107,9 +105,8 @@ IntroSequence_SwimmerChooseStarter:
 	message IntroSequence_AskStarterText2
 	waitmessage
 	dynmultipush IntroSequence_Slowpoke, 0
-	dynmultipush IntroSequence_Krabby, 1
 	dynmultipush IntroSequence_Wingull, 2
-	dynmultistack 9, 3, TRUE, 4, FALSE, 0, NULL
+	dynmultistack 9, 2, TRUE, 4, FALSE, 0, NULL
 	callnative AssignStarterToPlayer
 	goto IntroSequence_StartJourney
 	end
@@ -118,9 +115,8 @@ IntroSequence_HikerChooseStarter:
 	message IntroSequence_AskStarterText2
 	waitmessage
 	dynmultipush IntroSequence_Diglett, 0
-	dynmultipush IntroSequence_Roggenrola, 1
 	dynmultipush IntroSequence_Whismur, 2
-	dynmultistack 9, 3, TRUE, 4, FALSE, 0, NULL
+	dynmultistack 9, 2, TRUE, 4, FALSE, 0, NULL
 	callnative AssignStarterToPlayer
 	goto IntroSequence_StartJourney
 	end

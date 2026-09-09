@@ -503,7 +503,7 @@ static void Task_HandleBattleVictory(u8 taskId)
         break;
     case 7: // End battle if no caught mon.
         gTasks[taskId].tState = 0;
-        if (gDeckStruct.battlerCaught != MAX_DECK_BATTLERS_COUNT)
+        if (gDeckStruct.battlerCaught != MAX_DECK_BATTLERS_COUNT && !gDeckStruct.isBossBattle)
         {
             gTasks[taskId].func = Task_HandleCaughtBattler;
         }

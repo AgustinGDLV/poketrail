@@ -14,10 +14,127 @@
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
   "connections": 0,
   "object_events": [
-
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(SCYTHER)",
+      "x": 19,
+      "y": 12,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_WALK_IN_PLACE_LEFT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "FunkyForestEast1_ScytherBoss",
+      "flag": "FLAG_FUNKY_FOREST_EAST_BOSS"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_YOUNGSTER",
+      "x": 34,
+      "y": 9,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_WALK_LEFT_AND_RIGHT",
+      "movement_range_x": 2,
+      "movement_range_y": 2,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "FunkyForestEast1_Youngster",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SWIMMER_M",
+      "x": 44,
+      "y": 28,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "FunkyForestEast1_Swimmer",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
+      "x": 33,
+      "y": 35,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 1,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "ITEM_REVIVE",
+      "script": "Common_EventScript_FindItem",
+      "flag": "FLAG_FUNKY_FOREST_EAST_ITEM_2"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
+      "x": 23,
+      "y": 27,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 1,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "ITEM_HYPER_POTION",
+      "script": "Common_EventScript_FindItem",
+      "flag": "FLAG_FUNKY_FOREST_EAST_ITEM_1"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(TANGROWTH)",
+      "x": 29,
+      "y": 25,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_ENCOUNTER_TRACK_PLAYER",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "4",
+      "script": "NULL",
+      "flag": "FLAG_FUNKY_FOREST_EAST_ENCOUNTER_1"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(ROSELIA)",
+      "x": 41,
+      "y": 19,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_ENCOUNTER_TRACK_PLAYER",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "4",
+      "script": "NULL",
+      "flag": "FLAG_FUNKY_FOREST_EAST_ENCOUNTER_2"
+    }
   ],
   "warp_events": [
-
+    {
+      "x": 4,
+      "y": 11,
+      "elevation": 0,
+      "dest_map": "MAP_FUNKY_FOREST_EAST1",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 4,
+      "y": 12,
+      "elevation": 0,
+      "dest_map": "MAP_FUNKY_FOREST_EAST1",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 54,
+      "y": 34,
+      "elevation": 0,
+      "dest_map": "MAP_FUNKY_FOREST_EAST1",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 54,
+      "y": 35,
+      "elevation": 0,
+      "dest_map": "MAP_FUNKY_FOREST_EAST1",
+      "dest_warp_id": "0"
+    }
   ],
   "coord_events": [
 

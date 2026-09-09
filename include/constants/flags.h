@@ -1276,11 +1276,11 @@
 #define FLAG_DEEP_DESERT_WEST_ITEM_1                                0x4C4
 #define FLAG_DEEP_DESERT_WEST_ITEM_2                                0x4C5
 #define FLAG_DEEP_DESERT_WEST_ITEM_3                                0x4C6
-#define FLAG_UNUSED_0x4C7                                           0x4C7
-#define FLAG_UNUSED_0x4C8                                           0x4C8
-#define FLAG_UNUSED_0x4C9                                           0x4C9
-#define FLAG_UNUSED_0x4CA                                           0x4CA
-#define FLAG_UNUSED_0x4CB                                           0x4CB
+#define FLAG_FUNKY_FOREST_EAST_BOSS                                 0x4C7
+#define FLAG_FUNKY_FOREST_EAST_ENCOUNTER_1                          0x4C8
+#define FLAG_FUNKY_FOREST_EAST_ENCOUNTER_2                          0x4C9
+#define FLAG_FUNKY_FOREST_EAST_ITEM_1                               0x4CA
+#define FLAG_FUNKY_FOREST_EAST_ITEM_2                               0x4CB
 #define FLAG_UNUSED_0x4CC                                           0x4CC
 #define FLAG_UNUSED_0x4CD                                           0x4CD
 #define FLAG_UNUSED_0x4CE                                           0x4CE

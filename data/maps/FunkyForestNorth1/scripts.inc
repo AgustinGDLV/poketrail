@@ -59,10 +59,12 @@ FunkyForestNorth1_RattataText:
 	.string "way. Fight?$"
 
 FunkyForestNorth1_BugCatcher1_Text:
-	.string "Did you know you can\n"
-	.string "swap POKéMON in battle\p"
-	.string "by pressing START?\n"
-	.string "Pretty cool!$"
+	.string "If you want to recruit a\n"
+	.string "an opposing POKéMON,\p"
+	.string "I heard you should defeat\n"
+	.string "that POKéMON first!p"
+	.string "That's how it knows\n"
+	.string "you want it!$"
 
 FunkyForestNorth1_BugCatcher2_Text:
 	.string "These mushrooms are\n"
