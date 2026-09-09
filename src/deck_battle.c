@@ -971,7 +971,7 @@ static void Task_HandleTurnEndEffects(u8 taskId)
         for (enum BattleId battler = B_PLAYER_0; battler < MAX_DECK_BATTLERS_COUNT; ++battler)
         {
             if (GetDeckBattlerAbility(battler) == DECK_REGENERATIVE)
-                gDeckMons[battler].rechargeTurns -= 1;
+                UpdateBattlerHP(battler, -1 * (s32) ((gDeckMons[battler].hp * 10)/100));
         }
         ++gTasks[taskId].tTurnEndState;
         break;
@@ -979,7 +979,7 @@ static void Task_HandleTurnEndEffects(u8 taskId)
         for (enum BattleId battler = B_PLAYER_0; battler < MAX_DECK_BATTLERS_COUNT; ++battler)
         {
             if (GetDeckBattlerSide(battler) == gDeckStruct.actingSide && gDeckMons[battler].rechargeTurns > 0)
-                UpdateBattlerHP(battler, -1 * (s32) ((gDeckMons[battler].hp * 10)/100));
+                gDeckMons[battler].rechargeTurns -= 1;
         }
         ++gTasks[taskId].tTurnEndState;
         break;
