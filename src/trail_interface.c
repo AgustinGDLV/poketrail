@@ -1067,7 +1067,7 @@ static void LoadMapGraphics(u32 characterId)
 
     // Update palette blend.
     UpdateTimeOfDay();
-    u32 palettes = PALETTES_ALL & ~((1 << 15) | (1 << 14));
+    u32 palettes = (PALETTES_ALL & ~(1 << 15)) & ~(1 << 14);
     TimeMixPalettes(palettes, gPlttBufferUnfaded, gPlttBufferFaded, &gTimeBlend.startBlend, &gTimeBlend.endBlend, gTimeBlend.weight);
 
     // Print time.
@@ -1109,7 +1109,7 @@ static void IncrementTime(u32 minutes)
 
     // Update palette blend.
     UpdateTimeOfDay();
-    u32 palettes = PALETTES_ALL & ~(1 << 15);
+    u32 palettes = (PALETTES_ALL & ~(1 << 15)) & ~(1 << 14);
     TimeMixPalettes(palettes, gPlttBufferUnfaded, gPlttBufferFaded, &gTimeBlend.startBlend, &gTimeBlend.endBlend, gTimeBlend.weight);
 }
 
