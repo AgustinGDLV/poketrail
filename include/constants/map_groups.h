@@ -74,6 +74,10 @@
 #define MAP_FIELDS_TEMPLATES_ROOM5       (6 | (6 << 8))
 #define MAP_FIELDS_TEMPLATES_ROOM6       (7 | (6 << 8))
 #define MAP_FIELDS_TEMPLATES_ROOM7       (8 | (6 << 8))
+#define MAP_FIELDS_TEMPLATES_ROOM8       (9 | (6 << 8))
+#define MAP_FIELDS_TEMPLATES_ROOM10      (10 | (6 << 8))
+#define MAP_FIELDS_TEMPLATES_ROOM11      (11 | (6 << 8))
+#define MAP_FIELDS_TEMPLATES_ROOM12      (12 | (6 << 8))
 
 // gMapGroup_ForestTemplates
 #define MAP_FOREST_TEMPLATES_CONNECTIONS (0 | (7 << 8))

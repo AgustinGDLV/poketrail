@@ -30,6 +30,7 @@ FunkyForestEast1_Youngster::
 	faceplayer
 	msgbox FunkyForestEast1_Youngster_Text
 	applymovement 2, FunkyForestEast1_Movement_FaceUp
+	waitmovement 2
 	releaseall
 	end
 

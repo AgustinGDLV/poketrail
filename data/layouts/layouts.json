@@ -5050,6 +5050,46 @@
       "secondary_tileset": "gTileset_Unused1",
       "border_filepath": "data/layouts/DeepDesertWest1/border.bin",
       "blockdata_filepath": "data/layouts/DeepDesertWest1/map.bin"
+    },
+    {
+      "id": "LAYOUT_FIELDS_TEMPLATES_ROOM8",
+      "name": "FieldsTemplates_Room8_Layout",
+      "width": 18,
+      "height": 16,
+      "primary_tileset": "gTileset_Forest",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/FieldsTemplates_Room8/border.bin",
+      "blockdata_filepath": "data/layouts/FieldsTemplates_Room8/map.bin"
+    },
+    {
+      "id": "LAYOUT_FIELDS_TEMPLATES_ROOM10",
+      "name": "FieldsTemplates_Room10_Layout",
+      "width": 18,
+      "height": 16,
+      "primary_tileset": "gTileset_Forest",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/FieldsTemplates_Room10/border.bin",
+      "blockdata_filepath": "data/layouts/FieldsTemplates_Room10/map.bin"
+    },
+    {
+      "id": "LAYOUT_FIELDS_TEMPLATES_ROOM11",
+      "name": "FieldsTemplates_Room11_Layout",
+      "width": 18,
+      "height": 16,
+      "primary_tileset": "gTileset_Forest",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/FieldsTemplates_Room11/border.bin",
+      "blockdata_filepath": "data/layouts/FieldsTemplates_Room11/map.bin"
+    },
+    {
+      "id": "LAYOUT_FIELDS_TEMPLATES_ROOM12",
+      "name": "FieldsTemplates_Room12_Layout",
+      "width": 18,
+      "height": 16,
+      "primary_tileset": "gTileset_Forest",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/FieldsTemplates_Room12/border.bin",
+      "blockdata_filepath": "data/layouts/FieldsTemplates_Room12/map.bin"
     }
   ]
 }

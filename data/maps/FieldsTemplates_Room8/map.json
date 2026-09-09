@@ -1,12 +1,12 @@
 {
-  "id": "MAP_FIELDS_TEMPLATES_ROOM4",
-  "name": "FieldsTemplates_Room4",
-  "layout": "LAYOUT_FIELDS_TEMPLATES_ROOM4",
+  "id": "MAP_FIELDS_TEMPLATES_ROOM8",
+  "name": "FieldsTemplates_Room8",
+  "layout": "LAYOUT_FIELDS_TEMPLATES_ROOM8",
   "music": "MUS_DUMMY",
   "region_map_section": "MAPSEC_ABANDONED_SHIP",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
-  "map_type": "MAP_TYPE_ROUTE",
+  "map_type": "MAP_TYPE_TOWN",
   "allow_cycling": false,
   "allow_escaping": false,
   "allow_running": true,
@@ -16,8 +16,8 @@
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_MON",
-      "x": 5,
-      "y": 2,
+      "x": 3,
+      "y": 8,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_ENCOUNTER_TRACK_PLAYER",
       "movement_range_x": 0,
@@ -25,56 +25,56 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "4",
       "script": "NULL",
-      "flag": "FLAG_ENCOUNTER_11"
+      "flag": "FLAG_ENCOUNTER_9"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
-      "x": 4,
-      "y": 12,
+      "graphics_id": "OBJ_EVENT_MON",
+      "x": 12,
+      "y": 6,
       "elevation": 0,
-      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_type": "MOVEMENT_TYPE_ENCOUNTER_TRACK_PLAYER",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "0",
-      "script": "EventScript_ItemBall",
-      "flag": "FLAG_ITEM_6"
+      "trainer_sight_or_berry_tree_id": "4",
+      "script": "NULL",
+      "flag": "FLAG_ENCOUNTER_10"
     }
   ],
   "warp_events": [
     {
-      "x": 8,
-      "y": 8,
+      "x": 10,
+      "y": 6,
       "elevation": 0,
-      "dest_map": "MAP_FIELDS_TEMPLATES_ROOM4",
+      "dest_map": "MAP_FIELDS_TEMPLATES_ROOM7",
       "dest_warp_id": "0"
     },
     {
       "x": 8,
       "y": 1,
       "elevation": 0,
-      "dest_map": "MAP_FIELDS_TEMPLATES_ROOM4",
+      "dest_map": "MAP_FIELDS_TEMPLATES_ROOM7",
       "dest_warp_id": "0"
     },
     {
       "x": 8,
       "y": 14,
       "elevation": 0,
-      "dest_map": "MAP_FIELDS_TEMPLATES_ROOM4",
+      "dest_map": "MAP_FIELDS_TEMPLATES_ROOM7",
       "dest_warp_id": "0"
     },
     {
       "x": 16,
       "y": 7,
       "elevation": 0,
-      "dest_map": "MAP_FIELDS_TEMPLATES_ROOM4",
+      "dest_map": "MAP_FIELDS_TEMPLATES_ROOM7",
       "dest_warp_id": "0"
     },
     {
       "x": 1,
       "y": 7,
       "elevation": 0,
-      "dest_map": "MAP_FIELDS_TEMPLATES_ROOM4",
+      "dest_map": "MAP_FIELDS_TEMPLATES_ROOM7",
       "dest_warp_id": "0"
     }
   ],

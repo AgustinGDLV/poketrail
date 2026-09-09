@@ -1265,3 +1265,11 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/FunkyForestEast1/scripts.inc"
 
 	.include "data/maps/DeepDesertWest1/scripts.inc"
+
+	.include "data/maps/FieldsTemplates_Room8/scripts.inc"
+
+	.include "data/maps/FieldsTemplates_Room10/scripts.inc"
+
+	.include "data/maps/FieldsTemplates_Room11/scripts.inc"
+
+	.include "data/maps/FieldsTemplates_Room12/scripts.inc"

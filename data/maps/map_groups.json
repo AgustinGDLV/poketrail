@@ -114,7 +114,11 @@
     "FieldsTemplates_Room4",
     "FieldsTemplates_Room5",
     "FieldsTemplates_Room6",
-    "FieldsTemplates_Room7"
+    "FieldsTemplates_Room7",
+    "FieldsTemplates_Room8",
+    "FieldsTemplates_Room10",
+    "FieldsTemplates_Room11",
+    "FieldsTemplates_Room12"
   ],
   "gMapGroup_ForestTemplates": [
     "ForestTemplates_Connections",
