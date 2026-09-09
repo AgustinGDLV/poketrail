@@ -48,7 +48,10 @@ void InitEnemyPartyFromEncounter(void) // used by callnative
     u32 level = GetEncounterLevel();
     for (u32 i = 0; i < PARTY_SIZE; ++i)
     {
-        CreateMon(&gEnemyParty[i], gEncountersInfo[gSpecialVar_0x8000][i], level + (Random() % 2), USE_RANDOM_IVS, 0, 0, OT_ID_PLAYER_ID, 0);
+        if (gSaveBlock1Ptr->currentTemplateType == TEMPLATES_TERRIBLE_TUNNEL)
+            CreateMon(&gEnemyParty[i], gTerribleEncountersInfo[gSpecialVar_0x8000][i], level + (Random() % 2), USE_RANDOM_IVS, 0, 0, OT_ID_PLAYER_ID, 0);
+        else
+            CreateMon(&gEnemyParty[i], gEncountersInfo[gSpecialVar_0x8000][i], level + (Random() % 2), USE_RANDOM_IVS, 0, 0, OT_ID_PLAYER_ID, 0);
         SetMonData(&gEnemyParty[i], MON_DATA_POSITION, &i);
     }
     gDeckStruct.isBossBattle = FALSE;

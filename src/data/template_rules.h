@@ -403,10 +403,13 @@ const struct TemplateRules gTemplateRules[TEMPLATE_TYPES_COUNT] =
         },
         .itemPools = gDefaultItemPools,
         .encounterPool = {
-            {SPECIES_CLEFFA, 100},
-            {SPECIES_ZUBAT, 100},
-            {SPECIES_DIGLETT, 100},
-            {SPECIES_WHISMUR, 100},
+            {SPECIES_CLEFABLE, 100},
+            {SPECIES_CROBAT, 100},
+            {SPECIES_DUGTRIO, 100},
+            {SPECIES_EXPLOUD, 100},
+            {SPECIES_CHIMECHO, 50},
+            {SPECIES_GLISCOR, 50},
+            {SPECIES_SABLEYE, 50},
         }
     },
 
@@ -467,9 +470,9 @@ const struct TemplateRules gTemplateRules[TEMPLATE_TYPES_COUNT] =
         .encounterPool = {
             {SPECIES_CATERPIE, 100},
             {SPECIES_SLAKOTH, 100},
-            {SPECIES_TANGELA, 100},
             {SPECIES_SHROOMISH, 100},
             {SPECIES_PARAS, 100},
+            {SPECIES_AIPOM, 100},
             {SPECIES_BUDEW, 50},
             {SPECIES_GASTLY, 50},
             {SPECIES_PINSIR, 50},
@@ -504,10 +507,9 @@ const struct TemplateRules gTemplateRules[TEMPLATE_TYPES_COUNT] =
             {SPECIES_SPEAROW,       100},
             {SPECIES_EKANS,         100},
             {SPECIES_HOPPIP,        100},
-            {SPECIES_PHANPY,        100},
+            {SPECIES_CHANSEY,       50},
             {SPECIES_SWABLU,        50},
             {SPECIES_MAREEP,        50},
-            {SPECIES_CHINGLING,     50},
         }
     },
 
@@ -585,14 +587,14 @@ const struct TemplateRules gTemplateRules[TEMPLATE_TYPES_COUNT] =
         .itemPools = gDefaultItemPools,
         .encounterPool = {
             {SPECIES_SLOWPOKE, 100},
-            {SPECIES_WOOPER, 100},
             {SPECIES_ZUBAT, 100},
             {SPECIES_GRIMER, 100},
             {SPECIES_LOTAD, 100},
             {SPECIES_BELLSPROUT, 100},
-            {SPECIES_AZURILL, 100},
+            {SPECIES_AZUMARILL, 100},
+            {SPECIES_KOFFING, 50},
             {SPECIES_TANGELA, 50},
-            {SPECIES_BUDEW, 50},
+            {SPECIES_GASTLY, 50},
         }
     },
 
