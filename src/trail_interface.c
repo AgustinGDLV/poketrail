@@ -400,7 +400,7 @@ const struct CheckpointData gCheckpointData[CHECKPOINT_COUNT] =
     },
     [CHECKPOINT_TULIP_TOWN] =
     {
-        .name = COMPOUND_STRING("Tulip TOwn"),
+        .name = COMPOUND_STRING("Tulip Town"),
         .mapNum = MAP_NUM(TULIP_TOWN1),
         .warpId = {
             [DIR_EAST] = 0,
