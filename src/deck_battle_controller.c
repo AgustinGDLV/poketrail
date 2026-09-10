@@ -127,47 +127,44 @@ void Task_PlayerSelectAction(u8 taskId)
         // Swap not possible.
         PlaySE(SE_FAILURE);
     }
-    if (gMain.newKeys & B_BUTTON)
+    if ((gMain.newKeys & B_BUTTON) && gDeckStruct.actionsCount != 0)
     {
-        if (gDeckStruct.actionsCount == 0)
+        PlaySE(SE_SELECT);
+        struct BattleAction *action = &gDeckStruct.queuedActions[gDeckStruct.actionsCount - 1];
+        if (action->type == ACTION_SWAP)
         {
-            if (gDeckStruct.isBossBattle)
+            SwapBattlerPositions(action->attacker, action->target);
+            GetBattlerSprite(action->attacker)->oam.objMode = ST_OAM_OBJ_NORMAL;
+            GetBattlerSprite(action->target)->oam.objMode = ST_OAM_OBJ_NORMAL;
+            gDeckMons[action->attacker].hasSwapped = FALSE;
+            gDeckMons[action->target].hasSwapped = FALSE;
+
+            if (gDeckMons[action->attacker].pos == gDeckStruct.selectedPos || gDeckMons[action->target].pos == gDeckStruct.selectedPos)
             {
-                PlaySE(SE_FAILURE);
+                UpdateBattlerSelection(action->attacker, FALSE);
+                UpdateBattlerSelection(action->target, FALSE);
+                UpdateBattlerSelection(GetDeckBattlerAtPos(B_SIDE_PLAYER, gDeckStruct.selectedPos), TRUE);
+                DisplayActionSelectionInfo(GetDeckBattlerAtPos(B_SIDE_PLAYER, gDeckStruct.selectedPos));
             }
-            else
-            {
-                PlaySE(SE_SELECT);
-                gTasks[taskId].func = Task_PlayerTryToRun;
-            }
+            --gDeckStruct.actionsCount;
+        }
+        else
+        {
+            SetBattlerGrayscale(action->attacker, FALSE);
+            gDeckMons[action->attacker].hasMoved = FALSE;
+            --gDeckStruct.actionsCount;
+        }
+    }
+    if (JOY_NEW(L_BUTTON))
+    {
+        if (gDeckStruct.isBossBattle || gDeckStruct.actionsCount > 0)
+        {
+            PlaySE(SE_FAILURE);
         }
         else
         {
             PlaySE(SE_SELECT);
-            struct BattleAction *action = &gDeckStruct.queuedActions[gDeckStruct.actionsCount - 1];
-            if (action->type == ACTION_SWAP)
-            {
-                SwapBattlerPositions(action->attacker, action->target);
-                GetBattlerSprite(action->attacker)->oam.objMode = ST_OAM_OBJ_NORMAL;
-                GetBattlerSprite(action->target)->oam.objMode = ST_OAM_OBJ_NORMAL;
-                gDeckMons[action->attacker].hasSwapped = FALSE;
-                gDeckMons[action->target].hasSwapped = FALSE;
-
-                if (gDeckMons[action->attacker].pos == gDeckStruct.selectedPos || gDeckMons[action->target].pos == gDeckStruct.selectedPos)
-                {
-                    UpdateBattlerSelection(action->attacker, FALSE);
-                    UpdateBattlerSelection(action->target, FALSE);
-                    UpdateBattlerSelection(GetDeckBattlerAtPos(B_SIDE_PLAYER, gDeckStruct.selectedPos), TRUE);
-                    DisplayActionSelectionInfo(GetDeckBattlerAtPos(B_SIDE_PLAYER, gDeckStruct.selectedPos));
-                }
-                --gDeckStruct.actionsCount;
-            }
-            else
-            {
-                SetBattlerGrayscale(action->attacker, FALSE);
-                gDeckMons[action->attacker].hasMoved = FALSE;
-                --gDeckStruct.actionsCount;
-            }
+            gTasks[taskId].func = Task_PlayerTryToRun;
         }
     }
 }

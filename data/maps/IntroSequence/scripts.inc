@@ -105,7 +105,7 @@ IntroSequence_SwimmerChooseStarter:
 	message IntroSequence_AskStarterText2
 	waitmessage
 	dynmultipush IntroSequence_Slowpoke, 0
-	dynmultipush IntroSequence_Wingull, 2
+	dynmultipush IntroSequence_Krabby, 1
 	dynmultistack 9, 2, TRUE, 4, FALSE, 0, NULL
 	callnative AssignStarterToPlayer
 	goto IntroSequence_StartJourney
@@ -227,6 +227,8 @@ IntroSequence_TrailExplanation:
 	.string "START to swap battler positions.\p"
 	.string "This does not consume a move, and\n"
 	.string "this even boosts some POKéMON.\p"
+	.string "You can also press L to run\n"
+	.string "if no actions are selected.\p"
 	.string "Does that all make sense?\p$"
 
 IntroSequence_GoAhead:
