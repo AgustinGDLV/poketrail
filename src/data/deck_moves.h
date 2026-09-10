@@ -17,6 +17,15 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
         .target = TARGET_SINGLE_OPPONENT,
         .effect = DECK_EFFECT_HIT,
     },
+    
+    [DECK_SUPER_FANG] =
+    {
+        .name = COMPOUND_STRING("QUICK ATTACK"),
+        .description = COMPOUND_STRING("Damages one opponent."),
+        .power = 80,
+        .target = TARGET_SINGLE_OPPONENT,
+        .effect = DECK_EFFECT_HIT,
+    },
 
     [DECK_VINE_WHIP] =
     {
@@ -40,7 +49,7 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
     [DECK_HELPING_HAND] =
     {
         .name = COMPOUND_STRING("HELPING HAND"),
-        .description = COMPOUND_STRING("Boosts right ally power."),
+        .description = COMPOUND_STRING("Boosts right ally PWR."),
         .power = 40,
         .target = TARGET_RIGHT_ALLY,
         .effect = DECK_EFFECT_POWER_UP,
@@ -284,7 +293,7 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
     {
         .name = COMPOUND_STRING("SANDSTORM"),
         .description = COMPOUND_STRING("Lowers opponent stats."),
-        .power = 20,
+        .power = 15,
         .target = TARGET_ALL_OPPONENTS,
         .effect = DECK_EFFECT_POWER_UP,
         .param = 0xFF, // PWR + DEF
@@ -294,7 +303,7 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
     {
         .name = COMPOUND_STRING("RAIN DANCE"),
         .description = COMPOUND_STRING("Boosts ally stats."),
-        .power = 20,
+        .power = 15,
         .target = TARGET_ALL_ALLIES,
         .effect = DECK_EFFECT_POWER_UP,
         .param = 0xFF, // PWR + DEF
@@ -422,5 +431,44 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
         .description = COMPOUND_STRING("Damages all opponents."),
         .power = 70,
         .target = TARGET_ALL_OPPONENTS,
+        .effect = DECK_EFFECT_HIT,
+    },
+
+    [DECK_SOFTBOILED] =
+    {
+        .name = COMPOUND_STRING("SOFTBOILED"),
+        .description = COMPOUND_STRING("Heals right ally."),
+        .power = 40,
+        .target = TARGET_RIGHT_ALLY,
+        .effect = DECK_EFFECT_HEAL,
+    },
+
+    [DECK_HELPING_HANDS] =
+    {
+        .name = COMPOUND_STRING("HELPING HANDS"),
+        .description = COMPOUND_STRING("Boosts adjacent ally PWR."),
+        .power = 40,
+        .target = TARGET_LEFT_ALLY | TARGET_RIGHT_ALLY,
+        .effect = DECK_EFFECT_POWER_UP,
+    },
+
+    [DECK_TORMENT] =
+    {
+        .name = COMPOUND_STRING("TORMENT"),
+        .description = COMPOUND_STRING("Lowers opponent PWR."),
+        .power = 30,
+        .target = TARGET_SINGLE_OPPONENT,
+        .effect = DECK_EFFECT_POWER_UP,
+        .param = STAT_DEF
+    },
+
+    [DECK_CALM_MIND] =
+    {
+        .name = COMPOUND_STRING("CALM MIND"),
+        .description = COMPOUND_STRING("Boosts right ally stats."),
+        .power = 30,
+        .target = TARGET_RIGHT_ALLY,
+        .effect = DECK_EFFECT_POWER_UP,
+        .param = 0xFF,
     },
 };

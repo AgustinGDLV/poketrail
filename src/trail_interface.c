@@ -395,7 +395,7 @@ const struct CheckpointData gCheckpointData[CHECKPOINT_COUNT] =
         .mapNum = MAP_NUM(SWEATY_SUMMIT1),
         .warpId = {
             [DIR_SOUTH] = 0,
-            [DIR_WEST] = 2,
+            [DIR_WEST] = 1,
         }
     },
     [CHECKPOINT_TULIP_TOWN] =
@@ -414,16 +414,16 @@ const struct CheckpointData gCheckpointData[CHECKPOINT_COUNT] =
         .mapNum = MAP_NUM(TERRIBLE_TUNNEL_NORTH1),
         .warpId = {
             [DIR_EAST] = 0,
-            [DIR_WEST] = 2,
+            [DIR_WEST] = 1,
         }
     },
-    [CHECKPOINT_TERRIBLE_TUNNEL_NORTH] =
+    [CHECKPOINT_TERRIBLE_TUNNEL_SOUTH] =
     {
         .name = COMPOUND_STRING("Terrible Tunnel"),
         .mapNum = MAP_NUM(TERRIBLE_TUNNEL_SOUTH1),
         .warpId = {
             [DIR_EAST] = 0,
-            [DIR_WEST] = 2,
+            [DIR_WEST] = 1,
         }
     },
     [CHECKPOINT_ORCHID_CITY] =

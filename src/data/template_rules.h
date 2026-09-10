@@ -423,7 +423,7 @@ const struct TemplateRules gTemplateRules[TEMPLATE_TYPES_COUNT] =
             {SPECIES_EXPLOUD, 100},
             {SPECIES_CHIMECHO, 50},
             {SPECIES_GLISCOR, 50},
-            {SPECIES_SABLEYE, 50},
+            // {SPECIES_SABLEYE, 50},
         }
     },
 

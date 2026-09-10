@@ -5434,8 +5434,8 @@
     {
       "id": "LAYOUT_SWEATY_SUMMIT1",
       "name": "SweatySummit1_Layout",
-      "width": 80,
-      "height": 80,
+      "width": 70,
+      "height": 40,
       "primary_tileset": "gTileset_Volcano",
       "secondary_tileset": "gTileset_Unused1",
       "border_filepath": "data/layouts/SweatySummit1/border.bin",
