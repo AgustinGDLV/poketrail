@@ -62,7 +62,7 @@
       "movement_range_x": 1,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "ITEM_SITRUS_BERRY",
+      "trainer_sight_or_berry_tree_id": "ITEM_POTION",
       "script": "Common_EventScript_FindItem",
       "flag": "FLAG_FUNKY_FOREST_NORTH_ITEM_1"
     },
@@ -75,7 +75,7 @@
       "movement_range_x": 1,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "ITEM_SITRUS_BERRY",
+      "trainer_sight_or_berry_tree_id": "ITEM_POTION",
       "script": "Common_EventScript_FindItem",
       "flag": "FLAG_FUNKY_FOREST_NORTH_ITEM_2"
     },
@@ -106,7 +106,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_BUG_CATCHER",
+      "graphics_id": "OBJ_EVENT_GFX_SWIMMER_M",
       "x": 37,
       "y": 48,
       "elevation": 0,
@@ -143,6 +143,19 @@
       "trainer_sight_or_berry_tree_id": "4",
       "script": "NULL",
       "flag": "FLAG_FUNKY_FOREST_NORTH_ENCOUNTER_2"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_YOUNGSTER",
+      "x": 29,
+      "y": 24,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
+      "movement_range_x": 2,
+      "movement_range_y": 2,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "FunkyForestNorth1_Youngster",
+      "flag": "0"
     }
   ],
   "warp_events": [

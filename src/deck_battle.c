@@ -759,8 +759,8 @@ static void Task_SelectPartyMemberToReplace(u8 taskId)
         if (++gTasks[taskId].tTimer > 15 && (gMain.newKeys & A_BUTTON))
         {
             PlaySE(SE_SELECT);
-            gDeckStruct.selectedPos = GetLeftmostOccupiedPosition(B_SIDE_PLAYER);
-            UpdateBattlerSelection(GetDeckBattlerAtPos(B_SIDE_PLAYER, gDeckStruct.selectedPos), TRUE);
+            gDeckStruct.selectedPos = POSITION_0;
+            CreateSelectionCursorOverPosition(gDeckStruct.selectedPos);
             gTasks[taskId].tTimer = 0;
             ++gTasks[taskId].tState;
         }
@@ -771,24 +771,22 @@ static void Task_SelectPartyMemberToReplace(u8 taskId)
         {
             // Deselect battler.
             PlaySE(SE_SELECT);
-            UpdateBattlerSelection(GetDeckBattlerAtPos(B_SIDE_PLAYER, gDeckStruct.selectedPos), FALSE);
+            RemoveSwapSelectionCursor();
 
             // Select new battler.
             gDeckStruct.selectedPos -= 1;
-            battler = GetDeckBattlerAtPos(B_SIDE_PLAYER, gDeckStruct.selectedPos);
-            UpdateBattlerSelection(battler, TRUE);
+            CreateSelectionCursorOverPosition(gDeckStruct.selectedPos);
         }
         if ((JOY_NEW(DPAD_RIGHT)) // Check for a battler to move to the right.
             && gDeckStruct.selectedPos != POSITION_5)
         {
             // Deselect battler.
             PlaySE(SE_SELECT);
-            UpdateBattlerSelection(GetDeckBattlerAtPos(B_SIDE_PLAYER, gDeckStruct.selectedPos), FALSE);
+            RemoveSwapSelectionCursor();
 
             // Select new battler.
             gDeckStruct.selectedPos += 1;
-            battler = GetDeckBattlerAtPos(B_SIDE_PLAYER, gDeckStruct.selectedPos);
-            UpdateBattlerSelection(battler, TRUE);
+            CreateSelectionCursorOverPosition(gDeckStruct.selectedPos);
         }
         if (JOY_NEW(A_BUTTON))
         {
@@ -874,7 +872,7 @@ static void Task_SelectPartyMemberToReplace(u8 taskId)
         u32 battler = GetDeckBattlerAtPosUnsafe(B_SIDE_PLAYER, gDeckStruct.selectedPos);
         StringCopy(gStringVar2, GetSpeciesName(gDeckMons[battler].species));
         StringCopy(gStringVar3, GetSpeciesName(gDeckMons[gDeckStruct.battlerCaught].species));
-        StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("You recruited {STR_VAR_2} and sent {STR_VAR_3} home."));
+        StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("You recruited {STR_VAR_3} and sent {STR_VAR_2} home."));
         PrintStringToMessageBox(gStringVar1);
 
         CpuCopy32(&gEnemyParty[gDeckMons[gDeckStruct.battlerCaught].partyIndex], &gPlayerParty[gDeckMons[battler].partyIndex], sizeof(struct Pokemon));
@@ -1238,10 +1236,10 @@ s32 GetAbilityPowerBoost(u32 battlerAtk)
         boost += (power * 10 * (Random() % 6)) / 100; // 1.0x - 1.5x
         break;
     case DECK_SHORT_TEMPERED:
-        boost += -1 * (s32) (power * 10 * gDeckStruct.turns/2); // -0.9x per turn
+        boost += -1 * (s32) (power * 10 * gDeckStruct.turns) / 2; // -0.9x per turn
         break;
     case DECK_ADAPTIVE:
-        boost += (power * 10 * gDeckStruct.turns/2); // 1.1x per turn
+        boost += (power * 10 * gDeckStruct.turns) / 2; // 1.1x per turn
         break;
     default:
         break;
@@ -1263,12 +1261,10 @@ s32 CalculateDamage(u32 battlerAtk, u32 battlerDef, u32 move)
     power += powerBoost;
     defense += defenseBoost;
 
-    DebugPrintf("def %d / def boost %d", defense, defenseBoost);
     if (power <= 1)
         power = 1;
     if (defense <= 1)
         defense = 1;
-    DebugPrintf("def %d / def boost %d", defense, defenseBoost);
 
     // Calculate damage.
     s32 dmg = movePower * power * (2 * level / 5 + 2) / defense / 50 + 2;
@@ -1289,6 +1285,8 @@ void UpdateBattlerHP(u32 battler, s32 damage)
 
     if (damage < -999) // cap damage at 3 digits
         damage = -999;
+    if (damage > 999)
+        damage = 999;
 
     if (damage > gDeckMons[battler].hp) // correctly bound HP
         gDeckMons[battler].hp = 0;
@@ -1297,8 +1295,8 @@ void UpdateBattlerHP(u32 battler, s32 damage)
     else
         gDeckMons[battler].hp -= damage;
 
-    delta = before - (s32) gDeckMons[battler].hp;
-    PrintDamageNumbers(battler, delta);
+    // delta = before - (s32) gDeckMons[battler].hp;
+    PrintDamageNumbers(battler, damage);
 }
 
 u32 GetBattleSpeedScale(void)

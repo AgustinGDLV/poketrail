@@ -43,8 +43,8 @@ SmellySwampSouth1_Swimmer::
 	end
 
 SmellySwampSouth1_MukText:
-	.string "These Lotad seem caught\n"
-	.string "in an endless dance…\p"
+	.string "These Muk smell\n"
+	.string "pretty bad…\p"
 	.string "Fight?$"
 
 SmellySwampSouth1_Swimmer_Text:

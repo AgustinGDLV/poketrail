@@ -13,7 +13,7 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
     {
         .name = COMPOUND_STRING("QUICK ATTACK"),
         .description = COMPOUND_STRING("Damages one opponent."),
-        .power = 60,
+        .power = 70,
         .target = TARGET_SINGLE_OPPONENT,
         .effect = DECK_EFFECT_HIT,
     },
@@ -40,7 +40,7 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
     {
         .name = COMPOUND_STRING("FRENZY PLANT"),
         .description = COMPOUND_STRING("Damages opponents, recharges."),
-        .power = 100,
+        .power = 50,
         .target = TARGET_ALL_OPPONENTS,
         .effect = DECK_EFFECT_HIT,
         .secondary = DECK_SECONDARY_RECHARGE,
@@ -59,7 +59,7 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
     {
         .name = COMPOUND_STRING("SURF"),
         .description = COMPOUND_STRING("Damages all opponents."),
-        .power = 60,
+        .power = 30,
         .target = TARGET_ALL_OPPONENTS,
         .effect = DECK_EFFECT_HIT,
     },
@@ -151,7 +151,7 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
     {
         .name = COMPOUND_STRING("HEAL BELL"),
         .description = COMPOUND_STRING("Heals all allies."),
-        .power = 70,
+        .power = 40,
         .target = TARGET_ALL_ALLIES,
         .effect = DECK_EFFECT_HEAL,
         .secondary = DECK_SECONDARY_RECHARGE,
@@ -198,7 +198,7 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
     {
         .name = COMPOUND_STRING("SILVER WIND"),
         .description = COMPOUND_STRING("Damages all opponents."),
-        .power = 50,
+        .power = 30,
         .target = TARGET_ALL_OPPONENTS,
         .effect = DECK_EFFECT_HIT,
     },
@@ -207,7 +207,7 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
     {
         .name = COMPOUND_STRING("LICK"),
         .description = COMPOUND_STRING("Damages one opponent."),
-        .power = 100,
+        .power = 70,
         .target = TARGET_SINGLE_OPPONENT,
         .effect = DECK_EFFECT_HIT,
     },
@@ -216,7 +216,7 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
     {
         .name = COMPOUND_STRING("HEADBUTT"),
         .description = COMPOUND_STRING("Damages opposite opponent."),
-        .power = 60,
+        .power = 80,
         .target = TARGET_OPPOSITE,
         .effect = DECK_EFFECT_HIT,
     },
@@ -225,7 +225,7 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
     {
         .name = COMPOUND_STRING("FOCUS PUNCH"),
         .description = COMPOUND_STRING("Damages one opponent, recharges."),
-        .power = 200,
+        .power = 180,
         .target = TARGET_SINGLE_OPPONENT,
         .effect = DECK_EFFECT_HIT,
         .secondary = DECK_SECONDARY_RECHARGE,
@@ -256,7 +256,7 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
     {
         .name = COMPOUND_STRING("Earthquakes"),
         .description = COMPOUND_STRING("Damages all opponents, allies."),
-        .power = 90,
+        .power = 50,
         .target = TARGET_ALL_OPPONENTS | TARGET_LEFT_ALLY | TARGET_RIGHT_ALLY,
         .effect = DECK_EFFECT_HIT,
     },
@@ -265,7 +265,7 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
     {
         .name = COMPOUND_STRING("BULLDOZE"),
         .description = COMPOUND_STRING("Damages one opponent."),
-        .power = 60,
+        .power = 70,
         .target = TARGET_SINGLE_OPPONENT,
         .effect = DECK_EFFECT_HIT,
     },
@@ -284,7 +284,7 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
     {
         .name = COMPOUND_STRING("HURRICANE"),
         .description = COMPOUND_STRING("Damages all opponents."),
-        .power = 60,
+        .power = 30,
         .target = TARGET_ALL_OPPONENTS,
         .effect = DECK_EFFECT_HIT,
     },
@@ -322,7 +322,7 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
     {
         .name = COMPOUND_STRING("RAIN DANCE"),
         .description = COMPOUND_STRING("Damages all opponents, recharges"),
-        .power = 100,
+        .power = 50,
         .target = TARGET_ALL_OPPONENTS,
         .effect = DECK_EFFECT_HIT,
         .secondary = DECK_SECONDARY_RECHARGE,
@@ -382,7 +382,7 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
     {
         .name = COMPOUND_STRING("OVERHEAT"),
         .description = COMPOUND_STRING("Attacks opponents with recoil."),
-        .power = 90,
+        .power = 50,
         .target = TARGET_ALL_OPPONENTS | TARGET_USER,
         .effect = DECK_EFFECT_HIT,
     },
@@ -429,7 +429,7 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
     {
         .name = COMPOUND_STRING("MAGICAL LEAF"),
         .description = COMPOUND_STRING("Damages all opponents."),
-        .power = 60,
+        .power = 30,
         .target = TARGET_ALL_OPPONENTS,
         .effect = DECK_EFFECT_HIT,
     },

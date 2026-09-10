@@ -666,10 +666,11 @@ static void PrintMonInfo(u32 index)
     StringAppend(gStringVar1, gStringVar2);
     AddTextPrinterParameterized3(WINDOW_INFO, FONT_NORMAL, 0, 23, sTextColor_Black, TEXT_SKIP_DRAW, gStringVar1);
 
-    // Print item.
-    if (sPartyMenuData.mons[index].item != ITEM_NONE)
+    // Print evolution.
+    if (gSpeciesInfo[sPartyMenuData.mons[index].species].evolutions[0].method == EVO_LEVEL || gSpeciesInfo[sPartyMenuData.mons[index].species].evolutions[0].method == EVO_LEVEL_BATTLE_ONLY)
     {
-        CopyItemName(sPartyMenuData.mons[index].item, gStringVar1);
+        ConvertIntToDecimalStringN(gStringVar2, gSpeciesInfo[sPartyMenuData.mons[index].species].evolutions[0].param, STR_CONV_MODE_LEFT_ALIGN, 2);
+        StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Evolves at {STR_VAR_2}"));
         AddTextPrinterParameterized3(WINDOW_INFO, FONT_NORMAL, 0, 34, sTextColor_Black, TEXT_SKIP_DRAW, gStringVar1);
     }
 

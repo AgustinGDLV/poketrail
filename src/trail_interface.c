@@ -665,7 +665,7 @@ static void Task_SaveAndExit(u8 taskId)
             break;
         }
         case 2: // Do save.
-            TrySavingData(SAVE_NORMAL);
+            TrySavingData(SAVE_LINK);
             ++gTasks[taskId].data[0];
         case 3: // Print confirmation.
             ClearWindow(WIN_YESNO);
@@ -1428,4 +1428,24 @@ u32 GetCheckpointsCount(void)
         if (gSaveBlock1Ptr->checkpoints & (1 << i))
             ++checkpointsCount;
     return checkpointsCount;
+}
+
+static void Task_SaveAndEnd(u8 taskId)
+{
+    switch (gTasks[taskId].data[0])
+    {
+    case 0:
+        gSaveBlock1Ptr->checkpoints = 0;
+        TrySavingData(SAVE_LINK);
+        ++gTasks[taskId].data[0];
+        break;
+    case 1:
+        DoSoftReset();
+        break;
+    }
+}
+
+void EndTrailJourney(void)
+{
+    CreateTask(Task_SaveAndEnd, 0);
 }

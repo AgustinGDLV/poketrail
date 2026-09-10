@@ -577,8 +577,8 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .baseHP = 50,
         .basePower = 40,
         .baseDef = 40,
-        .move = DECK_EARTHQUAKE,
-        .ability = ABILITY_NONE,
+        .move = DECK_BULLDOZE,
+        .ability = DECK_RESILIENT,
 
         .playerIdle = gSwinubPlayerIdleGfx,
         .opponentIdle = gSwinubOpponentIdleGfx,
@@ -619,7 +619,7 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
     [SPECIES_MIGHTYENA] = 
     { 
         .baseHP = 100, 
-        .basePower = 100, 
+        .basePower = 120, 
         .baseDef = 100, 
         .move = DECK_CRUNCH,
         .ability = DECK_ALPHA, 
@@ -1128,7 +1128,7 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .basePower = 80, 
         .baseDef = 70, 
         .move = DECK_HEADBUTT, 
-        .ability = DECK_ENERGETIC, 
+        .ability = DECK_SHORT_TEMPERED, 
     
         .playerIdle = gVigorothPlayerIdleGfx, 
         .opponentIdle = gVigorothOpponentIdleGfx, 
@@ -1169,7 +1169,7 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
     [SPECIES_HIPPOPOTAS] = 
     { 
         .baseHP = 80, 
-        .basePower = 60, 
+        .basePower = 80, 
         .baseDef = 60, 
         .move = DECK_EARTHQUAKE, 
         .ability = DECK_SHORT_TEMPERED, 
@@ -1190,8 +1190,8 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
 
     [SPECIES_HIPPOWDON] = 
     { 
-        .baseHP = 100, 
-        .basePower = 80, 
+        .baseHP = 120, 
+        .basePower = 120, 
         .baseDef = 80, 
         .move = DECK_EARTHQUAKE, 
         .ability = DECK_SHORT_TEMPERED, 
@@ -1213,7 +1213,7 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
     [SPECIES_KINGLER] = 
     { 
         .baseHP = 70, 
-        .basePower = 120, 
+        .basePower = 130, 
         .baseDef = 70, 
         .move = DECK_CRABHAMMER, 
         .ability = DECK_ALPHA, 
@@ -1455,7 +1455,7 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
     [SPECIES_EXPLOUD] = 
     { 
         .baseHP = 100, 
-        .basePower = 90, 
+        .basePower = 110, 
         .baseDef = 70, 
         .move = DECK_BOOMBURST, 
         .ability = DECK_ALPHA, 
@@ -1521,7 +1521,7 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
     [SPECIES_PINSIR] = 
     { 
         .baseHP = 70, 
-        .basePower = 100, 
+        .basePower = 130, 
         .baseDef = 70, 
         .move = DECK_BUG_BITE, 
         .ability = DECK_ALPHA, 

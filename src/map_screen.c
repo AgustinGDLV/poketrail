@@ -444,11 +444,11 @@ static void PrintFloorText(void)
 {
     // Print floor number.
 	const u8 textColor[] = {TEXT_COLOR_TRANSPARENT, 9, 8};
-	StringCopy(gStringVar1, COMPOUND_STRING("FLOOR "));
-	ConvertIntToDecimalStringN(gStringVar2, gSaveBlock1Ptr->currentFloor, STR_CONV_MODE_LEFT_ALIGN, 3);
-	StringAppend(gStringVar1, gStringVar2);
-    u32 offset = GetStringRightAlignXOffset(FONT_NORMAL, gStringVar1, 80);
-    AddTextPrinterParameterized3(WIN_FLOOR, FONT_NORMAL, 152 + offset, 0, textColor, TEXT_SKIP_DRAW, gStringVar1);
+	// StringCopy(gStringVar1, COMPOUND_STRING("FLOOR "));
+	// ConvertIntToDecimalStringN(gStringVar2, gSaveBlock1Ptr->currentFloor, STR_CONV_MODE_LEFT_ALIGN, 3);
+	// StringAppend(gStringVar1, gStringVar2);
+    // u32 offset = GetStringRightAlignXOffset(FONT_NORMAL, gStringVar1, 80);
+    // AddTextPrinterParameterized3(WIN_FLOOR, FONT_NORMAL, 152 + offset, 0, textColor, TEXT_SKIP_DRAW, gStringVar1);
 
     // Print template name.
 	AddTextPrinterParameterized3(WIN_FLOOR, FONT_NORMAL, 4, 0, textColor, TEXT_SKIP_DRAW, GetCurrentTemplateRules()->name);

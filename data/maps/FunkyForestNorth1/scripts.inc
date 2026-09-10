@@ -54,6 +54,13 @@ FunkyForestNorth1_BugCatcher3_Alt::
 	releaseall
 	end
 
+FunkyForestNorth1_Youngster::
+	lockall
+	faceplayer
+	msgbox FunkyForestNorth1_Youngster_Text
+	releaseall
+	end
+
 FunkyForestNorth1_RattataText:
 	.string "A swarm of Rattata block the\n"
 	.string "way. Fight?$"
@@ -62,7 +69,7 @@ FunkyForestNorth1_BugCatcher1_Text:
 	.string "If you want to recruit a\n"
 	.string "an opposing POKéMON,\p"
 	.string "I heard you should defeat\n"
-	.string "that POKéMON first!p"
+	.string "that POKéMON first!\p"
 	.string "That's how it knows\n"
 	.string "you want it!$"
 
@@ -77,3 +84,9 @@ FunkyForestNorth1_BugCatcher3_Text:
 FunkyForestNorth1_BugCatcher3_Text_Alt:
 	.string "Wow! You defeated\n"
 	.string "the Rattata!$"
+
+FunkyForestNorth1_Youngster_Text:
+	.string "Did you know that PWR is\n"
+	.string "the most important stat?\p"
+	.string "Even moves that boost PWR\n"
+	.string "depend on PWR!$"

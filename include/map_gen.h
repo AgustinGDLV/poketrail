@@ -4,7 +4,7 @@
 #include "data_util.h"
 #include "item_gen.h"
 
-#define MAP_DEBUG   TRUE
+#define MAP_DEBUG   FALSE
 
 // Floor Constants
 #define LAYOUT_SIZE                 90
