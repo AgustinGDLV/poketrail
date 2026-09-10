@@ -327,6 +327,10 @@ static void Task_PlayerSelectAllyToSwap(u8 taskId)
             // Deselect battler.
             PlaySE(SE_SELECT);
             RemoveSwapSelectionCursor();
+            
+            // Swap any fainted battlers.
+            gBattlerTarget = GetDeckBattlerAtPosUnsafe(B_SIDE_PLAYER, gDeckStruct.selectedPos);
+            gDeckMons[gBattlerTarget].pos = gDeckMons[gBattlerAttacker].pos;
 
             // Immediately execute swap without cost.
             gDeckMons[gBattlerAttacker].pos = gDeckStruct.selectedPos;
