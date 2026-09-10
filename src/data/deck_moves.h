@@ -140,8 +140,8 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
 
     [DECK_CRUNCH] =
     {
-        .name = COMPOUND_STRING("BITE"),
-        .description = COMPOUND_STRING("Damages opposite opponent."),
+        .name = COMPOUND_STRING("CRUNCH"),
+        .description = COMPOUND_STRING("Damages 3 opposite opponents."),
         .power = 80,
         .target = TARGET_OPPOSITE_LEFT | TARGET_OPPOSITE | TARGET_OPPOSITE_RIGHT,
         .effect = DECK_EFFECT_HIT,
@@ -470,5 +470,24 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
         .target = TARGET_RIGHT_ALLY,
         .effect = DECK_EFFECT_POWER_UP,
         .param = 0xFF,
+    },
+
+    [DECK_PLAY_ROUGH] =
+    {
+        .name = COMPOUND_STRING("PLAY ROUGH"),
+        .description = COMPOUND_STRING("Damages opposite 3 opponents."),
+        .power = 80,
+        .target = TARGET_OPPOSITE | TARGET_OPPOSITE_LEFT | TARGET_OPPOSITE_RIGHT,
+        .effect = DECK_EFFECT_HIT,
+    },
+
+    [DECK_ACID_ARMOR] =
+    {
+        .name = COMPOUND_STRING("ACID ARMOR"),
+        .description = COMPOUND_STRING("Boosts right ally DEF."),
+        .power = 40,
+        .target = TARGET_RIGHT_ALLY,
+        .effect = DECK_EFFECT_POWER_UP,
+        .param = STAT_DEF,
     },
 };

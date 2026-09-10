@@ -1,14 +1,12 @@
 SweatySummit1_MapScripts::
 	.byte 0
 
-
 SweatySummit1_MagcargoBoss::
 	lock
 	msgbox SweatySummit1_MagcargoText, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, SweatySummit1_End
 	playse SE_PIN
 	applymovement 1, Common_Movement_ExclamationMark
-	applymovement 2, Common_Movement_ExclamationMark
 	waitmovement SPECIES_MAGCARGO
     playmoncry SPECIES_MAGCARGO, CRY_MODE_ENCOUNTER
 	delay 40

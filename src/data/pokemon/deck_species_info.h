@@ -1897,8 +1897,8 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .baseHP = 100, 
         .basePower = 100, 
         .baseDef = 100, 
-        .move = MOVE_TACKLE, 
-        .ability = ABILITY_NONE, 
+        .move = DECK_ACID_ARMOR, 
+        .ability = DECK_REGENERATIVE, 
     
         .playerIdle = gQuagsirePlayerIdleGfx, 
         .opponentIdle = gQuagsireOpponentIdleGfx, 
@@ -2112,4 +2112,25 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .portraitPalette = gKricketunePortraitPal, 
     },
 
+    [SPECIES_AZUMARILL] = 
+    { 
+        .baseHP = 110, 
+        .basePower = 80, 
+        .baseDef = 80, 
+        .move = DECK_PLAY_ROUGH, 
+        .ability = DECK_SOCIAL, 
+    
+        .playerIdle = gAzumarillPlayerIdleGfx, 
+        .opponentIdle = gAzumarillOpponentIdleGfx, 
+        .playerAttack = gAzumarillPlayerAttackGfx, 
+        .opponentAttack = gAzumarillOpponentAttackGfx, 
+        .playerHurt = gAzumarillPlayerHurtGfx, 
+        .opponentHurt = gAzumarillOpponentHurtGfx, 
+        .objectPalette = gAzumarillObjectPal, 
+        .playerYOffset = 0, 
+        .opponentYOffset = 0, 
+    
+        .portrait = gAzumarillPortraitGfx, 
+        .portraitPalette = gAzumarillPortraitPal, 
+    },
 };

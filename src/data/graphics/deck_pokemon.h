@@ -1150,3 +1150,15 @@ const u16 gKricketuneObjectPal[] = INCBIN_U16("graphics/deck_pokemon/kricketune/
  
 const u8 gKricketunePortraitGfx[] = INCBIN_U8("graphics/deck_pokemon/kricketune/portrait_normal.4bpp"); 
 const u16 gKricketunePortraitPal[] = INCBIN_U16("graphics/deck_pokemon/kricketune/portrait_normal.gbapal");
+
+// Azumarill
+const u8 gAzumarillPlayerIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/azumarill/player_idle.4bpp"); 
+const u8 gAzumarillOpponentIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/azumarill/opponent_idle.4bpp"); 
+const u8 gAzumarillPlayerAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/azumarill/player_attack.4bpp"); 
+const u8 gAzumarillOpponentAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/azumarill/opponent_attack.4bpp"); 
+const u8 gAzumarillPlayerHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/azumarill/player_hurt.4bpp"); 
+const u8 gAzumarillOpponentHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/azumarill/opponent_hurt.4bpp"); 
+const u16 gAzumarillObjectPal[] = INCBIN_U16("graphics/deck_pokemon/azumarill/player_idle.gbapal"); 
+ 
+const u8 gAzumarillPortraitGfx[] = INCBIN_U8("graphics/deck_pokemon/azumarill/portrait_normal.4bpp"); 
+const u16 gAzumarillPortraitPal[] = INCBIN_U16("graphics/deck_pokemon/azumarill/portrait_normal.gbapal");

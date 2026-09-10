@@ -85,7 +85,7 @@ IntroSequence_BugCatcherChooseStarter:
 	message IntroSequence_AskStarterText2
 	waitmessage
 	dynmultipush IntroSequence_Caterpie, 0
-	dynmultipush IntroSequence_Ledyba, 2
+	dynmultipush IntroSequence_Kricketot, 1
 	dynmultistack 9, 2, TRUE, 4, FALSE, 0, NULL
 	callnative AssignStarterToPlayer
 	goto IntroSequence_StartJourney
@@ -126,8 +126,15 @@ IntroSequence_StartJourney:
 	applymovement 1, IntroSequence_Movement_WalkDown
 	applymovement OBJ_EVENT_ID_PLAYER, IntroSequence_Movement_FaceUp
 	waitmovement 1
+	additem ITEM_POTION, 5
 	playfanfare MUS_OBTAIN_ITEM
 	msgbox IntroSequence_StarterKit
+	msgbox IntroSequence_JourneyQuestion, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, 0, IntroSequence_StartJourney_End
+IntroSequence_StartJourney_Explanation::
+	msgbox IntroSequence_TrailExplanation, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, 0, IntroSequence_StartJourney_Explanation
+IntroSequence_StartJourney_End::
 	msgbox IntroSequence_GoAhead
 	closemessage
 	special RemoveCameraObject
@@ -202,6 +209,25 @@ IntroSequence_StartJourneyText:
 IntroSequence_StarterKit:
 	.string "{PLAYER} received a\n"
 	.string "starter kit!$"
+
+IntroSequence_JourneyQuestion:
+	.string "Is this your first time\n"
+	.string "outside of Peony Town?$"
+
+IntroSequence_TrailExplanation:
+	.string "At any point on the trail,\n"
+	.string "you can press A to camp.\p"
+	.string "You can also press L to open\n"
+	.string "your bag and R to see your party.\p"
+	.string "When you camp, you can search\n"
+	.string "for items, battle, or rest.\p"
+	.string "Fainted POKéMON need to rest\n"
+	.string "for 12 hours to re-energize.\p"
+	.string "When you battle, you can press\n"
+	.string "START to swap battler positions.\p"
+	.string "This does not consume a move, and\n"
+	.string "this even boosts some POKéMON.\p"
+	.string "Does that all make sense?\p$"
 
 IntroSequence_GoAhead:
 	.string "Well…\n"
