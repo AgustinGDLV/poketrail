@@ -1820,7 +1820,7 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .opponentHurt = gChanseyOpponentHurtGfx, 
         .objectPalette = gChanseyObjectPal, 
         .playerYOffset = 0, 
-        .opponentYOffset = 0, 
+        .opponentYOffset = -1, 
     
         .portrait = gChanseyPortraitGfx, 
         .portraitPalette = gChanseyPortraitPal, 
@@ -1842,7 +1842,7 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .opponentHurt = gBlisseyOpponentHurtGfx, 
         .objectPalette = gBlisseyObjectPal, 
         .playerYOffset = 0, 
-        .opponentYOffset = 0, 
+        .opponentYOffset = -2, 
     
         .portrait = gBlisseyPortraitGfx, 
         .portraitPalette = gBlisseyPortraitPal, 

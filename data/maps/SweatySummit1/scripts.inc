@@ -2,18 +2,18 @@ SweatySummit1_MapScripts::
 	.byte 0
 
 
-SweatySummit1_TorkoalBoss::
+SweatySummit1_MagcargoBoss::
 	lock
-	msgbox SweatySummit1_TorkoalText, MSGBOX_YESNO
+	msgbox SweatySummit1_MagcargoText, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, SweatySummit1_End
 	playse SE_PIN
 	applymovement 1, Common_Movement_ExclamationMark
 	applymovement 2, Common_Movement_ExclamationMark
-	waitmovement SPECIES_TORKOAL
-    playmoncry SPECIES_TORKOAL, CRY_MODE_ENCOUNTER
+	waitmovement SPECIES_MAGCARGO
+    playmoncry SPECIES_MAGCARGO, CRY_MODE_ENCOUNTER
 	delay 40
 	waitmoncry
-	setvar VAR_0x8000, SPECIES_TORKOAL
+	setvar VAR_0x8000, SPECIES_MAGCARGO
 	callnative InitBossPartyFromEncounter
 	callnative OpenDeckBattle
 	removeobject 1
@@ -39,17 +39,18 @@ SweatySummit1_Woman::
 	releaseall
 	end
 
-SweatySummit1_TorkoalText:
-	.string "Upon closer inspection, you\p"
-	.string "realize this is a Torkoal…\p"
+SweatySummit1_MagcargoText:
+	.string "Upon closer inspection, you\n"
+	.string "realize this is a Magcargo…\p"
 	.string "Fight?$"
 
 SweatySummit1_Swimmer_Text:
-	.string "I'm not convinced\n"
-	.string "this isn't water.$"
+	.string "It's so hot!\p"
+	.string "I wish I could\n"
+	.string "go swimming…$"
 
 SweatySummit1_Woman_Text:
-	.string "Am I on my way\p"
-	.string "to Orchid City?!\n"
-	.string "No, I just come here\p"
+	.string "Am I on my way\n"
+	.string "to Orchid City?\p"
+	.string "No, I just come here\n"
 	.string "to do my yoga!$"

@@ -12,7 +12,7 @@
 
 static const u32 sCheckpointEncounterLevel[CHECKPOINT_COUNT] =
 {
-    5, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60
+    5, 5, 15, 25, 32, 40, 45, 50, 55, 60, 60, 60, 60
 };
 
 // Returns what level an encounter should be based on checkpoint status.
@@ -78,13 +78,31 @@ void InitBossPartyFromEncounter(void) // used by callnative
             level = 20;
             gDeckStruct.bossHPMult = UQ_4_12(2.0);
             break;
+        case SPECIES_SCYTHER:
+            level = 20;
+            gDeckStruct.bossHPMult = UQ_4_12(3.0);
+            gDeckStruct.musicOverride = MUS_VS_CHAMPION;
+            break;
         case SPECIES_HIPPOWDON:
             level = 28;
-            gDeckStruct.bossHPMult = UQ_4_12(2.0);
+            gDeckStruct.bossHPMult = UQ_4_12(2.5);
             break;
         case SPECIES_LOTAD:
-            level = 20;
+            level = 28;
             gDeckStruct.musicOverride = MUS_VS_CHAMPION;
+            gDeckStruct.bossHPMult = UQ_4_12(2.0);
+            break;
+        case SPECIES_MAGCARGO:
+            level = 36;
+            gDeckStruct.bossHPMult = UQ_4_12(2.0);
+            break;
+        case SPECIES_MUK:
+            level = 36;
+            gDeckStruct.bossHPMult = UQ_4_12(2.5);
+            break;
+        case SPECIES_CACTURNE:
+            level = 36;
+            gDeckStruct.bossHPMult = UQ_4_12(2.0);
             break;
     }
     
