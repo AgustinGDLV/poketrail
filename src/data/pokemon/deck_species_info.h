@@ -313,8 +313,8 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .baseHP = 90,
         .basePower = 55,
         .baseDef = 55,
-        .move = DECK_TACKLE,
-        .ability = ABILITY_NONE,
+        .move = DECK_SURF,
+        .ability = DECK_REGENERATIVE,
 
         .playerIdle = gSlowpokePlayerIdleGfx,
         .opponentIdle = gSlowpokeOpponentIdleGfx,
@@ -336,7 +336,7 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .basePower = 90,
         .baseDef = 95,
         .move = DECK_SURF,
-        .ability = ABILITY_NONE,
+        .ability = DECK_REGENERATIVE,
 
         .playerIdle = gSlowbroPlayerIdleGfx,
         .opponentIdle = gSlowbroOpponentIdleGfx,
