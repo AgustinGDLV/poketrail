@@ -4547,7 +4547,7 @@
       "width": 12,
       "height": 11,
       "primary_tileset": "gTileset_Volcano",
-      "secondary_tileset": "gTileset_Unused1",
+      "secondary_tileset": "gTileset_OverworldSecondary",
       "border_filepath": "data/layouts/VolcanoTemplates_BossRoom/border.bin",
       "blockdata_filepath": "data/layouts/VolcanoTemplates_BossRoom/map.bin"
     },
@@ -4584,8 +4584,8 @@
     {
       "id": "LAYOUT_VOLCANO_TEMPLATES_ROOM1",
       "name": "VolcanoTemplates_Room1_Layout",
-      "width": 12,
-      "height": 11,
+      "width": 18,
+      "height": 20,
       "primary_tileset": "gTileset_Volcano",
       "secondary_tileset": "gTileset_Unused1",
       "border_filepath": "data/layouts/VolcanoTemplates_Room1/border.bin",
@@ -5340,6 +5340,86 @@
       "secondary_tileset": "gTileset_Unused1",
       "border_filepath": "data/layouts/DesertTemplates_Room8/border.bin",
       "blockdata_filepath": "data/layouts/DesertTemplates_Room8/map.bin"
+    },
+    {
+      "id": "LAYOUT_VOLCANO_TEMPLATES_ROOM2",
+      "name": "VolcanoTemplates_Room2_Layout",
+      "width": 21,
+      "height": 18,
+      "primary_tileset": "gTileset_Volcano",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/VolcanoTemplates_Room2/border.bin",
+      "blockdata_filepath": "data/layouts/VolcanoTemplates_Room2/map.bin"
+    },
+    {
+      "id": "LAYOUT_VOLCANO_TEMPLATES_ROOM3",
+      "name": "VolcanoTemplates_Room3_Layout",
+      "width": 25,
+      "height": 25,
+      "primary_tileset": "gTileset_Volcano",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/VolcanoTemplates_Room3/border.bin",
+      "blockdata_filepath": "data/layouts/VolcanoTemplates_Room3/map.bin"
+    },
+    {
+      "id": "LAYOUT_VOLCANO_TEMPLATES_ROOM4",
+      "name": "VolcanoTemplates_Room4_Layout",
+      "width": 25,
+      "height": 25,
+      "primary_tileset": "gTileset_Volcano",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/VolcanoTemplates_Room4/border.bin",
+      "blockdata_filepath": "data/layouts/VolcanoTemplates_Room4/map.bin"
+    },
+    {
+      "id": "LAYOUT_VOLCANO_TEMPLATES_ROOM5",
+      "name": "VolcanoTemplates_Room5_Layout",
+      "width": 20,
+      "height": 23,
+      "primary_tileset": "gTileset_Volcano",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/VolcanoTemplates_Room5/border.bin",
+      "blockdata_filepath": "data/layouts/VolcanoTemplates_Room5/map.bin"
+    },
+    {
+      "id": "LAYOUT_VOLCANO_TEMPLATES_ROOM6",
+      "name": "VolcanoTemplates_Room6_Layout",
+      "width": 20,
+      "height": 14,
+      "primary_tileset": "gTileset_Volcano",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/VolcanoTemplates_Room6/border.bin",
+      "blockdata_filepath": "data/layouts/VolcanoTemplates_Room6/map.bin"
+    },
+    {
+      "id": "LAYOUT_VOLCANO_TEMPLATES_ROOM7",
+      "name": "VolcanoTemplates_Room7_Layout",
+      "width": 12,
+      "height": 11,
+      "primary_tileset": "gTileset_Volcano",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/VolcanoTemplates_Room7/border.bin",
+      "blockdata_filepath": "data/layouts/VolcanoTemplates_Room7/map.bin"
+    },
+    {
+      "id": "LAYOUT_VOLCANO_TEMPLATES_ROOM8",
+      "name": "VolcanoTemplates_Room8_Layout",
+      "width": 18,
+      "height": 11,
+      "primary_tileset": "gTileset_Volcano",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/VolcanoTemplates_Room8/border.bin",
+      "blockdata_filepath": "data/layouts/VolcanoTemplates_Room8/map.bin"
+    },
+    {
+      "id": "LAYOUT_VOLCANO_TEMPLATES_ROOM9",
+      "name": "VolcanoTemplates_Room9_Layout",
+      "width": 18,
+      "height": 11,
+      "primary_tileset": "gTileset_Volcano",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/VolcanoTemplates_Room9/border.bin",
+      "blockdata_filepath": "data/layouts/VolcanoTemplates_Room9/map.bin"
     }
   ]
 }

@@ -65,7 +65,7 @@ void InitBossPartyFromEncounter(void) // used by callnative
     u32 level = 5;
 
     gDeckStruct.isBossBattle = TRUE;
-    gDeckStruct.bossHPMult = 0;
+    gDeckStruct.bossHPMult = UQ_4_12(1.5);
     gDeckStruct.musicOverride = MUS_NONE;
 
     switch (species)

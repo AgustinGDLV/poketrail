@@ -86,7 +86,15 @@
     "VolcanoTemplates_ShopRoom",
     "VolcanoTemplates_TreasureRoom",
     "VolcanoTemplates_ChallengeRoom",
-    "VolcanoTemplates_Room1"
+    "VolcanoTemplates_Room1",
+    "VolcanoTemplates_Room2",
+    "VolcanoTemplates_Room3",
+    "VolcanoTemplates_Room4",
+    "VolcanoTemplates_Room5",
+    "VolcanoTemplates_Room6",
+    "VolcanoTemplates_Room7",
+    "VolcanoTemplates_Room8",
+    "VolcanoTemplates_Room9"
   ],
   "gMapGroup_CaveTemplates": [
     "CaveTemplates_Connections",

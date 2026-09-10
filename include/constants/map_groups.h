@@ -46,6 +46,14 @@
 #define MAP_VOLCANO_TEMPLATES_TREASURE_ROOM  (3 | (3 << 8))
 #define MAP_VOLCANO_TEMPLATES_CHALLENGE_ROOM (4 | (3 << 8))
 #define MAP_VOLCANO_TEMPLATES_ROOM1          (5 | (3 << 8))
+#define MAP_VOLCANO_TEMPLATES_ROOM2          (6 | (3 << 8))
+#define MAP_VOLCANO_TEMPLATES_ROOM3          (7 | (3 << 8))
+#define MAP_VOLCANO_TEMPLATES_ROOM4          (8 | (3 << 8))
+#define MAP_VOLCANO_TEMPLATES_ROOM5          (9 | (3 << 8))
+#define MAP_VOLCANO_TEMPLATES_ROOM6          (10 | (3 << 8))
+#define MAP_VOLCANO_TEMPLATES_ROOM7          (11 | (3 << 8))
+#define MAP_VOLCANO_TEMPLATES_ROOM8          (12 | (3 << 8))
+#define MAP_VOLCANO_TEMPLATES_ROOM9          (13 | (3 << 8))
 
 // gMapGroup_CaveTemplates
 #define MAP_CAVE_TEMPLATES_CONNECTIONS    (0 | (4 << 8))

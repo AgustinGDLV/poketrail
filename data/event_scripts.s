@@ -1323,3 +1323,19 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/DesertTemplates_Room7/scripts.inc"
 
 	.include "data/maps/DesertTemplates_Room8/scripts.inc"
+
+	.include "data/maps/VolcanoTemplates_Room2/scripts.inc"
+
+	.include "data/maps/VolcanoTemplates_Room3/scripts.inc"
+
+	.include "data/maps/VolcanoTemplates_Room4/scripts.inc"
+
+	.include "data/maps/VolcanoTemplates_Room5/scripts.inc"
+
+	.include "data/maps/VolcanoTemplates_Room6/scripts.inc"
+
+	.include "data/maps/VolcanoTemplates_Room7/scripts.inc"
+
+	.include "data/maps/VolcanoTemplates_Room8/scripts.inc"
+
+	.include "data/maps/VolcanoTemplates_Room9/scripts.inc"
