@@ -980,7 +980,11 @@ static void Task_TriggerHealEvent(u8 taskId)
         for (u32 i = 0; i < gPlayerPartyCount; ++i)
         {
             u32 maxHP = GetMonData(&gPlayerParty[i], MON_DATA_MAX_HP);
-            u32 hp = GetMonData(&gPlayerParty[i], MON_DATA_HP) + ((maxHP * 50) / 100);
+            u32 hp = GetMonData(&gPlayerParty[i], MON_DATA_HP);
+            if (hp == 0)
+                continue;
+
+            hp += ((maxHP * 50) / 100);
             if (hp > maxHP)
                 hp = maxHP;
             SetMonData(&gPlayerParty[i], MON_DATA_HP, &hp);
