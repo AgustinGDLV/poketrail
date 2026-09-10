@@ -220,6 +220,14 @@ static const u8 sVolcanoNormalRooms[] =
 static const u8 sCaveNormalRooms[] =
 {
     MAP_NUM(CAVE_TEMPLATES_ROOM1),
+    MAP_NUM(CAVE_TEMPLATES_ROOM2),
+    MAP_NUM(CAVE_TEMPLATES_ROOM3),
+    MAP_NUM(CAVE_TEMPLATES_ROOM4),
+    MAP_NUM(CAVE_TEMPLATES_ROOM5),
+    MAP_NUM(CAVE_TEMPLATES_ROOM6),
+    MAP_NUM(CAVE_TEMPLATES_ROOM7),
+    MAP_NUM(CAVE_TEMPLATES_ROOM8),
+    MAP_NUM(CAVE_TEMPLATES_ROOM9),
 };
 
 // Desert Template Pools
@@ -398,7 +406,7 @@ const struct TemplateRules gTemplateRules[TEMPLATE_TYPES_COUNT] =
     [TEMPLATES_TERRIBLE_TUNNEL] =
     {
         .name = COMPOUND_STRING("Terrible Tunnel"),
-        .mapGroup = MAP_GROUP(VOLCANO_TEMPLATES_CONNECTIONS),
+        .mapGroup = MAP_GROUP(CAVE_TEMPLATES_CONNECTIONS),
         .bgm = MUS_VICTORY_ROAD,
         .background = BG_CAVE,
         .connectionType = CONNECTION_TYPE_WARP,
@@ -408,12 +416,12 @@ const struct TemplateRules gTemplateRules[TEMPLATE_TYPES_COUNT] =
             [DIR_EAST] = {0, 0, 2, 1},
             [DIR_WEST] = {-1, 0, 2, 1},
         },
-        .numNormalRooms = ARRAY_COUNT(sVolcanoNormalRooms),
-        .normalRoomIds = sVolcanoNormalRooms,
+        .numNormalRooms = ARRAY_COUNT(sCaveNormalRooms),
+        .normalRoomIds = sCaveNormalRooms,
         .specialRoomIds = {
-            [BOSS_ROOM] = MAP_NUM(VOLCANO_TEMPLATES_BOSS_ROOM),
-            [TREASURE_ROOM] = MAP_NUM(VOLCANO_TEMPLATES_TREASURE_ROOM),
-            [SHOP_ROOM] = MAP_NUM(VOLCANO_TEMPLATES_SHOP_ROOM),
+            [BOSS_ROOM] = MAP_NUM(CAVE_TEMPLATES_BOSS_ROOM),
+            [TREASURE_ROOM] = MAP_NUM(CAVE_TEMPLATES_TREASURE_ROOM),
+            [SHOP_ROOM] = MAP_NUM(CAVE_TEMPLATES_SHOP_ROOM),
         },
         .itemPools = gDefaultItemPools,
         .encounterPool = {

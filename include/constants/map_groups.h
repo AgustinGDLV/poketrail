@@ -62,6 +62,14 @@
 #define MAP_CAVE_TEMPLATES_SHOP_ROOM      (3 | (4 << 8))
 #define MAP_CAVE_TEMPLATES_CHALLENGE_ROOM (4 | (4 << 8))
 #define MAP_CAVE_TEMPLATES_ROOM1          (5 | (4 << 8))
+#define MAP_CAVE_TEMPLATES_ROOM2          (6 | (4 << 8))
+#define MAP_CAVE_TEMPLATES_ROOM3          (7 | (4 << 8))
+#define MAP_CAVE_TEMPLATES_ROOM4          (8 | (4 << 8))
+#define MAP_CAVE_TEMPLATES_ROOM5          (9 | (4 << 8))
+#define MAP_CAVE_TEMPLATES_ROOM6          (10 | (4 << 8))
+#define MAP_CAVE_TEMPLATES_ROOM7          (11 | (4 << 8))
+#define MAP_CAVE_TEMPLATES_ROOM8          (12 | (4 << 8))
+#define MAP_CAVE_TEMPLATES_ROOM9          (13 | (4 << 8))
 
 // gMapGroup_DesertTemplates
 #define MAP_DESERT_TEMPLATES_CONNECTIONS    (0 | (5 << 8))

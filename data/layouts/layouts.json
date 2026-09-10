@@ -4767,7 +4767,7 @@
       "width": 12,
       "height": 11,
       "primary_tileset": "gTileset_CavePrimary",
-      "secondary_tileset": "gTileset_Unused1",
+      "secondary_tileset": "gTileset_OverworldSecondary",
       "border_filepath": "data/layouts/CaveTemplates_BossRoom/border.bin",
       "blockdata_filepath": "data/layouts/CaveTemplates_BossRoom/map.bin"
     },
@@ -5500,6 +5500,86 @@
       "secondary_tileset": "gTileset_Unused1",
       "border_filepath": "data/layouts/OrchidCity1/border.bin",
       "blockdata_filepath": "data/layouts/OrchidCity1/map.bin"
+    },
+    {
+      "id": "LAYOUT_CAVE_TEMPLATES_ROOM2",
+      "name": "CaveTemplates_Room2_Layout",
+      "width": 21,
+      "height": 18,
+      "primary_tileset": "gTileset_CavePrimary",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/CaveTemplates_Room2/border.bin",
+      "blockdata_filepath": "data/layouts/CaveTemplates_Room2/map.bin"
+    },
+    {
+      "id": "LAYOUT_CAVE_TEMPLATES_ROOM3",
+      "name": "CaveTemplates_Room3_Layout",
+      "width": 25,
+      "height": 25,
+      "primary_tileset": "gTileset_CavePrimary",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/CaveTemplates_Room3/border.bin",
+      "blockdata_filepath": "data/layouts/CaveTemplates_Room3/map.bin"
+    },
+    {
+      "id": "LAYOUT_CAVE_TEMPLATES_ROOM4",
+      "name": "CaveTemplates_Room4_Layout",
+      "width": 25,
+      "height": 25,
+      "primary_tileset": "gTileset_CavePrimary",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/CaveTemplates_Room4/border.bin",
+      "blockdata_filepath": "data/layouts/CaveTemplates_Room4/map.bin"
+    },
+    {
+      "id": "LAYOUT_CAVE_TEMPLATES_ROOM5",
+      "name": "CaveTemplates_Room5_Layout",
+      "width": 20,
+      "height": 23,
+      "primary_tileset": "gTileset_CavePrimary",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/CaveTemplates_Room5/border.bin",
+      "blockdata_filepath": "data/layouts/CaveTemplates_Room5/map.bin"
+    },
+    {
+      "id": "LAYOUT_CAVE_TEMPLATES_ROOM6",
+      "name": "CaveTemplates_Room6_Layout",
+      "width": 20,
+      "height": 14,
+      "primary_tileset": "gTileset_CavePrimary",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/CaveTemplates_Room6/border.bin",
+      "blockdata_filepath": "data/layouts/CaveTemplates_Room6/map.bin"
+    },
+    {
+      "id": "LAYOUT_CAVE_TEMPLATES_ROOM7",
+      "name": "CaveTemplates_Room7_Layout",
+      "width": 12,
+      "height": 11,
+      "primary_tileset": "gTileset_CavePrimary",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/CaveTemplates_Room7/border.bin",
+      "blockdata_filepath": "data/layouts/CaveTemplates_Room7/map.bin"
+    },
+    {
+      "id": "LAYOUT_CAVE_TEMPLATES_ROOM8",
+      "name": "CaveTemplates_Room8_Layout",
+      "width": 18,
+      "height": 11,
+      "primary_tileset": "gTileset_CavePrimary",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/CaveTemplates_Room8/border.bin",
+      "blockdata_filepath": "data/layouts/CaveTemplates_Room8/map.bin"
+    },
+    {
+      "id": "LAYOUT_CAVE_TEMPLATES_ROOM9",
+      "name": "CaveTemplates_Room9_Layout",
+      "width": 18,
+      "height": 11,
+      "primary_tileset": "gTileset_CavePrimary",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/CaveTemplates_Room9/border.bin",
+      "blockdata_filepath": "data/layouts/CaveTemplates_Room9/map.bin"
     }
   ]
 }

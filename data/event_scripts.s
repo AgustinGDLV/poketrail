@@ -1355,3 +1355,19 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/TulipTown1/scripts.inc"
 
 	.include "data/maps/OrchidCity1/scripts.inc"
+
+	.include "data/maps/CaveTemplates_Room2/scripts.inc"
+
+	.include "data/maps/CaveTemplates_Room3/scripts.inc"
+
+	.include "data/maps/CaveTemplates_Room4/scripts.inc"
+
+	.include "data/maps/CaveTemplates_Room5/scripts.inc"
+
+	.include "data/maps/CaveTemplates_Room6/scripts.inc"
+
+	.include "data/maps/CaveTemplates_Room7/scripts.inc"
+
+	.include "data/maps/CaveTemplates_Room8/scripts.inc"
+
+	.include "data/maps/CaveTemplates_Room9/scripts.inc"

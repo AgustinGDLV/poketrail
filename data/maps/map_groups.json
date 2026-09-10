@@ -102,7 +102,15 @@
     "CaveTemplates_TreasureRoom",
     "CaveTemplates_ShopRoom",
     "CaveTemplates_ChallengeRoom",
-    "CaveTemplates_Room1"
+    "CaveTemplates_Room1",
+    "CaveTemplates_Room2",
+    "CaveTemplates_Room3",
+    "CaveTemplates_Room4",
+    "CaveTemplates_Room5",
+    "CaveTemplates_Room6",
+    "CaveTemplates_Room7",
+    "CaveTemplates_Room8",
+    "CaveTemplates_Room9"
   ],
   "gMapGroup_DesertTemplates": [
     "DesertTemplates_Connections",
