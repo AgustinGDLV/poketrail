@@ -122,11 +122,19 @@
 // gMapGroup_TundraTemplates
 
 // gMapGroup_Checkpoints
-#define MAP_INTRO_SEQUENCE      (0 | (10 << 8))
-#define MAP_FUNKY_FOREST_NORTH1 (1 | (10 << 8))
-#define MAP_FUNKY_FOREST_WEST1  (2 | (10 << 8))
-#define MAP_FUNKY_FOREST_EAST1  (3 | (10 << 8))
-#define MAP_DEEP_DESERT_WEST1   (4 | (10 << 8))
+#define MAP_INTRO_SEQUENCE         (0 | (10 << 8))
+#define MAP_FUNKY_FOREST_NORTH1    (1 | (10 << 8))
+#define MAP_FUNKY_FOREST_WEST1     (2 | (10 << 8))
+#define MAP_FUNKY_FOREST_EAST1     (3 | (10 << 8))
+#define MAP_DEEP_DESERT_WEST1      (4 | (10 << 8))
+#define MAP_DEEP_DESERT_EAST1      (5 | (10 << 8))
+#define MAP_SWEATY_SUMMIT1         (6 | (10 << 8))
+#define MAP_SMELLY_SWAMP_NORTH1    (7 | (10 << 8))
+#define MAP_SMELLY_SWAMP_SOUTH1    (8 | (10 << 8))
+#define MAP_TERRIBLE_TUNNEL_NORTH1 (9 | (10 << 8))
+#define MAP_TERRIBLE_TUNNEL_SOUTH1 (10 | (10 << 8))
+#define MAP_TULIP_TOWN1            (11 | (10 << 8))
+#define MAP_ORCHID_CITY1           (12 | (10 << 8))
 
 // gMapGroup_TownsAndRoutes
 #define MAP_PETALBURG_CITY      (0 | (11 << 8))

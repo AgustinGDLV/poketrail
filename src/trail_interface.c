@@ -362,6 +362,78 @@ const struct CheckpointData gCheckpointData[CHECKPOINT_COUNT] =
             [DIR_WEST] = 2,
         }
     },
+    [CHECKPOINT_DEEP_DESERT_EAST] =
+    {
+        .name = COMPOUND_STRING("Deep Desert"),
+        .mapNum = MAP_NUM(DEEP_DESERT_EAST1),
+        .warpId = {
+            [DIR_EAST] = 0,
+            [DIR_WEST] = 2,
+        }
+    },
+    [CHECKPOINT_SMELLY_SWAMP] =
+    {
+        .name = COMPOUND_STRING("Smelly Swamp"),
+        .mapNum = MAP_NUM(SMELLY_SWAMP_NORTH1),
+        .warpId = {
+            [DIR_EAST] = 0,
+            [DIR_NORTH] = 2,
+        }
+    },
+    [CHECKPOINT_COOL_COAST] =
+    {
+        .name = COMPOUND_STRING("Smelly Swanp"),
+        .mapNum = MAP_NUM(SMELLY_SWAMP_SOUTH1),
+        .warpId = {
+            [DIR_EAST] = 0,
+            [DIR_WEST] = 2,
+        }
+    },
+    [CHECKPOINT_MOLTEN_MOUNTAIN] =
+    {
+        .name = COMPOUND_STRING("Sweaty Summit"),
+        .mapNum = MAP_NUM(SWEATY_SUMMIT1),
+        .warpId = {
+            [DIR_SOUTH] = 0,
+            [DIR_WEST] = 2,
+        }
+    },
+    [CHECKPOINT_TULIP_TOWN] =
+    {
+        .name = COMPOUND_STRING("Tulip TOwn"),
+        .mapNum = MAP_NUM(TULIP_TOWN1),
+        .warpId = {
+            [DIR_EAST] = 0,
+            [DIR_SOUTH] = 2,
+            [DIR_WEST] = 4,
+        }
+    },
+    [CHECKPOINT_TERRIBLE_TUNNEL_NORTH] =
+    {
+        .name = COMPOUND_STRING("Terrible Tunnel"),
+        .mapNum = MAP_NUM(TERRIBLE_TUNNEL_NORTH1),
+        .warpId = {
+            [DIR_EAST] = 0,
+            [DIR_WEST] = 2,
+        }
+    },
+    [CHECKPOINT_TERRIBLE_TUNNEL_NORTH] =
+    {
+        .name = COMPOUND_STRING("Terrible Tunnel"),
+        .mapNum = MAP_NUM(TERRIBLE_TUNNEL_SOUTH1),
+        .warpId = {
+            [DIR_EAST] = 0,
+            [DIR_WEST] = 2,
+        }
+    },
+    [CHECKPOINT_ORCHID_CITY] =
+    {
+        .name = COMPOUND_STRING("Orchid City"),
+        .mapNum = MAP_NUM(ORCHID_CITY1),
+        .warpId = {
+            [DIR_EAST] = 0,
+        }
+    },
 };
 
 // forward declarations

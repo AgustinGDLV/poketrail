@@ -880,13 +880,16 @@ static bool8 TryArrowWarp(struct MapPosition *position, u16 metatileBehavior, u8
             {
                 gSaveBlock1Ptr->trailX = 16;
                 gSaveBlock1Ptr->trailY = 31;
+                if (FlagGet(FLAG_FUNKY_FOREST_NORTH_BOSS))
+                    gSaveBlock1Ptr->checkpoints |= (1 << CHECKPOINT_FUNKY_FOREST_NORTH);
                 gSaveBlock1Ptr->facing = DIR_NORTH;
             }
             if (gSaveBlock1Ptr->location.mapNum == MAP_NUM(FUNKY_FOREST_NORTH1) && direction == DIR_SOUTH)
             {
                 gSaveBlock1Ptr->trailX = 16;
                 gSaveBlock1Ptr->trailY = 33;
-                gSaveBlock1Ptr->checkpoints |= (1 << CHECKPOINT_FUNKY_FOREST_NORTH);
+                if (FlagGet(FLAG_FUNKY_FOREST_NORTH_BOSS))
+                    gSaveBlock1Ptr->checkpoints |= (1 << CHECKPOINT_FUNKY_FOREST_NORTH);
                 gSaveBlock1Ptr->facing = DIR_SOUTH;
             }
 
@@ -895,13 +898,16 @@ static bool8 TryArrowWarp(struct MapPosition *position, u16 metatileBehavior, u8
             {
                 gSaveBlock1Ptr->trailX = 9;
                 gSaveBlock1Ptr->trailY = 56;
+                if (FlagGet(FLAG_FUNKY_FOREST_WEST_BOSS))
+                    gSaveBlock1Ptr->checkpoints |= (1 << CHECKPOINT_FUNKY_FOREST_WEST);
                 gSaveBlock1Ptr->facing = DIR_EAST;
             }
             if (gSaveBlock1Ptr->location.mapNum == MAP_NUM(FUNKY_FOREST_WEST1) && direction == DIR_SOUTH)
             {
                 gSaveBlock1Ptr->trailX = 8;
                 gSaveBlock1Ptr->trailY = 57;
-                gSaveBlock1Ptr->checkpoints |= (1 << CHECKPOINT_FUNKY_FOREST_WEST);
+                if (FlagGet(FLAG_FUNKY_FOREST_WEST_BOSS))
+                    gSaveBlock1Ptr->checkpoints |= (1 << CHECKPOINT_FUNKY_FOREST_WEST);
                 gSaveBlock1Ptr->facing = DIR_SOUTH;
             }
 
@@ -910,14 +916,35 @@ static bool8 TryArrowWarp(struct MapPosition *position, u16 metatileBehavior, u8
             {
                 gSaveBlock1Ptr->trailX = 39;
                 gSaveBlock1Ptr->trailY = 56;
+                if (FlagGet(FLAG_FUNKY_FOREST_EAST_BOSS))
+                    gSaveBlock1Ptr->checkpoints |= (1 << CHECKPOINT_FUNKY_FOREST_EAST);
                 gSaveBlock1Ptr->facing = DIR_WEST;
             }
             if (gSaveBlock1Ptr->location.mapNum == MAP_NUM(FUNKY_FOREST_EAST1) && direction == DIR_EAST)
             {
                 gSaveBlock1Ptr->trailX = 41;
                 gSaveBlock1Ptr->trailY = 56;
-                gSaveBlock1Ptr->checkpoints |= (1 << CHECKPOINT_FUNKY_FOREST_EAST);
+                if (FlagGet(FLAG_FUNKY_FOREST_EAST_BOSS))
+                    gSaveBlock1Ptr->checkpoints |= (1 << CHECKPOINT_FUNKY_FOREST_EAST);
                 gSaveBlock1Ptr->facing = DIR_EAST;
+            }
+
+            // Smelly Swamp North
+            if (gSaveBlock1Ptr->location.mapNum == MAP_NUM(SMELLY_SWAMP_NORTH1) && direction == DIR_WEST)
+            {
+                gSaveBlock1Ptr->trailX = 71;
+                gSaveBlock1Ptr->trailY = 56;
+                if (FlagGet(FLAG_SMELLY_SWAMP_NORTH_BOSS))
+                    gSaveBlock1Ptr->checkpoints |= (1 << CHECKPOINT_SMELLY_SWAMP);
+                gSaveBlock1Ptr->facing = DIR_WEST;
+            }
+            if (gSaveBlock1Ptr->location.mapNum == MAP_NUM(SMELLY_SWAMP_NORTH1) && direction == DIR_SOUTH)
+            {
+                gSaveBlock1Ptr->trailX = 72;
+                gSaveBlock1Ptr->trailY = 57;
+                if (FlagGet(FLAG_SMELLY_SWAMP_NORTH_BOSS))
+                    gSaveBlock1Ptr->checkpoints |= (1 << CHECKPOINT_SMELLY_SWAMP);
+                gSaveBlock1Ptr->facing = DIR_SOUTH;
             }
 
             // Deep Desert West
@@ -925,13 +952,125 @@ static bool8 TryArrowWarp(struct MapPosition *position, u16 metatileBehavior, u8
             {
                 gSaveBlock1Ptr->trailX = 8;
                 gSaveBlock1Ptr->trailY = 87;
+                if (FlagGet(FLAG_DEEP_DESERT_WEST_BOSS))
+                    gSaveBlock1Ptr->checkpoints |= (1 << CHECKPOINT_DEEP_DESERT_WEST);
                 gSaveBlock1Ptr->facing = DIR_NORTH;
             }
             if (gSaveBlock1Ptr->location.mapNum == MAP_NUM(DEEP_DESERT_WEST1) && direction == DIR_EAST)
             {
                 gSaveBlock1Ptr->trailX = 9;
                 gSaveBlock1Ptr->trailY = 88;
-                gSaveBlock1Ptr->checkpoints |= (1 << CHECKPOINT_DEEP_DESERT_WEST);
+                if (FlagGet(FLAG_DEEP_DESERT_WEST_BOSS))
+                    gSaveBlock1Ptr->checkpoints |= (1 << CHECKPOINT_DEEP_DESERT_WEST);
+                gSaveBlock1Ptr->facing = DIR_EAST;
+            }
+
+            // Deep Desert East
+            if (gSaveBlock1Ptr->location.mapNum == MAP_NUM(DEEP_DESERT_EAST1) && direction == DIR_WEST)
+            {
+                gSaveBlock1Ptr->trailX = 39;
+                gSaveBlock1Ptr->trailY = 88;
+                if (FlagGet(FLAG_DEEP_DESERT_EAST_BOSS))
+                    gSaveBlock1Ptr->checkpoints |= (1 << CHECKPOINT_DEEP_DESERT_EAST);
+                gSaveBlock1Ptr->facing = DIR_WEST;
+            }
+            if (gSaveBlock1Ptr->location.mapNum == MAP_NUM(DEEP_DESERT_EAST1) && direction == DIR_EAST)
+            {
+                gSaveBlock1Ptr->trailX = 41;
+                gSaveBlock1Ptr->trailY = 88;
+                if (FlagGet(FLAG_DEEP_DESERT_EAST_BOSS))
+                    gSaveBlock1Ptr->checkpoints |= (1 << CHECKPOINT_DEEP_DESERT_EAST);
+                gSaveBlock1Ptr->facing = DIR_EAST;
+            }
+
+            // Sweaty Summit
+            if (gSaveBlock1Ptr->location.mapNum == MAP_NUM(SWEATY_SUMMIT1) && direction == DIR_NORTH)
+            {
+                gSaveBlock1Ptr->trailX = 24;
+                gSaveBlock1Ptr->trailY = 111;
+                if (FlagGet(FLAG_SWEATY_SUMMIT_BOSS))
+                    gSaveBlock1Ptr->checkpoints |= (1 << CHECKPOINT_MOLTEN_MOUNTAIN);
+                gSaveBlock1Ptr->facing = DIR_NORTH;
+            }
+            if (gSaveBlock1Ptr->location.mapNum == MAP_NUM(SWEATY_SUMMIT1) && direction == DIR_EAST)
+            {
+                gSaveBlock1Ptr->trailX = 25;
+                gSaveBlock1Ptr->trailY = 112;
+                if (FlagGet(FLAG_SWEATY_SUMMIT_BOSS))
+                    gSaveBlock1Ptr->checkpoints |= (1 << CHECKPOINT_MOLTEN_MOUNTAIN);
+                gSaveBlock1Ptr->facing = DIR_EAST;
+            }
+
+            // Smelly Swamp South
+            if (gSaveBlock1Ptr->location.mapNum == MAP_NUM(SMELLY_SWAMP_SOUTH1) && direction == DIR_WEST)
+            {
+                gSaveBlock1Ptr->trailX = 95;
+                gSaveBlock1Ptr->trailY = 88;
+                if (FlagGet(FLAG_SMELLY_SWAMP_SOUTH_BOSS))
+                    gSaveBlock1Ptr->checkpoints |= (1 << CHECKPOINT_COOL_COAST);
+                gSaveBlock1Ptr->facing = DIR_WEST;
+            }
+            if (gSaveBlock1Ptr->location.mapNum == MAP_NUM(SMELLY_SWAMP_SOUTH1) && direction == DIR_EAST)
+            {
+                gSaveBlock1Ptr->trailX = 97;
+                gSaveBlock1Ptr->trailY = 88;
+                if (FlagGet(FLAG_SMELLY_SWAMP_SOUTH_BOSS))
+                    gSaveBlock1Ptr->checkpoints |= (1 << CHECKPOINT_COOL_COAST);
+                gSaveBlock1Ptr->facing = DIR_EAST;
+            }
+
+            // Tulip Town
+            if (gSaveBlock1Ptr->location.mapNum == MAP_NUM(TULIP_TOWN1) && direction == DIR_WEST)
+            {
+                gSaveBlock1Ptr->trailX = 71;
+                gSaveBlock1Ptr->trailY = 112;
+                gSaveBlock1Ptr->checkpoints |= (1 << CHECKPOINT_TULIP_TOWN);
+                gSaveBlock1Ptr->facing = DIR_WEST;
+            }
+            if (gSaveBlock1Ptr->location.mapNum == MAP_NUM(TULIP_TOWN1) && direction == DIR_NORTH)
+            {
+                gSaveBlock1Ptr->trailX = 72;
+                gSaveBlock1Ptr->trailY = 111;
+                gSaveBlock1Ptr->checkpoints |= (1 << CHECKPOINT_TULIP_TOWN);
+                gSaveBlock1Ptr->facing = DIR_NORTH;
+            }
+            if (gSaveBlock1Ptr->location.mapNum == MAP_NUM(TULIP_TOWN1) && direction == DIR_EAST)
+            {
+                gSaveBlock1Ptr->trailX = 73;
+                gSaveBlock1Ptr->trailY = 112;
+                gSaveBlock1Ptr->checkpoints |= (1 << CHECKPOINT_TULIP_TOWN);
+                gSaveBlock1Ptr->facing = DIR_EAST;
+            }
+
+            // Terrible Tunnel South
+            if (gSaveBlock1Ptr->location.mapNum == MAP_NUM(TERRIBLE_TUNNEL_SOUTH1) && direction == DIR_WEST)
+            {
+                gSaveBlock1Ptr->trailX = 119;
+                gSaveBlock1Ptr->trailY = 120;
+                gSaveBlock1Ptr->checkpoints |= (1 << CHECKPOINT_TERRIBLE_TUNNEL_SOUTH);
+                gSaveBlock1Ptr->facing = DIR_WEST;
+            }
+            if (gSaveBlock1Ptr->location.mapNum == MAP_NUM(TERRIBLE_TUNNEL_SOUTH1) && direction == DIR_EAST)
+            {
+                gSaveBlock1Ptr->trailX = 121;
+                gSaveBlock1Ptr->trailY = 120;
+                gSaveBlock1Ptr->checkpoints |= (1 << CHECKPOINT_TERRIBLE_TUNNEL_SOUTH);
+                gSaveBlock1Ptr->facing = DIR_EAST;
+            }
+
+            // Terrible Tunnel North
+            if (gSaveBlock1Ptr->location.mapNum == MAP_NUM(TERRIBLE_TUNNEL_NORTH1) && direction == DIR_WEST)
+            {
+                gSaveBlock1Ptr->trailX = 135;
+                gSaveBlock1Ptr->trailY = 104;
+                gSaveBlock1Ptr->checkpoints |= (1 << CHECKPOINT_TERRIBLE_TUNNEL_NORTH);
+                gSaveBlock1Ptr->facing = DIR_WEST;
+            }
+            if (gSaveBlock1Ptr->location.mapNum == MAP_NUM(TERRIBLE_TUNNEL_NORTH1) && direction == DIR_EAST)
+            {
+                gSaveBlock1Ptr->trailX = 137;
+                gSaveBlock1Ptr->trailY = 104;
+                gSaveBlock1Ptr->checkpoints |= (1 << CHECKPOINT_TERRIBLE_TUNNEL_NORTH);
                 gSaveBlock1Ptr->facing = DIR_EAST;
             }
 

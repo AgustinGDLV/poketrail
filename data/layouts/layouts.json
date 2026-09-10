@@ -5420,6 +5420,86 @@
       "secondary_tileset": "gTileset_Unused1",
       "border_filepath": "data/layouts/VolcanoTemplates_Room9/border.bin",
       "blockdata_filepath": "data/layouts/VolcanoTemplates_Room9/map.bin"
+    },
+    {
+      "id": "LAYOUT_DEEP_DESERT_EAST1",
+      "name": "DeepDesertEast1_Layout",
+      "width": 80,
+      "height": 80,
+      "primary_tileset": "gTileset_Desert",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/DeepDesertEast1/border.bin",
+      "blockdata_filepath": "data/layouts/DeepDesertEast1/map.bin"
+    },
+    {
+      "id": "LAYOUT_SWEATY_SUMMIT1",
+      "name": "SweatySummit1_Layout",
+      "width": 80,
+      "height": 80,
+      "primary_tileset": "gTileset_Volcano",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/SweatySummit1/border.bin",
+      "blockdata_filepath": "data/layouts/SweatySummit1/map.bin"
+    },
+    {
+      "id": "LAYOUT_SMELLY_SWAMP_NORTH1",
+      "name": "SmellySwampNorth1_Layout",
+      "width": 80,
+      "height": 80,
+      "primary_tileset": "gTileset_Swamp",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/SmellySwampNorth1/border.bin",
+      "blockdata_filepath": "data/layouts/SmellySwampNorth1/map.bin"
+    },
+    {
+      "id": "LAYOUT_SMELLY_SWAMP_SOUTH1",
+      "name": "SmellySwampSouth1_Layout",
+      "width": 80,
+      "height": 80,
+      "primary_tileset": "gTileset_Swamp",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/SmellySwampSouth1/border.bin",
+      "blockdata_filepath": "data/layouts/SmellySwampSouth1/map.bin"
+    },
+    {
+      "id": "LAYOUT_TERRIBLE_TUNNEL_NORTH1",
+      "name": "TerribleTunnelNorth1_Layout",
+      "width": 80,
+      "height": 80,
+      "primary_tileset": "gTileset_CavePrimary",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/TerribleTunnelNorth1/border.bin",
+      "blockdata_filepath": "data/layouts/TerribleTunnelNorth1/map.bin"
+    },
+    {
+      "id": "LAYOUT_TERRIBLE_TUNNEL_SOUTH1",
+      "name": "TerribleTunnelSouth1_Layout",
+      "width": 80,
+      "height": 80,
+      "primary_tileset": "gTileset_CavePrimary",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/TerribleTunnelSouth1/border.bin",
+      "blockdata_filepath": "data/layouts/TerribleTunnelSouth1/map.bin"
+    },
+    {
+      "id": "LAYOUT_TULIP_TOWN1",
+      "name": "TulipTown1_Layout",
+      "width": 80,
+      "height": 80,
+      "primary_tileset": "gTileset_City",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/TulipTown1/border.bin",
+      "blockdata_filepath": "data/layouts/TulipTown1/map.bin"
+    },
+    {
+      "id": "LAYOUT_ORCHID_CITY1",
+      "name": "OrchidCity1_Layout",
+      "width": 80,
+      "height": 80,
+      "primary_tileset": "gTileset_City",
+      "secondary_tileset": "gTileset_Unused1",
+      "border_filepath": "data/layouts/OrchidCity1/border.bin",
+      "blockdata_filepath": "data/layouts/OrchidCity1/map.bin"
     }
   ]
 }

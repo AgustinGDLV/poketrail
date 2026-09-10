@@ -168,7 +168,15 @@
     "FunkyForestNorth1",
     "FunkyForestWest1",
     "FunkyForestEast1",
-    "DeepDesertWest1"
+    "DeepDesertWest1",
+    "DeepDesertEast1",
+    "SweatySummit1",
+    "SmellySwampNorth1",
+    "SmellySwampSouth1",
+    "TerribleTunnelNorth1",
+    "TerribleTunnelSouth1",
+    "TulipTown1",
+    "OrchidCity1"
   ],
   "gMapGroup_TownsAndRoutes": [
     "PetalburgCity",

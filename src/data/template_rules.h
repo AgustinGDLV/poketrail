@@ -399,7 +399,7 @@ const struct TemplateRules gTemplateRules[TEMPLATE_TYPES_COUNT] =
     {
         .name = COMPOUND_STRING("Terrible Tunnel"),
         .mapGroup = MAP_GROUP(CAVE_TEMPLATES_CONNECTIONS),
-        .bgm = MUS_DP_MT_CORONET,
+        .bgm = MUS_VICTORY_ROAD,
         .background = BG_CAVE,
         .connectionType = CONNECTION_TYPE_WARP,
         .offsets = {

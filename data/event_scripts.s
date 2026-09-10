@@ -1339,3 +1339,19 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/VolcanoTemplates_Room8/scripts.inc"
 
 	.include "data/maps/VolcanoTemplates_Room9/scripts.inc"
+
+	.include "data/maps/DeepDesertEast1/scripts.inc"
+
+	.include "data/maps/SweatySummit1/scripts.inc"
+
+	.include "data/maps/SmellySwampNorth1/scripts.inc"
+
+	.include "data/maps/SmellySwampSouth1/scripts.inc"
+
+	.include "data/maps/TerribleTunnelNorth1/scripts.inc"
+
+	.include "data/maps/TerribleTunnelSouth1/scripts.inc"
+
+	.include "data/maps/TulipTown1/scripts.inc"
+
+	.include "data/maps/OrchidCity1/scripts.inc"
