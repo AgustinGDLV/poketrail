@@ -396,7 +396,9 @@ static void Task_HandleBattleVictory(u8 taskId)
     case 0: // Print EXP message.
     {
         gDeckStruct.isSelectionPhase = TRUE;
-        u32 exp = gDeckStruct.exp / gPlayerPartyCount; // *TODO - variable exp gain per battler
+        u32 exp = gDeckStruct.exp;
+        if (gPlayerPartyCount >= 2)
+            exp /= (gPlayerPartyCount / 2); // *TODO - variable exp gain per battler
         ConvertIntToDecimalStringN(gStringVar2, exp, STR_CONV_MODE_LEFT_ALIGN, 5);
         StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Your party gained an average of {STR_VAR_2} Exp. Points!"));
         PrintStringToMessageBox(gStringVar1);
@@ -415,7 +417,7 @@ static void Task_HandleBattleVictory(u8 taskId)
         }
         break;
     case 2: // Give experience to the current battler and print message if they level.
-        if (gDeckMons[gDeckStruct.battlerExp].species != SPECIES_NONE)
+        if (gDeckMons[gDeckStruct.battlerExp].species != SPECIES_NONE && gDeckMons[gDeckStruct.battlerExp].lvl != MAX_LEVEL)
         {
             u32 level = gDeckMons[gDeckStruct.battlerExp].lvl;
             u32 species = gDeckMons[gDeckStruct.battlerExp].species;
