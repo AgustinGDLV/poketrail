@@ -485,8 +485,18 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
     {
         .name = COMPOUND_STRING("ACID ARMOR"),
         .description = COMPOUND_STRING("Boosts right ally DEF."),
-        .power = 40,
+        .power = 50,
         .target = TARGET_RIGHT_ALLY,
+        .effect = DECK_EFFECT_POWER_UP,
+        .param = STAT_DEF,
+    },
+
+    [DECK_ICICLE_CRASH] =
+    {
+        .name = COMPOUND_STRING("ICICLE CRASH"),
+        .description = COMPOUND_STRING("Damages 3 opposite opponents."),
+        .power = 100,
+        .target = TARGET_OPPOSITE_LEFT | TARGET_OPPOSITE | TARGET_OPPOSITE_RIGHT,
         .effect = DECK_EFFECT_POWER_UP,
         .param = STAT_DEF,
     },

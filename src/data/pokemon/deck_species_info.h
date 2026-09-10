@@ -2133,4 +2133,48 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .portrait = gAzumarillPortraitGfx, 
         .portraitPalette = gAzumarillPortraitPal, 
     },
+
+    [SPECIES_PILOSWINE] = 
+    { 
+        .baseHP = 80, 
+        .basePower = 100, 
+        .baseDef = 80, 
+        .move = DECK_ICICLE_CRASH, 
+        .ability = DECK_HEAVY, 
+    
+        .playerIdle = gPiloswinePlayerIdleGfx, 
+        .opponentIdle = gPiloswineOpponentIdleGfx, 
+        .playerAttack = gPiloswinePlayerAttackGfx, 
+        .opponentAttack = gPiloswineOpponentAttackGfx, 
+        .playerHurt = gPiloswinePlayerHurtGfx, 
+        .opponentHurt = gPiloswineOpponentHurtGfx, 
+        .objectPalette = gPiloswineObjectPal, 
+        .playerYOffset = 0, 
+        .opponentYOffset = 0, 
+    
+        .portrait = gPiloswinePortraitGfx, 
+        .portraitPalette = gPiloswinePortraitPal, 
+    },
+
+    [SPECIES_MAMOSWINE] = 
+    { 
+        .baseHP = 100, 
+        .basePower = 130, 
+        .baseDef = 100, 
+        .move = DECK_ICICLE_CRASH, 
+        .ability = DECK_HEAVY, 
+    
+        .playerIdle = gMamoswinePlayerIdleGfx, 
+        .opponentIdle = gMamoswineOpponentIdleGfx, 
+        .playerAttack = gMamoswinePlayerAttackGfx, 
+        .opponentAttack = gMamoswineOpponentAttackGfx, 
+        .playerHurt = gMamoswinePlayerHurtGfx, 
+        .opponentHurt = gMamoswineOpponentHurtGfx, 
+        .objectPalette = gMamoswineObjectPal, 
+        .playerYOffset = 0, 
+        .opponentYOffset = 0, 
+    
+        .portrait = gMamoswinePortraitGfx, 
+        .portraitPalette = gMamoswinePortraitPal, 
+    },
 };

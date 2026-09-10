@@ -1162,3 +1162,27 @@ const u16 gAzumarillObjectPal[] = INCBIN_U16("graphics/deck_pokemon/azumarill/pl
  
 const u8 gAzumarillPortraitGfx[] = INCBIN_U8("graphics/deck_pokemon/azumarill/portrait_normal.4bpp"); 
 const u16 gAzumarillPortraitPal[] = INCBIN_U16("graphics/deck_pokemon/azumarill/portrait_normal.gbapal");
+
+// Piloswine
+const u8 gPiloswinePlayerIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/piloswine/player_idle.4bpp"); 
+const u8 gPiloswineOpponentIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/piloswine/opponent_idle.4bpp"); 
+const u8 gPiloswinePlayerAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/piloswine/player_attack.4bpp"); 
+const u8 gPiloswineOpponentAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/piloswine/opponent_attack.4bpp"); 
+const u8 gPiloswinePlayerHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/piloswine/player_hurt.4bpp"); 
+const u8 gPiloswineOpponentHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/piloswine/opponent_hurt.4bpp"); 
+const u16 gPiloswineObjectPal[] = INCBIN_U16("graphics/deck_pokemon/piloswine/player_idle.gbapal"); 
+ 
+const u8 gPiloswinePortraitGfx[] = INCBIN_U8("graphics/deck_pokemon/piloswine/portrait_normal.4bpp"); 
+const u16 gPiloswinePortraitPal[] = INCBIN_U16("graphics/deck_pokemon/piloswine/portrait_normal.gbapal");
+
+// Mamoswine
+const u8 gMamoswinePlayerIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/mamoswine/player_idle.4bpp"); 
+const u8 gMamoswineOpponentIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/mamoswine/opponent_idle.4bpp"); 
+const u8 gMamoswinePlayerAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/mamoswine/player_attack.4bpp"); 
+const u8 gMamoswineOpponentAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/mamoswine/opponent_attack.4bpp"); 
+const u8 gMamoswinePlayerHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/mamoswine/player_hurt.4bpp"); 
+const u8 gMamoswineOpponentHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/mamoswine/opponent_hurt.4bpp"); 
+const u16 gMamoswineObjectPal[] = INCBIN_U16("graphics/deck_pokemon/mamoswine/player_idle.gbapal"); 
+ 
+const u8 gMamoswinePortraitGfx[] = INCBIN_U8("graphics/deck_pokemon/mamoswine/portrait_normal.4bpp"); 
+const u16 gMamoswinePortraitPal[] = INCBIN_U16("graphics/deck_pokemon/mamoswine/portrait_normal.gbapal");
