@@ -309,10 +309,17 @@ static void Task_ContinueScreenWaitForKeypress(u8 taskId)
 {
     if (gMain.newKeys & A_BUTTON)
 	{
-        PlaySE(SE_SELECT);
-		BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
-        sExitCallback = CB2_ContinueSavedGame;
-		gTasks[taskId].func = Task_StartScreenFadeOutAndExit;
+        if (gSaveBlock1Ptr->checkpoints == UINT32_MAX)
+        {
+            PlaySE(SE_APPLAUSE);
+        }
+        else
+        {
+            PlaySE(SE_SELECT);
+            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+            sExitCallback = CB2_ContinueSavedGame;
+            gTasks[taskId].func = Task_StartScreenFadeOutAndExit;
+        }
     }
     if (gMain.newKeys & B_BUTTON)
 	{
@@ -416,7 +423,10 @@ static void DrawContinueScreenText(void)
     CopyWindowToVram(sStartScreenWindowIds[WIN_INFO], COPYWIN_FULL);
 
     // Load text into main window.
-    AddTextPrinterParameterized3(sStartScreenWindowIds[WIN_MAIN_TEXT], FONT_NORMAL, 2, 2, sTextColor_Instructions, TEXT_SKIP_DRAW, COMPOUND_STRING("Continue run?"));
+    if (gSaveBlock1Ptr->checkpoints == UINT32_MAX)
+        AddTextPrinterParameterized3(sStartScreenWindowIds[WIN_MAIN_TEXT], FONT_NORMAL, 2, 2, sTextColor_Instructions, TEXT_SKIP_DRAW, COMPOUND_STRING("Run completed!"));
+    else
+        AddTextPrinterParameterized3(sStartScreenWindowIds[WIN_MAIN_TEXT], FONT_NORMAL, 2, 2, sTextColor_Instructions, TEXT_SKIP_DRAW, COMPOUND_STRING("Continue run?"));
     CopyWindowToVram(sStartScreenWindowIds[WIN_MAIN_TEXT], COPYWIN_FULL);
 
     // Load instructions into button window.

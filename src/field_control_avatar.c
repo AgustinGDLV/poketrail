@@ -251,7 +251,7 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
     if (input->pressedRButton && TryStartDexNavSearch())
         return TRUE;
     
-    if (input->pressedLButton)
+    if (input->pressedLButton && IsPlayerInFloorMap())
     {
         FadeScreen(FADE_TO_BLACK, 0);
         LockPlayerFieldControls();

@@ -375,7 +375,7 @@ static bool32 UseItemOnPartyIndex(u32 itemId, u32 partyIndex)
     // Check for invalid item use; TODO: assumes only healing items
     if (itemId == ITEM_REVIVE && hp != 0)
         return FALSE;
-    if (hp == 0 || hp == maxHP)
+    else if (hp == 0 || hp == maxHP)
         return FALSE;
 
     // Heal party member; TODO: use item params.
@@ -385,10 +385,10 @@ static bool32 UseItemOnPartyIndex(u32 itemId, u32 partyIndex)
         hp += 20;
         break;
     case ITEM_SUPER_POTION:
-        hp += 40;
+        hp += 60;
         break;
     case ITEM_HYPER_POTION:
-        hp += 120;
+        hp += 200;
         break;
     case ITEM_REVIVE:
         hp += (maxHP * 50) / 100;

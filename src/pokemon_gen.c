@@ -12,7 +12,7 @@
 
 static const u32 sCheckpointEncounterLevel[CHECKPOINT_COUNT] =
 {
-    5, 5, 15, 25, 32, 40, 45, 50, 55, 60, 60, 60, 60
+    5, 5, 12, 20, 28, 35, 42, 50, 55, 60, 60, 60, 60
 };
 
 // Returns what level an encounter should be based on checkpoint status.
@@ -49,13 +49,16 @@ void InitEnemyPartyFromEncounter(void) // used by callnative
     for (u32 i = 0; i < PARTY_SIZE; ++i)
     {
         if (gSaveBlock1Ptr->currentTemplateType == TEMPLATES_TERRIBLE_TUNNEL)
-            CreateMon(&gEnemyParty[i], gTerribleEncountersInfo[gSpecialVar_0x8000][i], level + (Random() % 2), USE_RANDOM_IVS, 0, 0, OT_ID_PLAYER_ID, 0);
+            CreateMon(&gEnemyParty[i], gTerribleEncountersInfo[gSpecialVar_0x8000][i], level + (Random() % 2) + 5, USE_RANDOM_IVS, 0, 0, OT_ID_PLAYER_ID, 0);
         else
             CreateMon(&gEnemyParty[i], gEncountersInfo[gSpecialVar_0x8000][i], level + (Random() % 2), USE_RANDOM_IVS, 0, 0, OT_ID_PLAYER_ID, 0);
         SetMonData(&gEnemyParty[i], MON_DATA_POSITION, &i);
     }
     gDeckStruct.isBossBattle = FALSE;
-    gDeckStruct.bossHPMult = 0;
+    if (gSaveBlock1Ptr->currentTemplateType == TEMPLATES_TERRIBLE_TUNNEL)
+        gDeckStruct.bossHPMult = UQ_4_12(2.0);
+    else
+        gDeckStruct.bossHPMult = 0;
     gDeckStruct.musicOverride = MUS_NONE;
 }
 
@@ -81,13 +84,12 @@ void InitBossPartyFromEncounter(void) // used by callnative
         case SPECIES_SCYTHER:
             level = 20;
             gDeckStruct.bossHPMult = UQ_4_12(3.0);
-            gDeckStruct.musicOverride = MUS_VS_CHAMPION;
             break;
         case SPECIES_HIPPOWDON:
             level = 28;
             gDeckStruct.bossHPMult = UQ_4_12(2.5);
             break;
-        case SPECIES_LOTAD:
+        case SPECIES_LUDICOLO:
             level = 28;
             gDeckStruct.musicOverride = MUS_VS_CHAMPION;
             gDeckStruct.bossHPMult = UQ_4_12(2.0);

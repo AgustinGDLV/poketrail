@@ -147,6 +147,8 @@ EventScript_Campfire::
 	end
 
 EventScript_Campfire_Rest:
+	callnative CheckTerribleTunnel
+	goto_if_eq VAR_RESULT, TRUE, EventScript_Campfire_TerribleTunnel
 	message EventScript_RestHowLong_Text
 	waitmessage
 	dynmultipush EventScript_3_Hours_Text, 0
@@ -163,6 +165,15 @@ EventScript_Campfire_Rest:
 	releaseall
 	closemessage
 	end
+
+EventScript_Campfire_TerribleTunnel::
+	message EventScript_CantRestHere_Text
+	waitmessage
+	end
+
+EventScript_CantRestHere_Text:
+	.string "It feels too dangerous\n"
+	.string "to rest here…$"
 
 EventScript_Campfire_Resume:
 	callnative GoToTrailMap

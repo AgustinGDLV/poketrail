@@ -397,6 +397,8 @@ static void Task_HandleBattleVictory(u8 taskId)
     {
         gDeckStruct.isSelectionPhase = TRUE;
         u32 exp = gDeckStruct.exp;
+        if (gDeckStruct.isBossBattle) // more exp from bosses
+            exp *= 2;
         // if (gPlayerPartyCount >= 2)
         //     exp /= (gPlayerPartyCount / 2); // *TODO - variable exp gain per battler
         ConvertIntToDecimalStringN(gStringVar2, exp, STR_CONV_MODE_LEFT_ALIGN, 5);
@@ -584,6 +586,36 @@ void Task_CloseDeckBattle(u8 taskId)
     {
         if (gDeckMons[battler].species != SPECIES_NONE)
             SetMonData(&gPlayerParty[gDeckMons[battler].partyIndex], MON_DATA_HP, &gDeckMons[battler].hp);
+    }
+
+    // TODO: Band-aid fix for any position bugs.
+    u32 battlersAtPos[POSITIONS_COUNT] = {0};
+
+    for (u32 battler = B_PLAYER_0; battler < B_PLAYER_5; ++battler)
+        ++battlersAtPos[gDeckMons[battler].pos];
+
+    for (u32 pos = POSITION_0; pos < POSITIONS_COUNT; ++pos)
+    {
+        if (battlersAtPos[pos] > 1)
+        {
+            u32 battler = GetDeckBattlerAtPosUnsafe(B_SIDE_PLAYER, pos);
+            for (u32 pos2 = POSITION_0; pos2 < POSITIONS_COUNT; ++pos2)
+            {
+                if (battlersAtPos[pos2] == 0)
+                {
+                    battlersAtPos[pos] -= 1;
+                    battlersAtPos[pos2] += 1;
+                    gDeckMons[battler].pos = pos2;
+                }
+            }
+        }
+    }
+
+    // Update battler positions.
+    for (u32 battler = B_PLAYER_0; battler < B_PLAYER_5; ++battler)
+    {
+        if (gDeckMons[battler].species != SPECIES_NONE)
+            SetMonData(&gPlayerParty[gDeckMons[battler].partyIndex], MON_DATA_POSITION, &gDeckMons[battler].pos);
     }
 
     // Return to overworld.
@@ -970,8 +1002,8 @@ static void Task_HandleTurnEndEffects(u8 taskId)
     case TURN_END_REGENERATIVE:
         for (enum BattleId battler = B_PLAYER_0; battler < MAX_DECK_BATTLERS_COUNT; ++battler)
         {
-            if (GetDeckBattlerAbility(battler) == DECK_REGENERATIVE)
-                UpdateBattlerHP(battler, -1 * (s32) ((gDeckMons[battler].hp * 10)/100));
+            if (GetDeckBattlerAbility(battler) == DECK_REGENERATIVE && IsDeckBattlerAlive(battler))
+                UpdateBattlerHP(battler, -1 * (s32) ((gDeckMons[battler].maxHP* 5)/100));
         }
         ++gTasks[taskId].tTurnEndState;
         break;
@@ -1202,7 +1234,7 @@ s32 GetAbilityPowerBoost(u32 battlerAtk)
             for (u32 battler = B_PLAYER_0; battler <= B_PLAYER_5; ++battler)
             {
                 if (battler != battlerAtk && GetDeckBattlerAbility(battler) == DECK_SOCIAL && IsDeckBattlerAlive(battler))
-                    boost += (power * 10) / 100; // 1.1x per
+                    boost += (power * 15) / 100; // 1.15x per
             }
         }
         else
@@ -1210,7 +1242,7 @@ s32 GetAbilityPowerBoost(u32 battlerAtk)
             for (u32 battler = B_OPPONENT_0; battler <= B_OPPONENT_5; ++battler)
             {
                 if (battler != battlerAtk && GetDeckBattlerAbility(battler) == DECK_SOCIAL && IsDeckBattlerAlive(battler))
-                    boost += (power * 10) / 100; // 1.1x per
+                    boost += (power * 15) / 100; // 1.15x per
             }
         }
         break;
@@ -1220,7 +1252,7 @@ s32 GetAbilityPowerBoost(u32 battlerAtk)
             for (u32 battler = B_PLAYER_0; battler <= B_PLAYER_5; ++battler)
             {
                 if (battler != battlerAtk && GetDeckBattlerAbility(battler) == DECK_ALPHA && IsDeckBattlerAlive(battler))
-                    boost = -1 * (s32) ((power * 50) / 100); // 0.5x
+                    boost = -1 * (s32) ((power * 40) / 100); // -0.4x per
             }
         }
         else
@@ -1228,18 +1260,18 @@ s32 GetAbilityPowerBoost(u32 battlerAtk)
             for (u32 battler = B_OPPONENT_0; battler <= B_OPPONENT_5; ++battler)
             {
                 if (battler != battlerAtk && GetDeckBattlerAbility(battler) == DECK_ALPHA && IsDeckBattlerAlive(battler))
-                    boost += (power * 10) / 100; // 0.5x
+                    boost += (power * 40) / 100; // -0.4x
             }
         }
         break;
     case DECK_TRICKY:
-        boost += (power * 10 * (Random() % 6)) / 100; // 1.0x - 1.5x
+        boost = (power * 10 * (Random() % 6)) / 100; // 1.0x - 1.5x
         break;
     case DECK_SHORT_TEMPERED:
-        boost += -1 * (s32) (power * 10 * gDeckStruct.turns) / 2; // -0.9x per turn
+        boost = -1 * (s32) (power * 10 * gDeckStruct.turns) / 200; // -0.9x per turn
         break;
     case DECK_ADAPTIVE:
-        boost += (power * 10 * gDeckStruct.turns) / 2; // 1.1x per turn
+        boost = (power * 10 * gDeckStruct.turns) / 200; // 1.1x per two turn
         break;
     default:
         break;

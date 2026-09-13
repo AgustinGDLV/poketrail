@@ -331,6 +331,7 @@ static void Task_PlayerSelectAllyToSwap(u8 taskId)
             // Swap any fainted battlers.
             gBattlerTarget = GetDeckBattlerAtPosUnsafe(B_SIDE_PLAYER, gDeckStruct.selectedPos);
             gDeckMons[gBattlerTarget].pos = gDeckMons[gBattlerAttacker].pos;
+            gDeckMons[gBattlerTarget].initialPos = gDeckMons[gBattlerAttacker].pos;
 
             // Immediately execute swap without cost.
             gDeckMons[gBattlerAttacker].pos = gDeckStruct.selectedPos;
@@ -363,6 +364,7 @@ static void Task_PlayerSelectAllyToSwap(u8 taskId)
             QueueAction(ACTION_SWAP, gBattlerAttacker, gBattlerTarget, MOVE_NONE);
             SwapBattlerPositions(gBattlerAttacker, gBattlerTarget);
             StartBattlerAnim(gBattlerAttacker, ANIM_PAUSED);
+            StartBattlerAnim(gBattlerTarget, ANIM_PAUSED);
 
             // Prepare to select next battler for action.
             gDeckStruct.selectedPos = GetLeftmostPositionToMove(B_SIDE_PLAYER);

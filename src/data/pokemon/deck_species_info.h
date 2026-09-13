@@ -1455,7 +1455,7 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
     [SPECIES_EXPLOUD] = 
     { 
         .baseHP = 100, 
-        .basePower = 110, 
+        .basePower = 120, 
         .baseDef = 70, 
         .move = DECK_BOOMBURST, 
         .ability = DECK_ALPHA, 
@@ -1589,7 +1589,7 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
         .baseHP = 60, 
         .basePower = 80, 
         .baseDef = 60, 
-        .move = DECK_CRUNCH, 
+        .move = DECK_TOXIC_FANG, 
         .ability = DECK_VAMPIRIC, 
     
         .playerIdle = gGolbatPlayerIdleGfx, 
@@ -1609,9 +1609,9 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
     [SPECIES_CROBAT] = 
     { 
         .baseHP = 100, 
-        .basePower = 100, 
+        .basePower = 100,
         .baseDef = 60, 
-        .move = DECK_CRUNCH, 
+        .move = DECK_TOXIC_FANG, 
         .ability = DECK_VAMPIRIC, 
     
         .playerIdle = gCrobatPlayerIdleGfx, 

@@ -7,6 +7,7 @@ OrchidCity1_Porygon::
 	applymovement 1, OrchidCity1_Movement_Jump
 	waitmovement 1
 	playmoncry SPECIES_PORYGON, CRY_MODE_ENCOUNTER
+	msgbox OrchidCity1_Porygon_Text2
 	fadescreenswapbuffers FADE_TO_BLACK
 	callnative EndTrailJourney
 	releaseall
@@ -23,6 +24,9 @@ OrchidCity1_Porygon_Text:
 	.string "This is what you\n"
 	.string "journeyed for…\p"
 	.string "It's so cool!$"
+
+OrchidCity1_Porygon_Text2:
+	.string "Your journey is complete!$"
 
 OrchidCity1_Breeder::
 	lockall

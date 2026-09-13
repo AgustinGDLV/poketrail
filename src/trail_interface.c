@@ -1435,7 +1435,7 @@ static void Task_SaveAndEnd(u8 taskId)
     switch (gTasks[taskId].data[0])
     {
     case 0:
-        gSaveBlock1Ptr->checkpoints = 0;
+        gSaveBlock1Ptr->checkpoints = UINT32_MAX;
         TrySavingData(SAVE_LINK);
         ++gTasks[taskId].data[0];
         break;
@@ -1448,4 +1448,12 @@ static void Task_SaveAndEnd(u8 taskId)
 void EndTrailJourney(void)
 {
     CreateTask(Task_SaveAndEnd, 0);
+}
+
+void CheckTerribleTunnel(void)
+{
+    if (gSaveBlock1Ptr->currentTemplateType == TEMPLATES_TERRIBLE_TUNNEL)
+        gSpecialVar_Result = TRUE;
+    else
+        gSpecialVar_Result = FALSE;
 }

@@ -1994,7 +1994,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         )
         .levelUpLearnset = sLombreLevelUpLearnset,
         .teachableLearnset = sLombreTeachableLearnset,
-        .evolutions = EVOLUTION({EVO_LEVEL, 35, SPECIES_LUDICOLO}),
+        .evolutions = EVOLUTION({EVO_LEVEL, 30, SPECIES_LUDICOLO}),
     },
 
     [SPECIES_LUDICOLO] =
@@ -4016,7 +4016,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         )
         .levelUpLearnset = sLoudredLevelUpLearnset,
         .teachableLearnset = sLoudredTeachableLearnset,
-        .evolutions = EVOLUTION({EVO_LEVEL, 40, SPECIES_EXPLOUD}),
+        .evolutions = EVOLUTION({EVO_LEVEL, 32, SPECIES_EXPLOUD}),
     },
 
     [SPECIES_EXPLOUD] =
