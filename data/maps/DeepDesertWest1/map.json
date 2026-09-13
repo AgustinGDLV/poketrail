@@ -81,7 +81,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_YOUNGSTER",
-      "x": 40,
+      "x": 41,
       "y": 29,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
@@ -145,11 +145,11 @@
       "flag": "FLAG_DEEP_DESERT_WEST_ITEM_2"
     },
     {
-      "graphics_id": "0",
+      "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
       "x": 40,
       "y": 28,
       "elevation": 0,
-      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_type": "MOVEMENT_TYPE_INVISIBLE",
       "movement_range_x": 1,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",

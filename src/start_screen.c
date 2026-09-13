@@ -500,22 +500,6 @@ static void LoadScreenGfx(void)
     DrawContinueScreenText();
 }
 
-// Set the starting seed for a new run (from SeedRNGWithRTC, but custom seeds may be implemented)
-static void SeedNewRunRNG(void)
-{
-    #define BCD8(x) ((((x) >> 4) & 0xF) * 10 + ((x) & 0xF))
-    u32 seconds;
-    struct SiiRtcInfo rtc;
-    RtcGetInfo(&rtc);
-    seconds =
-        ((HOURS_PER_DAY * RtcGetDayCount(&rtc) + BCD8(rtc.hour))
-        * MINUTES_PER_HOUR + BCD8(rtc.minute))
-        * SECONDS_PER_MINUTE + BCD8(rtc.second);
-    gFloorplan.nextFloorSeed = seconds;
-    #undef BCD8
-}
-
-
 // Clears run-specific save data to start a new run or end a run.
 static void ResetRunSaveData(void)
 {

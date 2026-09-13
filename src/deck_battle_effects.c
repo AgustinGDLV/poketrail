@@ -69,9 +69,9 @@ static void ExecuteHitEffect(void)
             StartBattlerAnim(targets[i], ANIM_HURT);
             gDeckStruct.lastHitDamage = damage = CalculateDamage(gBattlerAttacker, targets[i], gCurrentMove);
             if (targets[i] == gBattlerAttacker) // recoil
-                damage = (damage * 33) / 100;
+                damage = (damage * 20) / 100;
             else if (GetDeckBattlerSide(targets[i]) == GetDeckBattlerSide(gBattlerAttacker))
-                damage = (damage * 50) / 100;
+                damage = (damage * 35) / 100;
             UpdateBattlerHP(targets[i], damage);
             aliveCount += 1;
         }

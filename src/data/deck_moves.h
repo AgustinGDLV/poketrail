@@ -151,7 +151,7 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
     {
         .name = COMPOUND_STRING("HEAL BELL"),
         .description = COMPOUND_STRING("Heals all allies."),
-        .power = 40,
+        .power = 45,
         .target = TARGET_ALL_ALLIES,
         .effect = DECK_EFFECT_HEAL,
         .secondary = DECK_SECONDARY_RECHARGE,
@@ -245,7 +245,7 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
     {
         .name = COMPOUND_STRING("GIGA IMPACT"),
         .description = COMPOUND_STRING("Damages 3 opposite, recharges 2."),
-        .power = 250,
+        .power = 220,
         .target = TARGET_OPPOSITE_LEFT | TARGET_OPPOSITE | TARGET_OPPOSITE_RIGHT,
         .effect = DECK_EFFECT_HIT,
         .secondary = DECK_SECONDARY_RECHARGE,
@@ -343,7 +343,7 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
     {
         .name = COMPOUND_STRING("SCARY FACE"),
         .description = COMPOUND_STRING("Lowers opponent DEF."),
-        .power = 35,
+        .power = 30,
         .target = TARGET_ALL_OPPONENTS,
         .effect = DECK_EFFECT_POWER_UP,
         .param = STAT_DEF,

@@ -1039,7 +1039,7 @@ void PrintMoveOutcomeString(u32 targets) // *TODO: refactor
         StringCopy(gStringVar2, GetSpeciesName(gDeckMons[gBattlerTarget].species)); // unsafe
     else
         StringCopy(gStringVar2, COMPOUND_STRING("???"));
-    ConvertIntToDecimalStringN(gStringVar3, abs(gDeckStruct.lastHitDamage), STR_CONV_MODE_LEFT_ALIGN, 2);
+    ConvertIntToDecimalStringN(gStringVar3, abs(gDeckStruct.lastHitDamage), STR_CONV_MODE_LEFT_ALIGN, 3);
 
     // Prepare strings.
     switch (gDeckMovesInfo[gCurrentMove].effect)

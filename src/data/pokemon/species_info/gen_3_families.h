@@ -3559,7 +3559,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         )
         .levelUpLearnset = sVigorothLevelUpLearnset,
         .teachableLearnset = sVigorothTeachableLearnset,
-        .evolutions = EVOLUTION({EVO_LEVEL, 36, SPECIES_SLAKING}),
+        .evolutions = EVOLUTION({EVO_LEVEL, 32, SPECIES_SLAKING}),
     },
 
     [SPECIES_SLAKING] =
@@ -7333,7 +7333,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .levelUpLearnset = sTrapinchLevelUpLearnset,
         .teachableLearnset = sTrapinchTeachableLearnset,
         .eggMoveLearnset = sTrapinchEggMoveLearnset,
-        .evolutions = EVOLUTION({EVO_LEVEL, 35, SPECIES_VIBRAVA}),
+        .evolutions = EVOLUTION({EVO_LEVEL, 25, SPECIES_VIBRAVA}),
     },
 
     [SPECIES_VIBRAVA] =
@@ -7410,7 +7410,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         )
         .levelUpLearnset = sVibravaLevelUpLearnset,
         .teachableLearnset = sVibravaTeachableLearnset,
-        .evolutions = EVOLUTION({EVO_LEVEL, 45, SPECIES_FLYGON}),
+        .evolutions = EVOLUTION({EVO_LEVEL, 33, SPECIES_FLYGON}),
     },
 
     [SPECIES_FLYGON] =
@@ -7731,7 +7731,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .levelUpLearnset = sSwabluLevelUpLearnset,
         .teachableLearnset = sSwabluTeachableLearnset,
         .eggMoveLearnset = sSwabluEggMoveLearnset,
-        .evolutions = EVOLUTION({EVO_LEVEL, 35, SPECIES_ALTARIA}),
+        .evolutions = EVOLUTION({EVO_LEVEL, 24, SPECIES_ALTARIA}),
     },
 
     [SPECIES_ALTARIA] =
@@ -8574,7 +8574,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         )
         .levelUpLearnset = sBaltoyLevelUpLearnset,
         .teachableLearnset = sBaltoyTeachableLearnset,
-        .evolutions = EVOLUTION({EVO_LEVEL, 36, SPECIES_CLAYDOL}),
+        .evolutions = EVOLUTION({EVO_LEVEL, 28, SPECIES_CLAYDOL}),
     },
 
     [SPECIES_CLAYDOL] =

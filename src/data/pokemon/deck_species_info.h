@@ -1345,7 +1345,7 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
     [SPECIES_FLYGON] = 
     { 
         .baseHP = 100, 
-        .basePower = 100, 
+        .basePower = 110, 
         .baseDef = 100, 
         .move = DECK_HURRICANE, 
         .ability = DECK_PATIENT, 

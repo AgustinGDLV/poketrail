@@ -592,23 +592,33 @@ void Task_CloseDeckBattle(u8 taskId)
     u32 battlersAtPos[POSITIONS_COUNT] = {0};
 
     for (u32 battler = B_PLAYER_0; battler < B_PLAYER_5; ++battler)
-        ++battlersAtPos[gDeckMons[battler].pos];
+        if (gDeckMons[battler].species != SPECIES_NONE)
+            ++battlersAtPos[gDeckMons[battler].pos];
 
-    for (u32 pos = POSITION_0; pos < POSITIONS_COUNT; ++pos)
+    while (TRUE)
     {
-        if (battlersAtPos[pos] > 1)
+        bool32 madeChanges = FALSE;
+        for (u32 pos = POSITION_0; pos < POSITIONS_COUNT; ++pos)
         {
-            u32 battler = GetDeckBattlerAtPosUnsafe(B_SIDE_PLAYER, pos);
-            for (u32 pos2 = POSITION_0; pos2 < POSITIONS_COUNT; ++pos2)
+            if (battlersAtPos[pos] > 1)
             {
-                if (battlersAtPos[pos2] == 0)
+                u32 battler = GetDeckBattlerAtPosUnsafe(B_SIDE_PLAYER, pos);
+                if (battler == MAX_DECK_BATTLERS_COUNT)
+                    continue;
+                for (u32 pos2 = POSITION_0; pos2 < POSITIONS_COUNT; ++pos2)
                 {
-                    battlersAtPos[pos] -= 1;
-                    battlersAtPos[pos2] += 1;
-                    gDeckMons[battler].pos = pos2;
+                    if (battlersAtPos[pos2] == 0)
+                    {
+                        battlersAtPos[pos] -= 1;
+                        battlersAtPos[pos2] += 1;
+                        gDeckMons[battler].pos = pos2;
+                        madeChanges = TRUE;
+                    }
                 }
             }
         }
+        if (!madeChanges)
+            break;
     }
 
     // Update battler positions.
@@ -779,7 +789,6 @@ static void Task_HandleCaughtBattler(u8 taskId)
 
 static void Task_SelectPartyMemberToReplace(u8 taskId)
 {
-    enum BattleId battler;
     switch (gTasks[taskId].tState)
     {
     default:
@@ -950,7 +959,7 @@ static u32 GetTurnEndFatigueDamage(u32 turns, u32 battler)
         mult = uq4_12_multiply(mult, UQ_4_12(0.5));
 
     // Return damage.
-    return UQ_4_12_TO_INT(uq4_12_multiply(mult, UQ_4_12(gDeckMons[battler].hp)));
+    return UQ_4_12_TO_INT(uq4_12_multiply(mult, UQ_4_12(gDeckMons[battler].maxHP)));
 }
 
 // Execute any turn end effects (e.g., poison, fatigue, sleep).
@@ -1169,8 +1178,12 @@ static void InitBattleMonData(void)
 
         if (GetDeckBattlerSide(i) == B_SIDE_OPPONENT && gDeckStruct.bossHPMult != 0)
         {
-            gDeckMons[i].hp = UQ_4_12_TO_INT(uq4_12_multiply(UQ_4_12(gDeckMons[i].hp), gDeckStruct.bossHPMult));
-            gDeckMons[i].maxHP = UQ_4_12_TO_INT(uq4_12_multiply(UQ_4_12(gDeckMons[i].maxHP), gDeckStruct.bossHPMult));
+            u32 hp = UQ_4_12_TO_INT(uq4_12_multiply(UQ_4_12(gDeckMons[i].hp), gDeckStruct.bossHPMult));
+            if (hp < gDeckMons[i].hp) // overflow protection
+                gDeckMons[i].hp *= 2;
+            u32 maxHP = UQ_4_12_TO_INT(uq4_12_multiply(UQ_4_12(gDeckMons[i].maxHP), gDeckStruct.bossHPMult));
+            if (maxHP < gDeckMons[i].maxHP) // overflow protection
+                gDeckMons[i].maxHP *= 2;
         }
     }
 }
@@ -1312,9 +1325,6 @@ s32 CalculateDamage(u32 battlerAtk, u32 battlerDef, u32 move)
 // Performs the HP change when a battler is hurt or healed.
 void UpdateBattlerHP(u32 battler, s32 damage)
 {
-    s32 delta;
-    s32 before = gDeckMons[battler].hp;
-
     if (damage < -999) // cap damage at 3 digits
         damage = -999;
     if (damage > 999)
