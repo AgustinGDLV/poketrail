@@ -213,6 +213,7 @@ struct DeckBattleStruct
     struct BattleAction queuedActions[MAX_ACTIONS];
     u8 actionsCount;
     u8 executedCount;
+    u8 attackCount; // for AGGRESSIVE and PATIENT
     u8 actingSide;
     u8 turns;
     u32 exp;

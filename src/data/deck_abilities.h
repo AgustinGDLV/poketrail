@@ -27,7 +27,7 @@ const struct DeckAbilityInfo gDeckAbilitiesInfo[DECK_ABILITIES_COUNT] =
     [DECK_HEAVY] =
     {
         .name = COMPOUND_STRING("HEAVY"),
-        .description = COMPOUND_STRING("Swapping reduces PWRfor battle"),
+        .description = COMPOUND_STRING("Swapping reduces PWR for battle"),
     },
 
     [DECK_SOCIAL] =

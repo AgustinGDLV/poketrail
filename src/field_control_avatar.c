@@ -21,6 +21,7 @@
 #include "follower_npc.h"
 #include "item_menu.h"
 #include "link.h"
+#include "load_save.h"
 #include "map_gen.h"
 #include "map_screen.h"
 #include "match_call.h"
@@ -28,6 +29,7 @@
 #include "overworld.h"
 #include "palette.h"
 #include "pokemon.h"
+#include "save.h"
 #include "safari_zone.h"
 #include "script.h"
 #include "secret_base.h"
@@ -1072,6 +1074,13 @@ static bool8 TryArrowWarp(struct MapPosition *position, u16 metatileBehavior, u8
                 gSaveBlock1Ptr->trailY = 104;
                 gSaveBlock1Ptr->checkpoints |= (1 << CHECKPOINT_TERRIBLE_TUNNEL_NORTH);
                 gSaveBlock1Ptr->facing = DIR_EAST;
+            }
+
+            // Intro Sequence
+            if (gSaveBlock1Ptr->location.mapNum == MAP_NUM(INTRO_SEQUENCE))
+            {
+                ClearContinueGameWarpStatus();
+                TrySavingData(SAVE_NORMAL); // force save for player name
             }
 
             PlaySE(SE_EXIT);

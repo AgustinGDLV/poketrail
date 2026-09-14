@@ -103,7 +103,7 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
 
     [DECK_FLARE_BLITZ] =
     {
-        .name = COMPOUND_STRING("FLARE_BLITZ"),
+        .name = COMPOUND_STRING("FLARE BLITZ"),
         .description = COMPOUND_STRING("Damages opposite opponent, recoils."),
         .power = 180,
         .target = TARGET_OPPOSITE | TARGET_USER,

@@ -373,9 +373,14 @@ void Task_ExecuteQueuedActionOrEnd(u8 taskId)
         gTasks[taskId].tTimer = 0;
         gTasks[taskId].tState = 0;
         if (gDeckStruct.queuedActions[gDeckStruct.executedCount].type == ACTION_ATTACK)
+        {
+            ++gDeckStruct.attackCount;
             gTasks[taskId].func = Task_ExecuteMove;
+        }
         else
+        {
             gTasks[taskId].func = Task_ExecuteSwap;
+        }
         ++gDeckStruct.executedCount;
     }
     // Otherwise, run through turn end effects.
@@ -1228,7 +1233,7 @@ s32 GetAbilityPowerBoost(u32 battlerAtk)
     switch (GetDeckBattlerAbility(battlerAtk))
     {
     case DECK_AGGRESSIVE:
-        if (gDeckStruct.executedCount == 1)
+        if (gDeckStruct.attackCount == 1)
             boost = (power * 50) / 100; // 1.5x
         break;
     case DECK_PATIENT:

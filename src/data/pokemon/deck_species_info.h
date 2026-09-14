@@ -1521,7 +1521,7 @@ const struct DeckSpeciesInfo gDeckSpeciesInfo[NUM_SPECIES] =
     [SPECIES_PINSIR] = 
     { 
         .baseHP = 70, 
-        .basePower = 130, 
+        .basePower = 140, 
         .baseDef = 70, 
         .move = DECK_BUG_BITE, 
         .ability = DECK_ALPHA, 

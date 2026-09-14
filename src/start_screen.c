@@ -524,6 +524,7 @@ static void NewSaveInitData(void)
 // Clear party, bag, and playtime.
 static void NewRunInitData(void)
 {
+    StringCopy(gSaveBlock2Ptr->playerName, COMPOUND_STRING("Player"));
     ZeroPlayerPartyMons();
     ZeroEnemyPartyMons();
     gPlayerPartyCount = 0;

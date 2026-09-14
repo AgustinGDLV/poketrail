@@ -12,7 +12,7 @@
 
 static const u32 sCheckpointEncounterLevel[CHECKPOINT_COUNT] =
 {
-    5, 5, 12, 20, 28, 35, 42, 50, 55, 60, 60, 60, 60
+    5, 5, 12, 20, 28, 35, 40, 45, 48, 50, 50, 50, 50
 };
 
 // Returns what level an encounter should be based on checkpoint status.
@@ -56,7 +56,7 @@ void InitEnemyPartyFromEncounter(void) // used by callnative
     }
     gDeckStruct.isBossBattle = FALSE;
     if (gSaveBlock1Ptr->currentTemplateType == TEMPLATES_TERRIBLE_TUNNEL)
-        gDeckStruct.bossHPMult = UQ_4_12(2.0);
+        gDeckStruct.bossHPMult = UQ_4_12(1.5);
     else
         gDeckStruct.bossHPMult = 0;
     gDeckStruct.musicOverride = MUS_NONE;
