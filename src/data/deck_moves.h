@@ -320,7 +320,7 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
 
     [DECK_BOOMBURST] =
     {
-        .name = COMPOUND_STRING("RAIN DANCE"),
+        .name = COMPOUND_STRING("BOOMBURST"),
         .description = COMPOUND_STRING("Damages all opponents, recharges"),
         .power = 50,
         .target = TARGET_ALL_OPPONENTS,
@@ -502,7 +502,7 @@ const struct DeckMoveInfo gDeckMovesInfo[DECK_MOVES_COUNT] =
 
     [DECK_TOXIC_FANG] =
     {
-        .name = COMPOUND_STRING("Toxic Fang"),
+        .name = COMPOUND_STRING("TOXIC FANG"),
         .description = COMPOUND_STRING("Damages one opponent."),
         .power = 130,
         .target = TARGET_SINGLE_OPPONENT,
