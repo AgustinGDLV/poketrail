@@ -37,8 +37,8 @@ u16 GetOverworldSpeciesInRoom(u32 index, u32 localId)
 
     // Check for evolutions.
     u32 species = ChooseElementFromPool(GetCurrentTemplateRules()->encounterPool);
-    while (gSpeciesInfo[species].evolutions[0].method == EVO_LEVEL && gSpeciesInfo[species].evolutions[0].param <= GetEncounterLevel())
-        species = gSpeciesInfo[species].evolutions[0].targetSpecies;
+    while (gDeckSpeciesInfo[species].evoSpecies != SPECIES_NONE && gDeckSpeciesInfo[species].evoLevel <= GetEncounterLevel())
+        species = gDeckSpeciesInfo[species].evoSpecies;
 
     return species;    
 }

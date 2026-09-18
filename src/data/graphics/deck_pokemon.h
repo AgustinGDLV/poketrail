@@ -131,16 +131,16 @@ const u8 gBellsproutPortraitGfx[] = INCBIN_U8("graphics/deck_pokemon/bellsprout/
 const u16 gBellsproutPortraitPal[] = INCBIN_U16("graphics/deck_pokemon/bellsprout/portrait_normal.gbapal");
 
 // Weepingbell
-const u8 gWeepingbellPlayerIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/weepingbell/player_idle.4bpp"); 
-const u8 gWeepingbellOpponentIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/weepingbell/opponent_idle.4bpp"); 
-const u8 gWeepingbellPlayerAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/weepingbell/player_attack.4bpp"); 
-const u8 gWeepingbellOpponentAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/weepingbell/opponent_attack.4bpp"); 
-const u8 gWeepingbellPlayerHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/weepingbell/player_hurt.4bpp"); 
-const u8 gWeepingbellOpponentHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/weepingbell/opponent_hurt.4bpp"); 
-const u16 gWeepingbellObjectPal[] = INCBIN_U16("graphics/deck_pokemon/weepingbell/player_idle.gbapal"); 
+const u8 gWeepinbellPlayerIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/weepingbell/player_idle.4bpp"); 
+const u8 gWeepinbellOpponentIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/weepingbell/opponent_idle.4bpp"); 
+const u8 gWeepinbellPlayerAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/weepingbell/player_attack.4bpp"); 
+const u8 gWeepinbellOpponentAttackGfx[] = INCBIN_U8("graphics/deck_pokemon/weepingbell/opponent_attack.4bpp"); 
+const u8 gWeepinbellPlayerHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/weepingbell/player_hurt.4bpp"); 
+const u8 gWeepinbellOpponentHurtGfx[] = INCBIN_U8("graphics/deck_pokemon/weepingbell/opponent_hurt.4bpp"); 
+const u16 gWeepinbellObjectPal[] = INCBIN_U16("graphics/deck_pokemon/weepingbell/player_idle.gbapal"); 
  
-const u8 gWeepingbellPortraitGfx[] = INCBIN_U8("graphics/deck_pokemon/weepingbell/portrait_normal.4bpp"); 
-const u16 gWeepingbellPortraitPal[] = INCBIN_U16("graphics/deck_pokemon/weepingbell/portrait_normal.gbapal");
+const u8 gWeepinbellPortraitGfx[] = INCBIN_U8("graphics/deck_pokemon/weepingbell/portrait_normal.4bpp"); 
+const u16 gWeepinbellPortraitPal[] = INCBIN_U16("graphics/deck_pokemon/weepingbell/portrait_normal.gbapal");
 
 // Victreebel
 const u8 gVictreebelPlayerIdleGfx[] = INCBIN_U8("graphics/deck_pokemon/victreebel/player_idle.4bpp"); 

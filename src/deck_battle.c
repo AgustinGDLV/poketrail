@@ -437,6 +437,7 @@ static void Task_HandleBattleVictory(u8 taskId)
             CalculateMonStats(&gPlayerParty[gDeckMons[gDeckStruct.battlerExp].partyIndex]);
             if (expAfterGain >= nextLevelExp)
             {
+                gDeckMons[gDeckStruct.battlerExp].lvl = GetMonData(&gPlayerParty[gDeckMons[gDeckStruct.battlerExp].partyIndex], MON_DATA_LEVEL);
                 if (gDeckMons[gDeckStruct.battlerExp].hp != 0)
                     gDeckMons[gDeckStruct.battlerExp].hp += GetMonData(&gPlayerParty[gDeckMons[gDeckStruct.battlerExp].partyIndex], MON_DATA_MAX_HP) - gDeckMons[gDeckStruct.battlerExp].maxHP;
                 gTasks[taskId].tState = 3;
@@ -470,10 +471,9 @@ static void Task_HandleBattleVictory(u8 taskId)
     case 4: // Check evolution.
         if (gDeckMons[gDeckStruct.battlerExp].species != SPECIES_NONE)
         {
-            bool32 canStopEvo = TRUE;
             struct Pokemon *mon = &gPlayerParty[gDeckMons[gDeckStruct.battlerExp].partyIndex];
-            u32 evoSpecies = GetEvolutionTargetSpecies(mon, EVO_MODE_BATTLE_ONLY, ITEM_NONE, NULL, &canStopEvo, CHECK_EVO);
-            if (evoSpecies != gDeckMons[gDeckStruct.battlerExp].species && evoSpecies != SPECIES_NONE)
+            u32 evoSpecies = gDeckSpeciesInfo[gDeckMons[gDeckStruct.battlerExp].species].evoSpecies;
+            if (evoSpecies != SPECIES_NONE && gDeckMons[gDeckStruct.battlerExp].lvl >= gDeckSpeciesInfo[gDeckMons[gDeckStruct.battlerExp].species].evoLevel)
             {
                 StringCopy(gStringVar2, GetSpeciesName(gDeckMons[gDeckStruct.battlerExp].species));
                 SetMonData(mon, MON_DATA_SPECIES, &evoSpecies);

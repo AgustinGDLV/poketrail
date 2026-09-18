@@ -37,6 +37,9 @@ struct DeckSpeciesInfo
     u16 move;
     u16 ability;
 
+    u16 evoSpecies;
+    u16 evoLevel;
+
     const u8 *playerIdle;
     const u8 *opponentIdle;
     const u8 *playerAttack;
