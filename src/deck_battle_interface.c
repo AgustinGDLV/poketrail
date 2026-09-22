@@ -559,10 +559,19 @@ void RemoveSelectionCursorOverBattler(enum BattleId battler)
 void CreateSelectionCursorOverPosition(enum BattlePosition position)
 {
     gDeckGraphics.swapCursorSpriteId = CreateSprite(&gCursorSpriteTemplate, PLAYER_OBJ_X + OBJ_OFFSET * position, PLAYER_OBJ_Y - 16, 0);
+
+    u16 color = RGB(28, 1, 1);
+    if (gDeckMons[GetDeckBattlerAtPos(B_SIDE_PLAYER, position)].hasSwapped)
+        color = RGB_GRAY;
+
+    LoadPalette(&color, OBJ_PLTT_ID(0) + 3, PLTT_SIZEOF(1));
 }
 
 void RemoveSwapSelectionCursor(void)
 {
+    u16 color = RGB(28, 1, 1);
+    LoadPalette(&color, OBJ_PLTT_ID(0) + 3, PLTT_SIZEOF(1));
+
     DestroySprite(&gSprites[gDeckGraphics.swapCursorSpriteId]);
     gDeckGraphics.swapCursorSpriteId = SPRITE_NONE;
 }
