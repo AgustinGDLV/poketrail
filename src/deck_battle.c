@@ -245,6 +245,7 @@ static void Task_OpenDeckBattle(u8 taskId)
         {
             // Start selection phase and update display.
             enum BattleId battler = GetDeckBattlerAtPos(B_SIDE_PLAYER, gDeckStruct.selectedPos);
+            PrintDeckBattleControls();
             PrintBattlerMoveInfo(battler);
             SetBattlerPortraitVisibility(TRUE);
             // HP bar updated before fade begins
@@ -407,7 +408,7 @@ static void Task_HandleBattleVictory(u8 taskId)
         // if (gPlayerPartyCount >= 2)
         //     exp /= (gPlayerPartyCount / 2); // *TODO - variable exp gain per battler
         ConvertIntToDecimalStringN(gStringVar2, exp, STR_CONV_MODE_LEFT_ALIGN, 5);
-        StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Your party gained an average of {STR_VAR_2} Exp. Points!"));
+        StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Your party gained an\naverage of {STR_VAR_2} Exp. Points!"));
         PrintStringToMessageBox(gStringVar1);
 
         PlayBGM(MUS_VICTORY_WILD);
@@ -532,7 +533,7 @@ static void Task_HandleBattleLoss(u8 taskId)
     default:
     case 0:
         gDeckStruct.isSelectionPhase = TRUE;
-        PrintStringToMessageBox(COMPOUND_STRING("You have no more Pokémon that can fight!"));
+        PrintStringToMessageBox(COMPOUND_STRING("You have no more Pokémon\nthat can fight!"));
         ++gTasks[taskId].tState;
         break;
     case 1:
@@ -544,7 +545,7 @@ static void Task_HandleBattleLoss(u8 taskId)
         }
         break;
     case 2:
-        PrintStringToMessageBox(COMPOUND_STRING("You end your journey and return home…"));
+        PrintStringToMessageBox(COMPOUND_STRING("You end your journey\nand return home…"));
         gSaveBlock1Ptr->checkpoints = 0;
         ++gTasks[taskId].tState;
         break;
@@ -661,7 +662,7 @@ static const struct WindowTemplate sCaughtWindowTemplate =
     .width = 9,
     .height = 4,
     .paletteNum = 15,
-    .baseBlock = 1 + 21*4 + 24*4,
+    .baseBlock = 1 + 21*6 + 24*4 + 28*2,
 };
 
 static const struct WindowTemplate sYesNoWindowTemplate =
@@ -672,7 +673,7 @@ static const struct WindowTemplate sYesNoWindowTemplate =
     .width = 5,
     .height = 4,
     .paletteNum = 15,
-    .baseBlock = 1 + 21*4 + 24*4,
+    .baseBlock = 1 + 21*6 + 24*4 + 28*2,
 };
 
 static void Task_HandleCaughtBattler(u8 taskId)
@@ -696,16 +697,17 @@ static void Task_HandleCaughtBattler(u8 taskId)
         break;
     case 2: // Create list menu.
     {
+        RemoveDeckBattleControlsWindow();
         struct ListMenuTemplate menuTemplate = {0};
-        gDeckStruct.caughtWindowId = AddWindow(&sCaughtWindowTemplate);
+        gDeckGraphics.multichoiceWindowId = AddWindow(&sCaughtWindowTemplate);
         LoadMessageBoxAndBorderGfx();
-        DrawStdWindowFrame(gDeckStruct.caughtWindowId, FALSE);
+        DrawStdWindowFrame(gDeckGraphics.multichoiceWindowId, FALSE);
 
         menuTemplate.moveCursorFunc = ListMenuDefaultCursorMoveFunc;
         menuTemplate.items = sCaughtListMenuItems;
         menuTemplate.totalItems = 2;
         menuTemplate.maxShowed = 2;
-        menuTemplate.windowId = gDeckStruct.caughtWindowId;
+        menuTemplate.windowId = gDeckGraphics.multichoiceWindowId;
         menuTemplate.item_X = 8;
         menuTemplate.upText_Y = 1;
         menuTemplate.cursorPal = 1;
@@ -714,7 +716,7 @@ static void Task_HandleCaughtBattler(u8 taskId)
         menuTemplate.scrollMultiple = LIST_NO_MULTIPLE_SCROLL;
         menuTemplate.fontId = FONT_NORMAL;
         gTasks[taskId].data[2] = ListMenuInit(&menuTemplate, 0, 0);
-        CopyWindowToVram(gDeckStruct.caughtWindowId, COPYWIN_FULL);
+        CopyWindowToVram(gDeckGraphics.multichoiceWindowId, COPYWIN_FULL);
         CopyBgTilemapBufferToVram(1);
         ++gTasks[taskId].tState;
         break;
@@ -740,9 +742,12 @@ static void Task_HandleCaughtBattler(u8 taskId)
     }
     case 4: // Party
     {
-        FillWindowPixelBuffer(gDeckStruct.caughtWindowId, PIXEL_FILL(0));
-        ClearStdWindowAndFrame(gDeckStruct.caughtWindowId, FALSE);
-        CopyWindowToVram(gDeckStruct.caughtWindowId, COPYWIN_FULL);
+        FillWindowPixelBuffer(gDeckGraphics.multichoiceWindowId, PIXEL_FILL(0));
+        ClearStdWindowAndFrame(gDeckGraphics.multichoiceWindowId, FALSE);
+        CopyWindowToVram(gDeckGraphics.multichoiceWindowId, COPYWIN_FULL);
+        RemoveWindow(gDeckGraphics.multichoiceWindowId);
+        AddDeckBattleControlsWindow();
+        PrintDeckBattleControls();
         CopyBgTilemapBufferToVram(1);
 
         if (CalculatePlayerPartyCount() == PARTY_SIZE)
@@ -766,9 +771,12 @@ static void Task_HandleCaughtBattler(u8 taskId)
         break;
     }
     case 5: // Release
-        FillWindowPixelBuffer(gDeckStruct.caughtWindowId, PIXEL_FILL(0));
-        ClearStdWindowAndFrame(gDeckStruct.caughtWindowId, FALSE);
-        CopyWindowToVram(gDeckStruct.caughtWindowId, COPYWIN_FULL);
+        FillWindowPixelBuffer(gDeckGraphics.multichoiceWindowId, PIXEL_FILL(0));
+        ClearStdWindowAndFrame(gDeckGraphics.multichoiceWindowId, FALSE);
+        CopyWindowToVram(gDeckGraphics.multichoiceWindowId, COPYWIN_FULL);
+        RemoveWindow(gDeckGraphics.multichoiceWindowId);
+        AddDeckBattleControlsWindow();
+        PrintDeckBattleControls();
         CopyBgTilemapBufferToVram(1);
 
         StringCopy(gStringVar2, GetSpeciesName(gDeckMons[gDeckStruct.battlerCaught].species));
@@ -852,16 +860,18 @@ static void Task_SelectPartyMemberToReplace(u8 taskId)
         break;
     case 3: // Create list menu.
     {
+        RemoveDeckBattleControlsWindow();
         struct ListMenuTemplate menuTemplate = {0};
-        gDeckStruct.caughtWindowId = AddWindow(&sYesNoWindowTemplate);
+        gDeckGraphics.multichoiceWindowId = AddWindow(&sYesNoWindowTemplate);
+        PutWindowTilemap(gDeckGraphics.multichoiceWindowId);
         LoadMessageBoxAndBorderGfx();
-        DrawStdWindowFrame(gDeckStruct.caughtWindowId, FALSE);
+        DrawStdWindowFrame(gDeckGraphics.multichoiceWindowId, FALSE);
 
         menuTemplate.moveCursorFunc = ListMenuDefaultCursorMoveFunc;
         menuTemplate.items = sYesNoMenuItems;
         menuTemplate.totalItems = 2;
         menuTemplate.maxShowed = 2;
-        menuTemplate.windowId = gDeckStruct.caughtWindowId;
+        menuTemplate.windowId = gDeckGraphics.multichoiceWindowId;
         menuTemplate.item_X = 8;
         menuTemplate.upText_Y = 1;
         menuTemplate.cursorPal = 1;
@@ -870,7 +880,7 @@ static void Task_SelectPartyMemberToReplace(u8 taskId)
         menuTemplate.scrollMultiple = LIST_NO_MULTIPLE_SCROLL;
         menuTemplate.fontId = FONT_NORMAL;
         gTasks[taskId].data[2] = ListMenuInit(&menuTemplate, 0, 0);
-        CopyWindowToVram(gDeckStruct.caughtWindowId, COPYWIN_FULL);
+        CopyWindowToVram(gDeckGraphics.multichoiceWindowId, COPYWIN_FULL);
         CopyBgTilemapBufferToVram(1);
         ++gTasks[taskId].tState;
         break;
@@ -882,9 +892,12 @@ static void Task_SelectPartyMemberToReplace(u8 taskId)
         {
             PlaySE(SE_SELECT);
             DestroyTask(gTasks[taskId].data[2]);
-            FillWindowPixelBuffer(gDeckStruct.caughtWindowId, PIXEL_FILL(0));
-            ClearStdWindowAndFrame(gDeckStruct.caughtWindowId, FALSE);
-            CopyWindowToVram(gDeckStruct.caughtWindowId, COPYWIN_FULL);
+            FillWindowPixelBuffer(gDeckGraphics.multichoiceWindowId, PIXEL_FILL(0));
+            ClearStdWindowAndFrame(gDeckGraphics.multichoiceWindowId, FALSE);
+            CopyWindowToVram(gDeckGraphics.multichoiceWindowId, COPYWIN_FULL);
+            RemoveWindow(gDeckGraphics.multichoiceWindowId);
+            AddDeckBattleControlsWindow();
+            PrintDeckBattleControls();
             CopyBgTilemapBufferToVram(1);
 
             gTasks[taskId].tTimer = 0;
@@ -902,9 +915,12 @@ static void Task_SelectPartyMemberToReplace(u8 taskId)
         {
             PlaySE(SE_SELECT);
             DestroyTask(gTasks[taskId].data[2]);
-            FillWindowPixelBuffer(gDeckStruct.caughtWindowId, PIXEL_FILL(0));
-            ClearStdWindowAndFrame(gDeckStruct.caughtWindowId, FALSE);
-            CopyWindowToVram(gDeckStruct.caughtWindowId, COPYWIN_FULL);
+            FillWindowPixelBuffer(gDeckGraphics.multichoiceWindowId, PIXEL_FILL(0));
+            ClearStdWindowAndFrame(gDeckGraphics.multichoiceWindowId, FALSE);
+            CopyWindowToVram(gDeckGraphics.multichoiceWindowId, COPYWIN_FULL);
+            RemoveWindow(gDeckGraphics.multichoiceWindowId);
+            AddDeckBattleControlsWindow();
+            PrintDeckBattleControls();
             CopyBgTilemapBufferToVram(1);
 
             gTasks[taskId].tTimer = 0;

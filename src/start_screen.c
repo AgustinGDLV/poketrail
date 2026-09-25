@@ -381,7 +381,7 @@ static const u8 sTextColor_Instructions[] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_
 static void DrawStartButtonWindow(void)
 {
     u16 palette = RGB(0, 0, 0); // dark gray used in BG top/bottom
-    const u8 sText_PressLR[] = _("{START_BUTTON} New Game");
+    const u8 sText_PressLR[] = _("{START_BUTTON} new game");
     if (sStartScreenWindowIds[WIN_BUTTONS_RIGHT] == WINDOW_NONE)
         sStartScreenWindowIds[WIN_BUTTONS_RIGHT] = AddWindow(&sStartScreenWinTemplates[WIN_BUTTONS_RIGHT]);
     FillWindowPixelBuffer(sStartScreenWindowIds[WIN_BUTTONS_RIGHT], PIXEL_FILL(0));
@@ -430,7 +430,7 @@ static void DrawContinueScreenText(void)
     CopyWindowToVram(sStartScreenWindowIds[WIN_MAIN_TEXT], COPYWIN_FULL);
 
     // Load instructions into button window.
-    AddTextPrinterParameterized3(sStartScreenWindowIds[WIN_BUTTONS_LEFT], FONT_SMALL, 2, 0, sTextColor_Instructions, TEXT_SKIP_DRAW, COMPOUND_STRING("{A_BUTTON} Continue"));
+    AddTextPrinterParameterized3(sStartScreenWindowIds[WIN_BUTTONS_LEFT], FONT_SMALL, 2, 0, sTextColor_Instructions, TEXT_SKIP_DRAW, COMPOUND_STRING("{A_BUTTON} continue"));
     CopyWindowToVram(sStartScreenWindowIds[WIN_BUTTONS_LEFT], COPYWIN_FULL);
 }
 

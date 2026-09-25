@@ -10,6 +10,7 @@
 #include "event_object_movement.h"
 #include "field_weather.h"
 #include "gpu_regs.h"
+#include "list_menu.h"
 #include "m4a.h"
 #include "main.h"
 #include "malloc.h"
@@ -40,6 +41,7 @@ static void Task_PlayerSelectAllyToSwap(u8 taskId);
 static void Task_PlayerSelectSingleOpponent(u8 taskId);
 static void Task_PlayerSelectSingleAlly(u8 taskId);
 static void Task_PlayerDisplayTargets(u8 taskId);
+static void Task_PlayerSelectBattleInfoMenu(u8 taskId);
 static void Task_PlayerTryToRun(u8 taskId);
 static void Task_RunAwayFailed(u8 taskId);
 static void Task_RunAwaySuccessful(u8 taskId);
@@ -51,7 +53,7 @@ void Task_PlayerSelectAction(u8 taskId)
 {
     enum BattleId battler;
     enum BattlePosition pos;
-    if ((gMain.newKeys & DPAD_LEFT) // Check for a battler to move to the left.
+    if (JOY_NEW(DPAD_LEFT) // Check for a battler to move to the left.
         && (pos = GetToMoveOnLeft(B_SIDE_PLAYER, gDeckStruct.selectedPos)) != POSITIONS_COUNT)
     {
         // Deselect battler.
@@ -64,7 +66,7 @@ void Task_PlayerSelectAction(u8 taskId)
         UpdateBattlerSelection(battler, TRUE);
         DisplayActionSelectionInfo(battler);
     }
-    if ((gMain.newKeys & DPAD_RIGHT) // Check for a battler to move to the right.
+    if (JOY_NEW(DPAD_RIGHT) // Check for a battler to move to the right.
         && (pos = GetToMoveOnRight(B_SIDE_PLAYER, gDeckStruct.selectedPos)) != POSITIONS_COUNT)
     {
         // Deselect battler.
@@ -77,7 +79,7 @@ void Task_PlayerSelectAction(u8 taskId)
         UpdateBattlerSelection(battler, TRUE);
         DisplayActionSelectionInfo(battler);
     }
-    if (gMain.newKeys & A_BUTTON) // Choose target to attack.
+    if (JOY_NEW(A_BUTTON)) // Choose target to attack.
     {
         // Remove cursor but keep idle anim while selecting target.
         PlaySE(SE_SELECT);
@@ -97,7 +99,7 @@ void Task_PlayerSelectAction(u8 taskId)
         else
             gTasks[taskId].func = Task_PlayerDisplayTargets;
     }
-    if (gMain.newKeys & START_BUTTON) // Choose target to swap.
+    if (JOY_NEW(START_BUTTON)) // Choose target to swap.
     {
         gBattlerAttacker = GetDeckBattlerAtPos(B_SIDE_PLAYER, gDeckStruct.selectedPos);
         if (!gDeckMons[gBattlerAttacker].hasSwapped)
@@ -127,69 +129,187 @@ void Task_PlayerSelectAction(u8 taskId)
         // Swap not possible.
         PlaySE(SE_FAILURE);
     }
-    if ((gMain.newKeys & B_BUTTON) && gDeckStruct.actionsCount != 0)
+    if (JOY_NEW(B_BUTTON))
     {
-        PlaySE(SE_SELECT);
-        struct BattleAction *action = &gDeckStruct.queuedActions[gDeckStruct.actionsCount - 1];
-        if (action->type == ACTION_SWAP)
-        {
-            SwapBattlerPositions(action->attacker, action->target);
-            GetBattlerSprite(action->attacker)->oam.objMode = ST_OAM_OBJ_NORMAL;
-            GetBattlerSprite(action->target)->oam.objMode = ST_OAM_OBJ_NORMAL;
-            gDeckMons[action->attacker].hasSwapped = FALSE;
-            gDeckMons[action->target].hasSwapped = FALSE;
-
-            if (gDeckMons[action->attacker].pos == gDeckStruct.selectedPos || gDeckMons[action->target].pos == gDeckStruct.selectedPos)
+        if (gDeckStruct.actionsCount == 0)
+        { 
+            if (gDeckStruct.isBossBattle)
             {
-                UpdateBattlerSelection(action->attacker, FALSE);
-                UpdateBattlerSelection(action->target, FALSE);
-                UpdateBattlerSelection(GetDeckBattlerAtPos(B_SIDE_PLAYER, gDeckStruct.selectedPos), TRUE);
-                DisplayActionSelectionInfo(GetDeckBattlerAtPos(B_SIDE_PLAYER, gDeckStruct.selectedPos));
+                PlaySE(SE_FAILURE);
             }
-            --gDeckStruct.actionsCount;
-        }
-        else
-        {
-            SetBattlerGrayscale(action->attacker, FALSE);
-            gDeckMons[action->attacker].hasMoved = FALSE;
-            --gDeckStruct.actionsCount;
-        }
-    }
-    if (JOY_NEW(L_BUTTON))
-    {
-        if (gDeckStruct.isBossBattle || gDeckStruct.actionsCount > 0)
-        {
-            PlaySE(SE_FAILURE);
+            else
+            {
+                PlaySE(SE_SELECT);
+                gTasks[taskId].func = Task_PlayerTryToRun;
+            }
         }
         else
         {
             PlaySE(SE_SELECT);
-            gTasks[taskId].func = Task_PlayerTryToRun;
+            struct BattleAction *action = &gDeckStruct.queuedActions[gDeckStruct.actionsCount - 1];
+            if (action->type == ACTION_SWAP)
+            {
+                SwapBattlerPositions(action->attacker, action->target);
+                GetBattlerSprite(action->attacker)->oam.objMode = ST_OAM_OBJ_NORMAL;
+                GetBattlerSprite(action->target)->oam.objMode = ST_OAM_OBJ_NORMAL;
+                gDeckMons[action->attacker].hasSwapped = FALSE;
+                gDeckMons[action->target].hasSwapped = FALSE;
+
+                if (gDeckMons[action->attacker].pos == gDeckStruct.selectedPos || gDeckMons[action->target].pos == gDeckStruct.selectedPos)
+                {
+                    UpdateBattlerSelection(action->attacker, FALSE);
+                    UpdateBattlerSelection(action->target, FALSE);
+                    UpdateBattlerSelection(GetDeckBattlerAtPos(B_SIDE_PLAYER, gDeckStruct.selectedPos), TRUE);
+                    DisplayActionSelectionInfo(GetDeckBattlerAtPos(B_SIDE_PLAYER, gDeckStruct.selectedPos));
+                }
+                --gDeckStruct.actionsCount;
+            }
+            else
+            {
+                SetBattlerGrayscale(action->attacker, FALSE);
+                gDeckMons[action->attacker].hasMoved = FALSE;
+                --gDeckStruct.actionsCount;
+            }
+            if (gDeckStruct.actionsCount == 0)
+                PrintDeckBattleControls();
         }
     }
+    if (JOY_NEW(SELECT_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+        gTasks[taskId].func = Task_PlayerSelectBattleInfoMenu;
+    }
 }
+
+
+static const struct ListMenuItem sYesNoMenuItems[] = 
+{
+    { COMPOUND_STRING("YES"),   0 },
+    { COMPOUND_STRING("NO"),   1 },
+};
+
+static const struct WindowTemplate sYesNoWindowTemplate =
+{
+    .bg = 1,
+    .tilemapLeft = 22,
+    .tilemapTop = 29,
+    .width = 5,
+    .height = 4,
+    .paletteNum = 15,
+    .baseBlock = 1 + 21*6 + 24*4,
+};
 
 static void Task_PlayerTryToRun(u8 taskId)
 {
     u32 playerPartyLevel = 0;
     u32 enemyPartyLevel = 0;
 
-    for (u32 i = 0; i < PARTY_SIZE; ++i)
+    switch (gTasks[taskId].tState)
     {
-        if (gDeckMons[i].hp != 0)
-            playerPartyLevel += gDeckMons[i].lvl;
-        if (gDeckMons[i+PARTY_SIZE].hp != 0)
-            enemyPartyLevel += gDeckMons[i+PARTY_SIZE].lvl;
-    }
+        case 0: // Print confirmation message.
+            PrintStringToMessageBox(COMPOUND_STRING("Run away?"));
+            SetBattlerPortraitVisibility(FALSE);
+            SetGpuReg(REG_OFFSET_BG0VOFS, DISPLAY_HEIGHT);
+            SetGpuReg(REG_OFFSET_BG1VOFS, DISPLAY_HEIGHT);
+            ++gTasks[taskId].tState;
+            break;
+        case 1: // Create list menu.
+        {
+            RemoveDeckBattleControlsWindow();
+            struct ListMenuTemplate menuTemplate = {0};
+            gDeckGraphics.multichoiceWindowId = AddWindow(&sYesNoWindowTemplate);
+            PutWindowTilemap(gDeckGraphics.multichoiceWindowId);
+            LoadMessageBoxAndBorderGfx();
+            DrawStdWindowFrame(gDeckGraphics.multichoiceWindowId, FALSE);
 
-    if (playerPartyLevel > enemyPartyLevel + 5)
-        gTasks[taskId].func = Task_RunAwaySuccessful;
-    else if (playerPartyLevel >= enemyPartyLevel && (Random() % 100) > 80)
-        gTasks[taskId].func = Task_RunAwaySuccessful;
-    else if ((Random() % 100) > 40)
-        gTasks[taskId].func = Task_RunAwaySuccessful;
-    else
-        gTasks[taskId].func = Task_RunAwayFailed;        
+            menuTemplate.moveCursorFunc = ListMenuDefaultCursorMoveFunc;
+            menuTemplate.items = sYesNoMenuItems;
+            menuTemplate.totalItems = 2;
+            menuTemplate.maxShowed = 2;
+            menuTemplate.windowId = gDeckGraphics.multichoiceWindowId;
+            menuTemplate.item_X = 8;
+            menuTemplate.upText_Y = 1;
+            menuTemplate.cursorPal = 1;
+            menuTemplate.fillValue = 15;
+            menuTemplate.cursorShadowPal = 15;
+            menuTemplate.scrollMultiple = LIST_NO_MULTIPLE_SCROLL;
+            menuTemplate.fontId = FONT_NORMAL;
+            gTasks[taskId].data[2] = ListMenuInit(&menuTemplate, 0, 0);
+            CopyWindowToVram(gDeckGraphics.multichoiceWindowId, COPYWIN_FULL);
+            CopyBgTilemapBufferToVram(1);
+            ++gTasks[taskId].tState;
+            break;
+        }
+        case 2: // Wait for input.
+        {
+            u32 input = ListMenu_ProcessInput(gTasks[taskId].data[2]);
+            if (++gTasks[taskId].tTimer > 15 && (gMain.newKeys & A_BUTTON))
+            {
+                PlaySE(SE_SELECT);
+                DestroyTask(gTasks[taskId].data[2]);
+                FillWindowPixelBuffer(gDeckGraphics.multichoiceWindowId, PIXEL_FILL(0));
+                ClearStdWindowAndFrame(gDeckGraphics.multichoiceWindowId, FALSE);
+                CopyWindowToVram(gDeckGraphics.multichoiceWindowId, COPYWIN_FULL);
+                RemoveWindow(gDeckGraphics.multichoiceWindowId);
+                AddDeckBattleControlsWindow();
+                PrintDeckBattleControls();
+                CopyBgTilemapBufferToVram(1);
+
+                gTasks[taskId].tTimer = 0;
+                if (input == 0)
+                    gTasks[taskId].tState = 3;
+                else
+                    gTasks[taskId].tState = 4;
+            }
+            else if (gTasks[taskId].tTimer > 15 && (gMain.newKeys & B_BUTTON))
+            {
+                PlaySE(SE_SELECT);
+                DestroyTask(gTasks[taskId].data[2]);
+                FillWindowPixelBuffer(gDeckGraphics.multichoiceWindowId, PIXEL_FILL(0));
+                ClearStdWindowAndFrame(gDeckGraphics.multichoiceWindowId, FALSE);
+                CopyWindowToVram(gDeckGraphics.multichoiceWindowId, COPYWIN_FULL);
+                RemoveWindow(gDeckGraphics.multichoiceWindowId);
+                AddDeckBattleControlsWindow();
+                PrintDeckBattleControls();
+                CopyBgTilemapBufferToVram(1);
+
+                gTasks[taskId].tState = 4;
+            }
+            break;
+        }
+            break;
+        case 3: // Try to run away.
+            gTasks[taskId].tState = 0;
+            gTasks[taskId].tTimer = 0;
+
+            for (u32 i = 0; i < PARTY_SIZE; ++i)
+            {
+                if (gDeckMons[i].hp != 0)
+                    playerPartyLevel += gDeckMons[i].lvl;
+                if (gDeckMons[i+PARTY_SIZE].hp != 0)
+                    enemyPartyLevel += gDeckMons[i+PARTY_SIZE].lvl;
+            }
+
+            if (playerPartyLevel > enemyPartyLevel + 5)
+                gTasks[taskId].func = Task_RunAwaySuccessful;
+            else if (playerPartyLevel >= enemyPartyLevel && (Random() % 100) > 80)
+                gTasks[taskId].func = Task_RunAwaySuccessful;
+            else if ((Random() % 100) > 40)
+                gTasks[taskId].func = Task_RunAwaySuccessful;
+            else
+                gTasks[taskId].func = Task_RunAwayFailed;
+            break;
+        case 4: // Return to action selection.
+            gTasks[taskId].tState = 0;
+            gTasks[taskId].tTimer = 0;
+            SetBattlerPortraitVisibility(TRUE);
+            SetGpuReg(REG_OFFSET_BG0VOFS, 0);
+            SetGpuReg(REG_OFFSET_BG1VOFS, 0);
+            AddDeckBattleControlsWindow();
+            PrintDeckBattleControls();
+            gTasks[taskId].func = Task_PlayerSelectAction;
+            break;
+    }     
 }
 
 static void Task_RunAwaySuccessful(u8 taskId)
@@ -209,12 +329,6 @@ static void Task_RunAwaySuccessful(u8 taskId)
             ++gTasks[taskId].tState;
             break;
         case 2:
-            SetBattlerPortraitVisibility(FALSE);
-            SetGpuReg(REG_OFFSET_BG0VOFS, DISPLAY_HEIGHT);
-            SetGpuReg(REG_OFFSET_BG1VOFS, DISPLAY_HEIGHT);
-            ++gTasks[taskId].tState;
-            break;
-        case 3:
             if (JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON))
             {
                 PlaySE(SE_FLEE);
@@ -350,6 +464,7 @@ static void Task_PlayerSelectAllyToSwap(u8 taskId)
             SetBattlerPortraitVisibility(TRUE);
             SetGpuReg(REG_OFFSET_BG0VOFS, 0);
             SetGpuReg(REG_OFFSET_BG1VOFS, 0);
+            PrintDeckBattleControls();
             gTasks[taskId].func = Task_PlayerSelectAction;
         }
         else if (!gDeckMons[gBattlerTarget].hasSwapped)
@@ -376,6 +491,7 @@ static void Task_PlayerSelectAllyToSwap(u8 taskId)
             SetBattlerPortraitVisibility(TRUE);
             SetGpuReg(REG_OFFSET_BG0VOFS, 0);
             SetGpuReg(REG_OFFSET_BG1VOFS, 0);
+            PrintDeckBattleControls();
             gTasks[taskId].func = Task_PlayerSelectAction;
         }
         else
@@ -468,6 +584,7 @@ static void Task_PlayerSelectSingleOpponent(u8 taskId)
             SetBattlerPortraitVisibility(TRUE);
             SetGpuReg(REG_OFFSET_BG0VOFS, 0);
             SetGpuReg(REG_OFFSET_BG1VOFS, 0);
+            PrintDeckBattleControls();
             gTasks[taskId].func = Task_PlayerSelectAction;
         }
         else
@@ -562,6 +679,7 @@ static void Task_PlayerSelectSingleAlly(u8 taskId)
             SetBattlerPortraitVisibility(TRUE);
             SetGpuReg(REG_OFFSET_BG0VOFS, 0);
             SetGpuReg(REG_OFFSET_BG1VOFS, 0);
+            PrintDeckBattleControls();
             gTasks[taskId].func = Task_PlayerSelectAction;
         }
         else
@@ -645,6 +763,7 @@ static void Task_PlayerDisplayTargets(u8 taskId)
             SetBattlerPortraitVisibility(TRUE);
             SetGpuReg(REG_OFFSET_BG0VOFS, 0);
             SetGpuReg(REG_OFFSET_BG1VOFS, 0);
+            PrintDeckBattleControls();
             gTasks[taskId].func = Task_PlayerSelectAction;
         }
         else
@@ -667,6 +786,61 @@ void Task_AutoSelectAction(u8 taskId)
     {
         gTasks[taskId].func = Task_PrepareForActionPhase;
     } 
+}
+
+static void Task_PlayerSelectBattleInfoMenu(u8 taskId)
+{
+    if (gTasks[taskId].tState == 0)
+    {
+        gDeckStruct.infoBattler = GetDeckBattlerAtPosUnsafe(B_SIDE_PLAYER, GetLeftmostOccupiedPosition(B_SIDE_PLAYER));
+        LoadBattleInfoMenuGraphics();
+        ++gTasks[taskId].tState;
+    }
+    else
+    {
+        if (JOY_NEW(DPAD_RIGHT)) // Scroll right.
+        {
+            PlaySE(SE_SELECT);
+            while (TRUE)
+            {
+                ++gDeckStruct.infoBattler;
+                if (gDeckStruct.infoBattler == MAX_DECK_BATTLERS_COUNT)
+                {
+                    gDeckStruct.infoBattler = B_PLAYER_0;
+                }
+                if (gDeckMons[gDeckStruct.infoBattler].species != SPECIES_NONE)
+                {
+                    UpdateBattlerInfoDisplay(gDeckStruct.infoBattler);
+                    break;
+                }
+            }
+        }
+        if (JOY_NEW(DPAD_LEFT)) // Scroll left.
+        {
+            PlaySE(SE_SELECT);
+            while (TRUE)
+            {
+                if (gDeckStruct.infoBattler == B_PLAYER_0)
+                {
+                    gDeckStruct.infoBattler = MAX_DECK_BATTLERS_COUNT;
+                }
+                --gDeckStruct.infoBattler;
+
+                if (gDeckMons[gDeckStruct.infoBattler].species != SPECIES_NONE)
+                {
+                    UpdateBattlerInfoDisplay(gDeckStruct.infoBattler);
+                    break;
+                }
+            }
+        }
+        if (JOY_NEW(B_BUTTON))
+        {
+            gTasks[taskId].tState = 0;
+            gTasks[taskId].tTimer = 0;
+            ReloadBattleMenuGraphics();
+            gTasks[taskId].func = Task_PlayerSelectAction;
+        }
+    }
 }
 
 #undef tState

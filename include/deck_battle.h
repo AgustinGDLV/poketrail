@@ -176,6 +176,7 @@ struct DeckMoveInfo
 {
     const u8* name;
     const u8* description;
+    const u8* infoMenuDesc;
     u8 power;
     u16 target;
     u8 effect;
@@ -208,6 +209,7 @@ struct DeckAbilityInfo
 {
     const u8* name;
     const u8* description;
+    const u8* infoMenuDesc;
 };
 
 struct DeckBattleStruct
@@ -229,7 +231,8 @@ struct DeckBattleStruct
     bool8 isBossBattle;
     u32 musicOverride;
     uq4_12_t bossHPMult;
-    u8 caughtWindowId; // maybe belongs in interface struct
+
+    enum BattleId  infoBattler;
 };
 
 enum DeckBattleBackgroundId
