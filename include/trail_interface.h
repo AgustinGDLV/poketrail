@@ -38,6 +38,7 @@ struct TrailInterface
     u8 playerSpriteId;
     u8 arrowSpriteIds[5]; // for each direction
     u16 keyHeldTimer;
+    u8 musicPlaying;
 };
 
 extern const u8 gTrailMapData[TRAIL_MAP_HEIGHT][TRAIL_MAP_WIDTH];

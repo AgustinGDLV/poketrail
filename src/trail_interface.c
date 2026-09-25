@@ -557,7 +557,11 @@ void CB2_InitTrailInterface(void)
             break;
         case 8:
             ResetMapMusic();
-            PlayBGM(MUS_ROUTE119);
+            if (!gTrailInterface.musicPlaying)
+            {
+                PlayBGM(MUS_ROUTE119);
+                gTrailInterface.musicPlaying = TRUE;
+            }
             ClearContinueGameWarpStatus();
             FadeScreen(FADE_FROM_BLACK, 2);
             SetVBlankCallback(VBlankCB2_TrailMap);
@@ -798,6 +802,7 @@ static void Task_GoToOverworldCamp(u8 taskId)
             TryWarpToRoom(STARTING_ROOM, 0xFF);
             Free(sTrailMapTilemapPtr);
             sTrailMapTilemapPtr = NULL;
+            gTrailInterface.musicPlaying = FALSE;
             FreeAllWindowBuffers();
             ResetSpriteData();
             UnlockPlayerFieldControls();
@@ -885,6 +890,7 @@ static void Task_GoToCheckpoint(u8 taskId)
             StoreInitialPlayerAvatarState();
             LockPlayerFieldControls();
             PlayBGM(GetCurrentTemplateRules()->bgm);
+            gTrailInterface.musicPlaying = FALSE;
             WarpFadeOutScreen();
             PlayRainStoppingSoundEffect();
             SetWarpDestination(MAP_GROUP(INTRO_SEQUENCE), gCheckpointData[checkpoint].mapNum, gCheckpointData[checkpoint].warpId[gSaveBlock1Ptr->facing], 0, 0);
