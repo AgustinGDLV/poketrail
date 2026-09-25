@@ -417,7 +417,7 @@ static void Task_HandleBattleVictory(u8 taskId)
         break;
     }
     case 1: // Wait for message box.
-        if (++gTasks[taskId].tTimer > 10 && (gMain.newKeys & A_BUTTON))
+        if (++gTasks[taskId].tTimer > 10 && (JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON)))
         {
             PlaySE(SE_SELECT);
             gTasks[taskId].tTimer = 0;
@@ -462,7 +462,7 @@ static void Task_HandleBattleVictory(u8 taskId)
             PlaySE(SE_EXP_MAX);
             ++gTasks[taskId].tTimer;
         }
-        else if (++gTasks[taskId].tTimer > 10 && (gMain.newKeys & A_BUTTON))
+        else if (++gTasks[taskId].tTimer > 10 && (JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON)))
         {
             PlaySE(SE_SELECT);
             gTasks[taskId].tTimer = 0;
@@ -498,7 +498,7 @@ static void Task_HandleBattleVictory(u8 taskId)
             PlayFanfare(MUS_LEVEL_UP);
             ++gTasks[taskId].tTimer;
         }
-        else if (++gTasks[taskId].tTimer > 60 && (gMain.newKeys & A_BUTTON))
+        else if (++gTasks[taskId].tTimer > 60 && (JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON)))
         {
             PlaySE(SE_SELECT);
             gTasks[taskId].tTimer = 0;
