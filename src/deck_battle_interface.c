@@ -1427,7 +1427,10 @@ void UpdateBattlerInfoDisplay(enum BattleId battler)
     AddTextPrinterParameterized3(WINDOW_STATS, FONT_NORMAL, 4, 4, sTextColorRed, TEXT_SKIP_DRAW, nameStr);
     else
         AddTextPrinterParameterized3(WINDOW_STATS, FONT_NORMAL, 4, 4, sTextColorNormal, TEXT_SKIP_DRAW, nameStr);
-    AddTextPrinterParameterized3(WINDOW_STATS, FONT_NORMAL, 4, 16, sTextColorNormal, TEXT_SKIP_DRAW, hpStr);
+    if (gDeckMons[battler].hp == 0)
+        AddTextPrinterParameterized3(WINDOW_STATS, FONT_NORMAL, 4, 16, sTextColorRed, TEXT_SKIP_DRAW, hpStr);
+    else
+        AddTextPrinterParameterized3(WINDOW_STATS, FONT_NORMAL, 4, 16, sTextColorNormal, TEXT_SKIP_DRAW, hpStr);
     AddTextPrinterParameterized3(WINDOW_STATS, FONT_NORMAL, 4, 28, sTextColorNormal, TEXT_SKIP_DRAW, lvlStr);
     AddTextPrinterParameterized3(WINDOW_STATS, FONT_NORMAL, 96, 4, sTextColorNormal, TEXT_SKIP_DRAW, pwrStr);
     AddTextPrinterParameterized3(WINDOW_STATS, FONT_NORMAL, 96, 16, sTextColorNormal, TEXT_SKIP_DRAW, defStr);
