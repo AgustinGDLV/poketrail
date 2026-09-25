@@ -80,8 +80,8 @@ static const struct WindowTemplate sBagListMenuWinTemplates[] =
         .bg = 0,
         .tilemapLeft = 1,
         .tilemapTop = 1,
-        .width = 14,
-        .height = 6,
+        .width = 16,
+        .height = 12,
         .paletteNum = 15,
         .baseBlock = 8,
     },
@@ -90,8 +90,8 @@ static const struct WindowTemplate sBagListMenuWinTemplates[] =
         .bg = 1,
         .tilemapLeft = 1,
         .tilemapTop = 3,
-        .width = 14,
-        .height = 6,
+        .width = 16,
+        .height = 12,
         .paletteNum = 15,
         .baseBlock = 1 + 14*2 + 14*2, // no overlap with trail interface
     },
@@ -167,7 +167,7 @@ static void InitBagListMenuData(void)
     sBagListMenu.template.moveCursorFunc = ListMenuDefaultCursorMoveFunc;
     sBagListMenu.template.items = sBagListItems;
     sBagListMenu.template.totalItems = 0;
-    sBagListMenu.template.maxShowed = 3;
+    sBagListMenu.template.maxShowed = 6;
     sBagListMenu.template.windowId = sBagListMenu.windowId;
     sBagListMenu.template.item_X = 8;
     sBagListMenu.template.upText_Y = 1;
@@ -348,7 +348,7 @@ static void BagListMenu_ItemPrintFunc(u8 windowId, u32 itemId, u8 y)
     const u8 textColor[] = {TEXT_COLOR_TRANSPARENT, 1, 8};
     AddTextPrinterParameterized4(windowId, FONT_NORMAL, 8, y, 0, 0, textColor, TEXT_SKIP_DRAW, ItemId_GetName(sBagListMenu.items[itemId]));
     ConvertIntToDecimalStringN(gStringVar1, GetItemIdQuantity(sBagListMenu.items[itemId]), STR_CONV_MODE_LEFT_ALIGN, 2);
-    AddTextPrinterParameterized4(windowId, FONT_NORMAL, 8 + GetStringRightAlignXOffset(FONT_NORMAL, gStringVar1, 96), y, 0, 0, textColor, TEXT_SKIP_DRAW, gStringVar1);
+    AddTextPrinterParameterized4(windowId, FONT_NORMAL, 8 + GetStringRightAlignXOffset(FONT_NORMAL, gStringVar1, 112), y, 0, 0, textColor, TEXT_SKIP_DRAW, gStringVar1);
 }
 
 static void BagListMenu_PartyPrintFunc(u8 windowId, u32 itemId, u8 y)
@@ -363,7 +363,7 @@ static void BagListMenu_PartyPrintFunc(u8 windowId, u32 itemId, u8 y)
     ConvertIntToDecimalStringN(gStringVar2, hp, STR_CONV_MODE_LEFT_ALIGN, 3);
     ConvertIntToDecimalStringN(gStringVar3, maxHP, STR_CONV_MODE_LEFT_ALIGN, 3);
     StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2}/{STR_VAR_3}"));
-    AddTextPrinterParameterized4(windowId, FONT_NORMAL, 8 + GetStringRightAlignXOffset(FONT_NORMAL, gStringVar1, 96), y, 0, 0, textColor, TEXT_SKIP_DRAW, gStringVar1);
+    AddTextPrinterParameterized4(windowId, FONT_NORMAL, 8 + GetStringRightAlignXOffset(FONT_NORMAL, gStringVar1, 112), y, 0, 0, textColor, TEXT_SKIP_DRAW, gStringVar1);
 }
 
 static bool32 UseItemOnPartyIndex(u32 itemId, u32 partyIndex)
