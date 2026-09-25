@@ -110,6 +110,7 @@ enum
 {
     WIN_TIME,
     WIN_LOCATION,
+    WIN_CONTROLS,
     WIN_MESSAGE,
     WIN_YESNO,
     WINDOW_COUNT,
@@ -137,6 +138,16 @@ static const struct WindowTemplate sTrailInterfaceWinTemplates[WINDOW_COUNT + 1]
         .paletteNum = 15,
         .baseBlock = 1 + 14*2,
     },
+    [WIN_CONTROLS] =
+    {
+        .bg = 1,
+        .tilemapLeft = 1,
+        .tilemapTop = 18,
+        .width = 28,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 1 + 14*2 + 14*2,
+    },
     [WIN_MESSAGE] =
     {
         .bg = 1,
@@ -145,7 +156,7 @@ static const struct WindowTemplate sTrailInterfaceWinTemplates[WINDOW_COUNT + 1]
         .width = 28,
         .height = 4,
         .paletteNum = 15,
-        .baseBlock = 1 + 14*2 + 14*2,
+        .baseBlock = 1 + 14*2 + 14*2 + 28*2,
     },
     [WIN_YESNO] =
     {
@@ -155,7 +166,7 @@ static const struct WindowTemplate sTrailInterfaceWinTemplates[WINDOW_COUNT + 1]
         .width = 5,
         .height = 4,
         .paletteNum = 15,
-        .baseBlock = 1 + 14*2 + 14*2 + 28*4,
+        .baseBlock = 1 + 14*2 + 14*2 + 28*2 + 28*4,
     },
     DUMMY_WIN_TEMPLATE,
 };
@@ -454,6 +465,7 @@ static void LoadMapGraphics(u32 characterId);
 static void IncrementTime(u32 minutes);
 static void PrintTime(void);
 static void PrintLocation(void);
+static void PrintControls(void);
 static void PrintTextToMessageBox(const u8 *str);
 static u32 CreateYesNoBox(void);
 static void ClearWindow(u32 windowId);
@@ -530,6 +542,7 @@ void CB2_InitTrailInterface(void)
             }
             break;
         case 6:
+            FreeAllWindowBuffers();
             InitWindows(sTrailInterfaceWinTemplates);
             DeactivateAllTextPrinters();
             gMain.state++;
@@ -680,6 +693,7 @@ static void Task_SaveAndExit(u8 taskId)
         case 5: // Return to trail map.
             ClearWindow(WIN_MESSAGE);
             ClearWindow(WIN_YESNO);
+            PrintControls();
             gTasks[taskId].func = Task_TrailMapWaitForKeypress;
             gTasks[taskId].data[0] = 0;
             break;
@@ -794,6 +808,7 @@ static void Task_GoToOverworldCamp(u8 taskId)
     case 6: // Return to trail map.
         ClearWindow(WIN_MESSAGE);
         ClearWindow(WIN_YESNO);
+        PrintControls();
         gTasks[taskId].func = Task_TrailMapWaitForKeypress;
         gTasks[taskId].data[0] = 0;
         break;
@@ -900,6 +915,7 @@ static void Task_GoToCheckpoint(u8 taskId)
     case 8: // Return to trail map.
         ClearWindow(WIN_MESSAGE);
         ClearWindow(WIN_YESNO);
+        PrintControls();
         gTasks[taskId].func = Task_TrailMapWaitForKeypress;
         gTasks[taskId].data[0] = 0;
         break;
@@ -1009,6 +1025,7 @@ static void Task_TriggerHealEvent(u8 taskId)
         {
             ClearWindow(WIN_MESSAGE);
             ClearWindow(WIN_YESNO);
+            PrintControls();
             gTasks[taskId].func = Task_TrailMapWaitForKeypress;
             gTasks[taskId].data[0] = 0;
             gTasks[taskId].data[2] = 0;
@@ -1083,6 +1100,7 @@ static void Task_TriggerDysentery(u8 taskId)
         {
             ClearWindow(WIN_MESSAGE);
             ClearWindow(WIN_YESNO);
+            PrintControls();
             gTasks[taskId].func = Task_TrailMapWaitForKeypress;
             gTasks[taskId].data[0] = 0;
             gTasks[taskId].data[2] = 0;
@@ -1151,6 +1169,9 @@ static void LoadMapGraphics(u32 characterId)
 
     // Print location.
     PrintLocation();
+
+    // Print controls.
+    PrintControls();
 }
 
 void IncrementTrailTime(u32 minutes)
@@ -1228,6 +1249,17 @@ static void PrintLocation(void)
     AddTextPrinterParameterized3(WIN_LOCATION, FONT_NORMAL, 7, 0, textColor, TEXT_SKIP_DRAW, GetCurrentTemplateRules()->name);
     CopyWindowToVram(WIN_LOCATION, COPYWIN_FULL);
     PutWindowTilemap(WIN_LOCATION);
+}
+
+// Print controls to bottom.
+static void PrintControls(void)
+{
+	const u8 textColor[] = {TEXT_COLOR_TRANSPARENT, 1, 15};
+    FillWindowPixelBuffer(WIN_CONTROLS, PIXEL_FILL(0));
+    AddTextPrinterParameterized3(WIN_CONTROLS, FONT_SMALL, 7, 0, textColor, TEXT_SKIP_DRAW, COMPOUND_STRING("{DPAD_NONE} MOVE {A_BUTTON} CAMP {START_BUTTON} SAVE {L_BUTTON} BAG {R_BUTTON} PARTY"));
+    CopyWindowToVram(WIN_CONTROLS, COPYWIN_FULL);
+    PutWindowTilemap(WIN_CONTROLS);
+    CopyBgTilemapBufferToVram(1);
 }
 
 // Draw message box and print text.

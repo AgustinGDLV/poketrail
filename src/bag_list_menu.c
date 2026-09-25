@@ -93,7 +93,7 @@ static const struct WindowTemplate sBagListMenuWinTemplates[] =
         .width = 16,
         .height = 12,
         .paletteNum = 15,
-        .baseBlock = 1 + 14*2 + 14*2, // no overlap with trail interface
+        .baseBlock = 1 + 14*2 + 14*2 + 28*2, // no overlap with trail interface
     },
 };
 
