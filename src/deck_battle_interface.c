@@ -616,7 +616,8 @@ void CreateSelectionCursorOverPosition(enum BattlePosition position)
     gDeckGraphics.swapCursorSpriteId = CreateSprite(&gCursorSpriteTemplate, PLAYER_OBJ_X + OBJ_OFFSET * position, PLAYER_OBJ_Y - 16, 0);
 
     u16 color = RGB(28, 1, 1);
-    if (gDeckMons[GetDeckBattlerAtPos(B_SIDE_PLAYER, position)].hasSwapped)
+    u32 battler = GetDeckBattlerAtPos(B_SIDE_PLAYER, position);
+    if (battler != MAX_DECK_BATTLERS_COUNT && gDeckMons[battler].hasSwapped)
         color = RGB_GRAY;
 
     LoadPalette(&color, OBJ_PLTT_ID(0) + 3, PLTT_SIZEOF(1));
