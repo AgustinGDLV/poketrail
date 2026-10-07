@@ -245,6 +245,7 @@ static void Task_OpenDeckBattle(u8 taskId)
         {
             // Start selection phase and update display.
             enum BattleId battler = GetDeckBattlerAtPos(B_SIDE_PLAYER, gDeckStruct.selectedPos);
+            PrintDeckBattleControls();
             PrintBattlerMoveInfo(battler);
             SetBattlerPortraitVisibility(TRUE);
             // HP bar updated before fade begins
@@ -373,9 +374,14 @@ void Task_ExecuteQueuedActionOrEnd(u8 taskId)
         gTasks[taskId].tTimer = 0;
         gTasks[taskId].tState = 0;
         if (gDeckStruct.queuedActions[gDeckStruct.executedCount].type == ACTION_ATTACK)
+        {
+            ++gDeckStruct.attackCount;
             gTasks[taskId].func = Task_ExecuteMove;
+        }
         else
+        {
             gTasks[taskId].func = Task_ExecuteSwap;
+        }
         ++gDeckStruct.executedCount;
     }
     // Otherwise, run through turn end effects.
@@ -396,13 +402,16 @@ static void Task_HandleBattleVictory(u8 taskId)
     case 0: // Print EXP message.
     {
         gDeckStruct.isSelectionPhase = TRUE;
+        gDeckStruct.isBattleEndPhase = TRUE;
+        ResetTurnValues();
+
         u32 exp = gDeckStruct.exp;
         if (gDeckStruct.isBossBattle) // more exp from bosses
             exp *= 2;
         // if (gPlayerPartyCount >= 2)
         //     exp /= (gPlayerPartyCount / 2); // *TODO - variable exp gain per battler
         ConvertIntToDecimalStringN(gStringVar2, exp, STR_CONV_MODE_LEFT_ALIGN, 5);
-        StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Your party gained an average of {STR_VAR_2} Exp. Points!"));
+        StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Your party gained an\naverage of {STR_VAR_2} Exp. Points!"));
         PrintStringToMessageBox(gStringVar1);
 
         PlayBGM(MUS_VICTORY_WILD);
@@ -411,7 +420,7 @@ static void Task_HandleBattleVictory(u8 taskId)
         break;
     }
     case 1: // Wait for message box.
-        if (++gTasks[taskId].tTimer > 10 && (gMain.newKeys & A_BUTTON))
+        if (++gTasks[taskId].tTimer > 10 && (JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON)))
         {
             PlaySE(SE_SELECT);
             gTasks[taskId].tTimer = 0;
@@ -432,6 +441,7 @@ static void Task_HandleBattleVictory(u8 taskId)
             CalculateMonStats(&gPlayerParty[gDeckMons[gDeckStruct.battlerExp].partyIndex]);
             if (expAfterGain >= nextLevelExp)
             {
+                gDeckMons[gDeckStruct.battlerExp].lvl = GetMonData(&gPlayerParty[gDeckMons[gDeckStruct.battlerExp].partyIndex], MON_DATA_LEVEL);
                 if (gDeckMons[gDeckStruct.battlerExp].hp != 0)
                     gDeckMons[gDeckStruct.battlerExp].hp += GetMonData(&gPlayerParty[gDeckMons[gDeckStruct.battlerExp].partyIndex], MON_DATA_MAX_HP) - gDeckMons[gDeckStruct.battlerExp].maxHP;
                 gTasks[taskId].tState = 3;
@@ -455,7 +465,7 @@ static void Task_HandleBattleVictory(u8 taskId)
             PlaySE(SE_EXP_MAX);
             ++gTasks[taskId].tTimer;
         }
-        else if (++gTasks[taskId].tTimer > 10 && (gMain.newKeys & A_BUTTON))
+        else if (++gTasks[taskId].tTimer > 10 && (JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON)))
         {
             PlaySE(SE_SELECT);
             gTasks[taskId].tTimer = 0;
@@ -465,10 +475,9 @@ static void Task_HandleBattleVictory(u8 taskId)
     case 4: // Check evolution.
         if (gDeckMons[gDeckStruct.battlerExp].species != SPECIES_NONE)
         {
-            bool32 canStopEvo = TRUE;
             struct Pokemon *mon = &gPlayerParty[gDeckMons[gDeckStruct.battlerExp].partyIndex];
-            u32 evoSpecies = GetEvolutionTargetSpecies(mon, EVO_MODE_BATTLE_ONLY, ITEM_NONE, NULL, &canStopEvo, CHECK_EVO);
-            if (evoSpecies != gDeckMons[gDeckStruct.battlerExp].species && evoSpecies != SPECIES_NONE)
+            u32 evoSpecies = gDeckSpeciesInfo[gDeckMons[gDeckStruct.battlerExp].species].evoSpecies;
+            if (evoSpecies != SPECIES_NONE && gDeckMons[gDeckStruct.battlerExp].lvl >= gDeckSpeciesInfo[gDeckMons[gDeckStruct.battlerExp].species].evoLevel)
             {
                 StringCopy(gStringVar2, GetSpeciesName(gDeckMons[gDeckStruct.battlerExp].species));
                 SetMonData(mon, MON_DATA_SPECIES, &evoSpecies);
@@ -492,7 +501,7 @@ static void Task_HandleBattleVictory(u8 taskId)
             PlayFanfare(MUS_LEVEL_UP);
             ++gTasks[taskId].tTimer;
         }
-        else if (++gTasks[taskId].tTimer > 60 && (gMain.newKeys & A_BUTTON))
+        else if (++gTasks[taskId].tTimer > 60 && (JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON)))
         {
             PlaySE(SE_SELECT);
             gTasks[taskId].tTimer = 0;
@@ -527,7 +536,7 @@ static void Task_HandleBattleLoss(u8 taskId)
     default:
     case 0:
         gDeckStruct.isSelectionPhase = TRUE;
-        PrintStringToMessageBox(COMPOUND_STRING("You have no more Pokémon that can fight!"));
+        PrintStringToMessageBox(COMPOUND_STRING("You have no more Pokémon\nthat can fight!"));
         ++gTasks[taskId].tState;
         break;
     case 1:
@@ -539,7 +548,7 @@ static void Task_HandleBattleLoss(u8 taskId)
         }
         break;
     case 2:
-        PrintStringToMessageBox(COMPOUND_STRING("You end your journey and return home…"));
+        PrintStringToMessageBox(COMPOUND_STRING("You end your journey\nand return home…"));
         gSaveBlock1Ptr->checkpoints = 0;
         ++gTasks[taskId].tState;
         break;
@@ -656,7 +665,7 @@ static const struct WindowTemplate sCaughtWindowTemplate =
     .width = 9,
     .height = 4,
     .paletteNum = 15,
-    .baseBlock = 1 + 21*4 + 24*4,
+    .baseBlock = 1 + 21*6 + 24*4 + 28*2,
 };
 
 static const struct WindowTemplate sYesNoWindowTemplate =
@@ -667,7 +676,7 @@ static const struct WindowTemplate sYesNoWindowTemplate =
     .width = 5,
     .height = 4,
     .paletteNum = 15,
-    .baseBlock = 1 + 21*4 + 24*4,
+    .baseBlock = 1 + 21*6 + 24*4 + 28*2,
 };
 
 static void Task_HandleCaughtBattler(u8 taskId)
@@ -691,16 +700,17 @@ static void Task_HandleCaughtBattler(u8 taskId)
         break;
     case 2: // Create list menu.
     {
+        RemoveDeckBattleControlsWindow();
         struct ListMenuTemplate menuTemplate = {0};
-        gDeckStruct.caughtWindowId = AddWindow(&sCaughtWindowTemplate);
+        gDeckGraphics.multichoiceWindowId = AddWindow(&sCaughtWindowTemplate);
         LoadMessageBoxAndBorderGfx();
-        DrawStdWindowFrame(gDeckStruct.caughtWindowId, FALSE);
+        DrawStdWindowFrame(gDeckGraphics.multichoiceWindowId, FALSE);
 
         menuTemplate.moveCursorFunc = ListMenuDefaultCursorMoveFunc;
         menuTemplate.items = sCaughtListMenuItems;
         menuTemplate.totalItems = 2;
         menuTemplate.maxShowed = 2;
-        menuTemplate.windowId = gDeckStruct.caughtWindowId;
+        menuTemplate.windowId = gDeckGraphics.multichoiceWindowId;
         menuTemplate.item_X = 8;
         menuTemplate.upText_Y = 1;
         menuTemplate.cursorPal = 1;
@@ -709,7 +719,7 @@ static void Task_HandleCaughtBattler(u8 taskId)
         menuTemplate.scrollMultiple = LIST_NO_MULTIPLE_SCROLL;
         menuTemplate.fontId = FONT_NORMAL;
         gTasks[taskId].data[2] = ListMenuInit(&menuTemplate, 0, 0);
-        CopyWindowToVram(gDeckStruct.caughtWindowId, COPYWIN_FULL);
+        CopyWindowToVram(gDeckGraphics.multichoiceWindowId, COPYWIN_FULL);
         CopyBgTilemapBufferToVram(1);
         ++gTasks[taskId].tState;
         break;
@@ -735,9 +745,12 @@ static void Task_HandleCaughtBattler(u8 taskId)
     }
     case 4: // Party
     {
-        FillWindowPixelBuffer(gDeckStruct.caughtWindowId, PIXEL_FILL(0));
-        ClearStdWindowAndFrame(gDeckStruct.caughtWindowId, FALSE);
-        CopyWindowToVram(gDeckStruct.caughtWindowId, COPYWIN_FULL);
+        FillWindowPixelBuffer(gDeckGraphics.multichoiceWindowId, PIXEL_FILL(0));
+        ClearStdWindowAndFrame(gDeckGraphics.multichoiceWindowId, FALSE);
+        CopyWindowToVram(gDeckGraphics.multichoiceWindowId, COPYWIN_FULL);
+        RemoveWindow(gDeckGraphics.multichoiceWindowId);
+        AddDeckBattleControlsWindow();
+        PrintDeckBattleControls();
         CopyBgTilemapBufferToVram(1);
 
         if (CalculatePlayerPartyCount() == PARTY_SIZE)
@@ -761,9 +774,12 @@ static void Task_HandleCaughtBattler(u8 taskId)
         break;
     }
     case 5: // Release
-        FillWindowPixelBuffer(gDeckStruct.caughtWindowId, PIXEL_FILL(0));
-        ClearStdWindowAndFrame(gDeckStruct.caughtWindowId, FALSE);
-        CopyWindowToVram(gDeckStruct.caughtWindowId, COPYWIN_FULL);
+        FillWindowPixelBuffer(gDeckGraphics.multichoiceWindowId, PIXEL_FILL(0));
+        ClearStdWindowAndFrame(gDeckGraphics.multichoiceWindowId, FALSE);
+        CopyWindowToVram(gDeckGraphics.multichoiceWindowId, COPYWIN_FULL);
+        RemoveWindow(gDeckGraphics.multichoiceWindowId);
+        AddDeckBattleControlsWindow();
+        PrintDeckBattleControls();
         CopyBgTilemapBufferToVram(1);
 
         StringCopy(gStringVar2, GetSpeciesName(gDeckMons[gDeckStruct.battlerCaught].species));
@@ -792,7 +808,13 @@ static void Task_SelectPartyMemberToReplace(u8 taskId)
     switch (gTasks[taskId].tState)
     {
     default:
-    case 0: // Print message.
+    case 0: // Print message and show battlers to replace.
+        for (u32 battler = 0; battler < B_PLAYER_5; ++battler)
+        {
+            LoadBattlerObjectSprite(battler);
+            if (gDeckMons[battler].hp == 0)
+                GetBattlerSprite(battler)->oam.objMode = ST_OAM_OBJ_BLEND;
+        }
         PrintStringToMessageBox(COMPOUND_STRING("Your party is full! Select a battler to send home."));
         ++gTasks[taskId].tState;
         break;
@@ -847,16 +869,18 @@ static void Task_SelectPartyMemberToReplace(u8 taskId)
         break;
     case 3: // Create list menu.
     {
+        RemoveDeckBattleControlsWindow();
         struct ListMenuTemplate menuTemplate = {0};
-        gDeckStruct.caughtWindowId = AddWindow(&sYesNoWindowTemplate);
+        gDeckGraphics.multichoiceWindowId = AddWindow(&sYesNoWindowTemplate);
+        PutWindowTilemap(gDeckGraphics.multichoiceWindowId);
         LoadMessageBoxAndBorderGfx();
-        DrawStdWindowFrame(gDeckStruct.caughtWindowId, FALSE);
+        DrawStdWindowFrame(gDeckGraphics.multichoiceWindowId, FALSE);
 
         menuTemplate.moveCursorFunc = ListMenuDefaultCursorMoveFunc;
         menuTemplate.items = sYesNoMenuItems;
         menuTemplate.totalItems = 2;
         menuTemplate.maxShowed = 2;
-        menuTemplate.windowId = gDeckStruct.caughtWindowId;
+        menuTemplate.windowId = gDeckGraphics.multichoiceWindowId;
         menuTemplate.item_X = 8;
         menuTemplate.upText_Y = 1;
         menuTemplate.cursorPal = 1;
@@ -865,7 +889,7 @@ static void Task_SelectPartyMemberToReplace(u8 taskId)
         menuTemplate.scrollMultiple = LIST_NO_MULTIPLE_SCROLL;
         menuTemplate.fontId = FONT_NORMAL;
         gTasks[taskId].data[2] = ListMenuInit(&menuTemplate, 0, 0);
-        CopyWindowToVram(gDeckStruct.caughtWindowId, COPYWIN_FULL);
+        CopyWindowToVram(gDeckGraphics.multichoiceWindowId, COPYWIN_FULL);
         CopyBgTilemapBufferToVram(1);
         ++gTasks[taskId].tState;
         break;
@@ -877,9 +901,12 @@ static void Task_SelectPartyMemberToReplace(u8 taskId)
         {
             PlaySE(SE_SELECT);
             DestroyTask(gTasks[taskId].data[2]);
-            FillWindowPixelBuffer(gDeckStruct.caughtWindowId, PIXEL_FILL(0));
-            ClearStdWindowAndFrame(gDeckStruct.caughtWindowId, FALSE);
-            CopyWindowToVram(gDeckStruct.caughtWindowId, COPYWIN_FULL);
+            FillWindowPixelBuffer(gDeckGraphics.multichoiceWindowId, PIXEL_FILL(0));
+            ClearStdWindowAndFrame(gDeckGraphics.multichoiceWindowId, FALSE);
+            CopyWindowToVram(gDeckGraphics.multichoiceWindowId, COPYWIN_FULL);
+            RemoveWindow(gDeckGraphics.multichoiceWindowId);
+            AddDeckBattleControlsWindow();
+            PrintDeckBattleControls();
             CopyBgTilemapBufferToVram(1);
 
             gTasks[taskId].tTimer = 0;
@@ -897,9 +924,12 @@ static void Task_SelectPartyMemberToReplace(u8 taskId)
         {
             PlaySE(SE_SELECT);
             DestroyTask(gTasks[taskId].data[2]);
-            FillWindowPixelBuffer(gDeckStruct.caughtWindowId, PIXEL_FILL(0));
-            ClearStdWindowAndFrame(gDeckStruct.caughtWindowId, FALSE);
-            CopyWindowToVram(gDeckStruct.caughtWindowId, COPYWIN_FULL);
+            FillWindowPixelBuffer(gDeckGraphics.multichoiceWindowId, PIXEL_FILL(0));
+            ClearStdWindowAndFrame(gDeckGraphics.multichoiceWindowId, FALSE);
+            CopyWindowToVram(gDeckGraphics.multichoiceWindowId, COPYWIN_FULL);
+            RemoveWindow(gDeckGraphics.multichoiceWindowId);
+            AddDeckBattleControlsWindow();
+            PrintDeckBattleControls();
             CopyBgTilemapBufferToVram(1);
 
             gTasks[taskId].tTimer = 0;
@@ -922,6 +952,7 @@ static void Task_SelectPartyMemberToReplace(u8 taskId)
         SetMonData(&gPlayerParty[gDeckMons[battler].partyIndex], MON_DATA_POSITION, &gDeckStruct.selectedPos);
         UpdateBattlerSelection(battler, FALSE);
         LoadBattlerObjectSprite(battler);
+        GetBattlerSprite(battler)->oam.objMode = ST_OAM_OBJ_NORMAL;
         StartBattlerAnim(battler, ANIM_ATTACK);
         gTasks[taskId].tState = 6;
         break;
@@ -1100,6 +1131,7 @@ static void InitBattleStructData(void)
     gDeckStruct.exp = 0;
     gDeckStruct.battlerCaught = MAX_DECK_BATTLERS_COUNT;
     gDeckStruct.selectedPos = GetLeftmostOccupiedPosition(B_SIDE_PLAYER);
+    gDeckStruct.isBattleEndPhase = FALSE;
 }
 
 // Reset struct data associated with a single turn.
@@ -1228,7 +1260,7 @@ s32 GetAbilityPowerBoost(u32 battlerAtk)
     switch (GetDeckBattlerAbility(battlerAtk))
     {
     case DECK_AGGRESSIVE:
-        if (gDeckStruct.executedCount == 1)
+        if (gDeckStruct.attackCount == 1)
             boost = (power * 50) / 100; // 1.5x
         break;
     case DECK_PATIENT:

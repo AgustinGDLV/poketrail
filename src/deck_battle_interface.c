@@ -64,7 +64,16 @@ enum Windows
 {
     WINDOW_BATTLER_INFO,
     WINDOW_MESSAGE,
+    WINDOW_CONTROLS,
     WINDOW_COUNT,
+};
+
+enum WindowsInfo
+{
+    WINDOW_STATS,
+    WINDOW_MOVE,
+    WINDOW_ABILITY,
+    WINDOW_COUNT2,
 };
 
 static const struct WindowTemplate sDeckBattleWinTemplates[WINDOW_COUNT + 1] =
@@ -75,8 +84,8 @@ static const struct WindowTemplate sDeckBattleWinTemplates[WINDOW_COUNT + 1] =
         .tilemapLeft = 6,
         .tilemapTop = 15,
         .width = 21,
-        .height = 4,
-        .paletteNum = 0,
+        .height = 6,
+        .paletteNum = 15,
         .baseBlock = 1,
     },
     [WINDOW_MESSAGE] =
@@ -86,8 +95,53 @@ static const struct WindowTemplate sDeckBattleWinTemplates[WINDOW_COUNT + 1] =
         .tilemapTop = 35,
         .width = 24,
         .height = 4,
-        .paletteNum = 0,
-        .baseBlock = 1 + 21*4,
+        .paletteNum = 15,
+        .baseBlock = 1 + 21*6,
+    },
+    [WINDOW_CONTROLS] =
+    {
+        .bg = 1,
+        .tilemapLeft = 0,
+        .tilemapTop = 0,
+        .width = 28,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 1 + 21*6 + 24*4,
+    },
+    DUMMY_WIN_TEMPLATE,
+};
+
+static const struct WindowTemplate sDeckBattleInfoWinTemplates[WINDOW_COUNT + 1] =
+{
+    [WINDOW_STATS] =
+    {
+        .bg = 1,
+        .tilemapLeft = 7,
+        .tilemapTop = 40,
+        .width = 21,
+        .height = 6,
+        .paletteNum = 15,
+        .baseBlock = 1,
+    },
+    [WINDOW_MOVE] =
+    {
+        .bg = 1,
+        .tilemapLeft = 2,
+        .tilemapTop = 47,
+        .width = 24,
+        .height = 4,
+        .paletteNum = 15,
+        .baseBlock = 1 + 21*6,
+    },
+    [WINDOW_ABILITY] =
+    {
+        .bg = 1,
+        .tilemapLeft = 2,
+        .tilemapTop = 54,
+        .width = 24,
+        .height = 4,
+        .paletteNum = 15,
+        .baseBlock = 1 + 21*6 + 24*4,
     },
     DUMMY_WIN_TEMPLATE,
 };
@@ -330,6 +384,7 @@ void LoadBattleBoxesAndBackground(void)
     LoadPalette(bg->palette, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
 
     CopyBgTilemapBufferToVram(0);
+    CopyBgTilemapBufferToVram(1);
     CopyBgTilemapBufferToVram(3);
 }
 
@@ -483,7 +538,7 @@ void LoadBattlerObjectSprite(enum BattleId battler)
 {
     u32 *dst, *src, index;
 
-    if (IsDeckBattlerAlive(battler))
+    if (IsDeckBattlerAlive(battler) || (gDeckStruct.isBattleEndPhase && gDeckMons[battler].species != SPECIES_NONE))
     {
         FreeSpritePaletteByTag(TAG_BATTLER_OBJ + battler); // just in case?
         index = LoadSpritePaletteWithTag(gDeckSpeciesInfo[gDeckMons[battler].species].objectPalette, TAG_BATTLER_OBJ + battler);
@@ -559,10 +614,20 @@ void RemoveSelectionCursorOverBattler(enum BattleId battler)
 void CreateSelectionCursorOverPosition(enum BattlePosition position)
 {
     gDeckGraphics.swapCursorSpriteId = CreateSprite(&gCursorSpriteTemplate, PLAYER_OBJ_X + OBJ_OFFSET * position, PLAYER_OBJ_Y - 16, 0);
+
+    u16 color = RGB(28, 1, 1);
+    u32 battler = GetDeckBattlerAtPos(B_SIDE_PLAYER, position);
+    if (battler != MAX_DECK_BATTLERS_COUNT && gDeckMons[battler].hasSwapped)
+        color = RGB_GRAY;
+
+    LoadPalette(&color, OBJ_PLTT_ID(0) + 3, PLTT_SIZEOF(1));
 }
 
 void RemoveSwapSelectionCursor(void)
 {
+    u16 color = RGB(28, 1, 1);
+    LoadPalette(&color, OBJ_PLTT_ID(0) + 3, PLTT_SIZEOF(1));
+
     DestroySprite(&gSprites[gDeckGraphics.swapCursorSpriteId]);
     gDeckGraphics.swapCursorSpriteId = SPRITE_NONE;
 }
@@ -982,16 +1047,24 @@ void PrintDamageNumbers(enum BattleId battler, s32 damage)
 #undef sTracker
 
 static const u8 sTextColorNormal[] = { 0, 1, 2 };
+static const u8 sTextColorControls[] = { 0, 1, 15 };
+static const u8 sTextColorRed[] = {0, 4, 0};
+
+
+void PrintDeckBattleControls(void)
+{
+    FillWindowPixelBuffer(WINDOW_CONTROLS, PIXEL_FILL(0));
+    if (gDeckStruct.actionsCount == 0)
+        AddTextPrinterParameterized3(WINDOW_CONTROLS, FONT_SMALL, 4, 0, sTextColorControls, TEXT_SKIP_DRAW, COMPOUND_STRING("{A_BUTTON} SELECT {START_BUTTON} SWAP {SELECT_BUTTON} INFO {B_BUTTON} RUN"));
+    else
+        AddTextPrinterParameterized3(WINDOW_CONTROLS, FONT_SMALL, 4, 0, sTextColorControls, TEXT_SKIP_DRAW, COMPOUND_STRING("{A_BUTTON} SELECT {START_BUTTON} SWAP {SELECT_BUTTON} INFO {B_BUTTON} UNDO"));
+    CopyWindowToVram(WINDOW_CONTROLS, COPYWIN_FULL);
+}
 
 void PrintBattlerMoveInfo(enum BattleId battler)
 {
-    StringCopy(gStringVar1, gDeckMovesInfo[gDeckSpeciesInfo[gDeckMons[battler].species].move].name);
-    StringAppend(gStringVar1, COMPOUND_STRING(": "));
-    StringAppend(gStringVar1, gDeckMovesInfo[gDeckSpeciesInfo[gDeckMons[battler].species].move].description);
-    BreakStringAutomatic(gStringVar1, 164, 2, FONT_NORMAL, HIDE_SCROLL_PROMPT);
-
     FillWindowPixelBuffer(WINDOW_BATTLER_INFO, PIXEL_FILL(0));
-    AddTextPrinterParameterized3(WINDOW_BATTLER_INFO, FONT_NORMAL, 4, 1, sTextColorNormal, TEXT_SKIP_DRAW, gStringVar1);
+    AddTextPrinterParameterized3(WINDOW_BATTLER_INFO, FONT_NORMAL, 4, 1, sTextColorNormal, TEXT_SKIP_DRAW, gDeckMovesInfo[gDeckSpeciesInfo[gDeckMons[battler].species].move].infoMenuDesc);
     CopyWindowToVram(WINDOW_BATTLER_INFO, COPYWIN_FULL);
 }
 
@@ -1001,7 +1074,11 @@ void PrintTargetBattlerPrompt(enum BattleId battler)
     if (gDeckMovesInfo[gDeckSpeciesInfo[gDeckMons[gBattlerAttacker].species].move].effect == DECK_EFFECT_POWER_UP)
         StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Boost {STR_VAR_2}?"));
     else if (gDeckMovesInfo[gDeckSpeciesInfo[gDeckMons[gBattlerAttacker].species].move].effect == DECK_EFFECT_HEAL)
-        StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Heal {STR_VAR_2}?"));
+    {
+        ConvertIntToDecimalStringN(gStringVar3, gDeckMons[battler].hp, STR_CONV_MODE_LEFT_ALIGN, 3);
+        ConvertIntToDecimalStringN(gStringVar4, gDeckMons[battler].maxHP, STR_CONV_MODE_LEFT_ALIGN, 3);
+        StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Heal {STR_VAR_2}?\nHP: {STR_VAR_3}/{STR_VAR_4}"));
+    }
     else
         StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Attack {STR_VAR_2}?"));
 
@@ -1024,7 +1101,7 @@ void PrintMoveUseString(void)
 {
     StringCopy(gStringVar2, GetSpeciesName(gDeckMons[gBattlerAttacker].species));
     StringCopy(gStringVar3, gDeckMovesInfo[gDeckSpeciesInfo[gDeckMons[gBattlerAttacker].species].move].name);
-    StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2} used {STR_VAR_3}!"));
+    StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2} used\n{STR_VAR_3}!"));
 
     FillWindowPixelBuffer(WINDOW_MESSAGE, PIXEL_FILL(0));
     BreakStringAutomatic(gStringVar1, 196, 2, FONT_NORMAL, HIDE_SCROLL_PROMPT);
@@ -1046,52 +1123,52 @@ void PrintMoveOutcomeString(u32 targets) // *TODO: refactor
     {
     case DECK_EFFECT_HIT:
         if (targets == 1)
-            StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2} took {STR_VAR_3} damage!"));
+            StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2} took\n{STR_VAR_3} damage!"));
         else
-            StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Opponents took damage!"));
+            StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Opponents took\ndamage!"));
         break;
     case DECK_EFFECT_HEAL:
         if (targets == 1)
-            StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2} healed {STR_VAR_3} HP!"));
+            StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2} healed\n{STR_VAR_3} HP!"));
         else if (gDeckMovesInfo[gCurrentMove].target & TARGET_ALL_ALLIES)
-            StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Allies had their HP healed!"));
+            StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Allies had their\nHP healed!"));
         break;
     case DECK_EFFECT_POWER_UP:
         if (gDeckMovesInfo[gCurrentMove].param == 0xFF)
         {
             if (GetDeckBattlerSide(gBattlerTarget) != GetDeckBattlerSide(gBattlerAttacker))
-                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Opponent's stats were lowered!"));
+                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Opponent's stats\nwere lowered!"));
             else if (targets == 1)
-                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2}'s stats were boosted!"));
+                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2}'s stats\nwere boosted!"));
             else
-                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Allies had their stats boosted!"));
+                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Allies had their\nstats boosted!"));
         }
         else if (gDeckMovesInfo[gCurrentMove].param == STAT_DEF)
         {
             if (GetDeckBattlerSide(gBattlerTarget) != GetDeckBattlerSide(gBattlerAttacker))
-                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Opponent's DEF was lowered!"));
+                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Opponent's DEF \nas lowered!"));
             else if (targets == 1)
-                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2}'s DEF was boosted!"));
+                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2}'s DEF\nwas boosted!"));
             else
-                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Allies had their DEF boosted!"));
+                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Allies had their\nDEF boosted!"));
         }
         else
         {
             if (GetDeckBattlerSide(gBattlerTarget) != GetDeckBattlerSide(gBattlerAttacker))
-                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Opponent's PWR was lowered!"));
+                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Opponent's PWR\nwas lowered!"));
             else if (targets == 1)
-                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2}'s PWR was boosted!"));
+                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2}'s\nPWR was boosted!"));
             else
-                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Allies had their DEF boosted!"));
+                StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Allies had their\nDEF boosted!"));
         }
         break;
     case DECK_EFFECT_SWAP:
         if (gDeckMovesInfo[gCurrentMove].param == STAT_ATK)
-            StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Targets were swapped and had their PWR boosted!"));
+            StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Targets were swapped and\nhad their PWR boosted!"));
         else if (gDeckMovesInfo[gCurrentMove].param == STAT_DEF)
-            StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Targets were swapped and had their DEF boosted!"));
+            StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Targets were swapped and\nhad their DEF boosted!"));
         else if (gDeckMovesInfo[gCurrentMove].param == 0xFF)
-            StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Targets were swapped and had their stats boosted!"));
+            StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Targets were swapped and\nhad their stats boosted!"));
         else
             StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Targets were swapped!"));
     }
@@ -1125,7 +1202,7 @@ void PrintSwapString(enum BattleId battler1, enum BattleId battler2)
 {
     StringCopy(gStringVar2, GetSpeciesName(gDeckMons[battler1].species));
     StringCopy(gStringVar3, GetSpeciesName(gDeckMons[battler2].species));
-    StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2} and {STR_VAR_3} swapped places!"));
+    StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2} and {STR_VAR_3}\nswapped places!"));
     BreakStringAutomatic(gStringVar1, 196, 2, FONT_NORMAL, HIDE_SCROLL_PROMPT);
 
     FillWindowPixelBuffer(WINDOW_MESSAGE, PIXEL_FILL(0));
@@ -1240,4 +1317,184 @@ void DisplaySwapSelectionInfo(enum BattlePosition position)
     PrintSwapTargetPrompt(position);
     if (battler != MAX_DECK_BATTLERS_COUNT)
         UpdatePlayerHPBar(battler);
+}
+
+static void Task_LoadInfoGraphics(u8 taskId)
+{
+    switch (gTasks[taskId].data[0])
+    {
+    case 0:
+        // Clear windows.
+        for (u32 i = 0; i < WINDOW_COUNT; ++i)
+            FillWindowPixelBuffer(i, PIXEL_FILL(0));
+
+        // Hide battle graphics.
+        SetBattlerPortraitVisibility(FALSE);
+        RemoveSelectionCursorOverBattler(GetDeckBattlerAtPos(B_SIDE_PLAYER, gDeckStruct.selectedPos));
+        for (enum BattleId battler = B_PLAYER_0; battler < MAX_DECK_BATTLERS_COUNT; ++battler)
+            if (IsDeckBattlerAlive(battler))
+                gSprites[gDeckGraphics.battlerSpriteIds[battler]].invisible = TRUE;
+        ++gTasks[taskId].data[0];
+        break;
+    case 1:
+        // Move battler portrait.
+        gSprites[gDeckGraphics.portraitSpriteId].x = 42;
+        gSprites[gDeckGraphics.portraitSpriteId].y = 14;
+
+        // Move to bottom of BG map.
+        SetGpuReg(REG_OFFSET_BG0VOFS, DISPLAY_HEIGHT * 2);
+        SetGpuReg(REG_OFFSET_BG1VOFS, DISPLAY_HEIGHT * 2);
+        ++gTasks[taskId].data[0];
+        break;
+    case 2:
+        // Load new set of windows.
+        for (u32 i = 0; i < WINDOW_COUNT; ++i)
+        {
+            SetWindowAttribute(i, WINDOW_TILEMAP_LEFT, sDeckBattleInfoWinTemplates[i].tilemapLeft);
+            SetWindowAttribute(i, WINDOW_TILEMAP_TOP, sDeckBattleInfoWinTemplates[i].tilemapTop);
+            SetWindowAttribute(i, WINDOW_WIDTH, sDeckBattleInfoWinTemplates[i].width);
+            SetWindowAttribute(i, WINDOW_HEIGHT, sDeckBattleInfoWinTemplates[i].height);
+            PutWindowTilemap(i);
+            CopyWindowToVram(i, COPYWIN_FULL);
+        }
+
+        // Load initial battler info.
+        UpdateBattlerInfoDisplay(gDeckStruct.infoBattler);
+        SetBattlerPortraitVisibility(TRUE);
+        DestroyTask(taskId);
+        break;
+    }
+}
+
+// Load graphics data for info menu.
+void LoadBattleInfoMenuGraphics(void)
+{
+    CreateTask(Task_LoadInfoGraphics, 0);
+}
+
+// Print battler info to info menu.
+void UpdateBattlerInfoDisplay(enum BattleId battler)
+{
+    u8 *strPtr;
+    u8 nameStr[20];
+    u8 hpStr[20] = _("HP ");
+    u8 lvlStr[20] = _("LVL ");
+    u8 evoStr[20] = _("");
+    u8 pwrStr[20] = _("PWR ");
+    u8 defStr[20] = _("DEF ");
+    u32 digits = 0;
+
+    // Load strings.
+    // [NAME]
+    StringCopy(nameStr, GetSpeciesName(gDeckMons[battler].species));
+
+    // [HP]
+    ConvertIntToDecimalStringN(gStringVar2, gDeckMons[battler].hp, STR_CONV_MODE_LEFT_ALIGN, 3);
+    for (u32 i = gDeckMons[battler].hp; i > 0; i /= 10)
+        ++digits;
+    strPtr = &gStringVar2[digits];
+    if (gDeckMons[battler].hp == 0)
+    {
+        *strPtr = CHAR_0;
+        ++strPtr;
+    }
+    *strPtr = CHAR_SLASH;
+    ++strPtr;
+    ConvertIntToDecimalStringN(strPtr, gDeckMons[battler].maxHP, STR_CONV_MODE_LEFT_ALIGN, 3);
+    StringAppend(hpStr, gStringVar2);
+    
+    // [LVL]
+    ConvertIntToDecimalStringN(gStringVar2, gDeckMons[battler].lvl, STR_CONV_MODE_LEFT_ALIGN, 3);
+    StringAppend(lvlStr, gStringVar2);
+
+    // [PWR]
+    ConvertIntToDecimalStringN(gStringVar2, gDeckMons[battler].power, STR_CONV_MODE_LEFT_ALIGN, 3);
+    StringAppend(pwrStr, gStringVar2);
+
+    // [DEF]
+    ConvertIntToDecimalStringN(gStringVar2, gDeckMons[battler].def, STR_CONV_MODE_LEFT_ALIGN, 3);
+    StringAppend(defStr, gStringVar2);
+
+    // [EVO]
+    if (gDeckSpeciesInfo[gDeckMons[battler].species].evoSpecies != SPECIES_NONE)
+    {
+        ConvertIntToDecimalStringN(gStringVar2, gDeckSpeciesInfo[gDeckMons[battler].species].evoLevel, STR_CONV_MODE_LEFT_ALIGN, 2);
+        StringExpandPlaceholders(evoStr, COMPOUND_STRING("Evo at {STR_VAR_2}"));
+    }
+
+    // Print strings.
+    FillWindowPixelBuffer(WINDOW_STATS, PIXEL_FILL(0));
+    FillWindowPixelBuffer(WINDOW_MOVE, PIXEL_FILL(0));
+    FillWindowPixelBuffer(WINDOW_ABILITY, PIXEL_FILL(0));
+
+    if (GetDeckBattlerSide(battler) == B_SIDE_OPPONENT)
+    AddTextPrinterParameterized3(WINDOW_STATS, FONT_NORMAL, 4, 4, sTextColorRed, TEXT_SKIP_DRAW, nameStr);
+    else
+        AddTextPrinterParameterized3(WINDOW_STATS, FONT_NORMAL, 4, 4, sTextColorNormal, TEXT_SKIP_DRAW, nameStr);
+    if (gDeckMons[battler].hp == 0)
+        AddTextPrinterParameterized3(WINDOW_STATS, FONT_NORMAL, 4, 16, sTextColorRed, TEXT_SKIP_DRAW, hpStr);
+    else
+        AddTextPrinterParameterized3(WINDOW_STATS, FONT_NORMAL, 4, 16, sTextColorNormal, TEXT_SKIP_DRAW, hpStr);
+    AddTextPrinterParameterized3(WINDOW_STATS, FONT_NORMAL, 4, 28, sTextColorNormal, TEXT_SKIP_DRAW, lvlStr);
+    AddTextPrinterParameterized3(WINDOW_STATS, FONT_NORMAL, 96, 4, sTextColorNormal, TEXT_SKIP_DRAW, pwrStr);
+    AddTextPrinterParameterized3(WINDOW_STATS, FONT_NORMAL, 96, 16, sTextColorNormal, TEXT_SKIP_DRAW, defStr);
+    AddTextPrinterParameterized3(WINDOW_STATS, FONT_NORMAL, 96, 28, sTextColorNormal, TEXT_SKIP_DRAW, evoStr);
+    AddTextPrinterParameterized3(WINDOW_MOVE, FONT_NORMAL, 4, 1, sTextColorNormal, TEXT_SKIP_DRAW, gDeckMovesInfo[gDeckSpeciesInfo[gDeckMons[battler].species].move].infoMenuDesc);
+    AddTextPrinterParameterized3(WINDOW_ABILITY, FONT_NORMAL, 4, 1, sTextColorNormal, TEXT_SKIP_DRAW, gDeckAbilitiesInfo[gDeckSpeciesInfo[gDeckMons[battler].species].ability].infoMenuDesc);
+
+    CopyWindowToVram(WINDOW_STATS, COPYWIN_FULL);
+    CopyWindowToVram(WINDOW_MOVE, COPYWIN_FULL);
+    CopyWindowToVram(WINDOW_ABILITY, COPYWIN_FULL);
+    ScheduleBgCopyTilemapToVram(1);
+
+    // Update portrait.
+    LoadBattlerPortrait(battler);
+}
+
+// Load graphics data when returning from battle info menu.
+void ReloadBattleMenuGraphics(void)
+{
+    // Unhide battle graphics.
+    for (enum BattleId battler = B_PLAYER_0; battler < MAX_DECK_BATTLERS_COUNT; ++battler)
+        if (IsDeckBattlerAlive(battler))
+            gSprites[gDeckGraphics.battlerSpriteIds[battler]].invisible = FALSE;
+
+    // Move battler portrait.
+    SetBattlerPortraitVisibility(FALSE);
+    gSprites[gDeckGraphics.portraitSpriteId].x = PORTRAIT_X;
+    gSprites[gDeckGraphics.portraitSpriteId].y = PORTRAIT_Y;
+
+    // Move to top of BG map.
+    SetGpuReg(REG_OFFSET_BG0VOFS, 0);
+    SetGpuReg(REG_OFFSET_BG1VOFS, 0);
+
+    // Restore windows.
+    for (u32 i = 0; i < WINDOW_COUNT; ++i)
+    {
+        SetWindowAttribute(i, WINDOW_TILEMAP_LEFT, sDeckBattleWinTemplates[i].tilemapLeft);
+        SetWindowAttribute(i, WINDOW_TILEMAP_TOP, sDeckBattleWinTemplates[i].tilemapTop);
+        SetWindowAttribute(i, WINDOW_WIDTH, sDeckBattleWinTemplates[i].width);
+        SetWindowAttribute(i, WINDOW_HEIGHT, sDeckBattleWinTemplates[i].height);
+        PutWindowTilemap(i);
+        CopyWindowToVram(i, COPYWIN_FULL);
+    }
+
+    // Load initial battler info.
+    u32 battler = GetDeckBattlerAtPos(B_SIDE_PLAYER, gDeckStruct.selectedPos);
+    CreateSelectionCursorOverBattler(battler);
+    LoadBattlerPortrait(battler);
+    PrintBattlerMoveInfo(battler);
+    PrintDeckBattleControls();
+    SetBattlerPortraitVisibility(TRUE);
+}
+
+void AddDeckBattleControlsWindow(void)
+{
+    AddWindow(&sDeckBattleWinTemplates[WINDOW_CONTROLS]);
+    PutWindowTilemap(WINDOW_CONTROLS);
+}
+
+void RemoveDeckBattleControlsWindow(void)
+{
+    RemoveWindow(WINDOW_CONTROLS);
 }

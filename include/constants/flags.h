@@ -1316,7 +1316,7 @@
 #define FLAG_SWEATY_SUMMIT_ITEM_2                                   0x4EC
 #define FLAG_UNUSED_0x4ED                                           0x4ED
 #define FLAG_UNUSED_0x4EE                                           0x4EE
-#define FLAG_UNUSED_0x4EF                                           0x4EF
+#define FLAG_ENTERED_TERRIBLE_TUNNEL                                0x4EF
 
 #define TEMPLATE_EVENT_FLAGS_END                                    FLAG_BOSS_ENCOUNTER
 

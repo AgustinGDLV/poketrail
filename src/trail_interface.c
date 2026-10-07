@@ -110,6 +110,7 @@ enum
 {
     WIN_TIME,
     WIN_LOCATION,
+    WIN_CONTROLS,
     WIN_MESSAGE,
     WIN_YESNO,
     WINDOW_COUNT,
@@ -137,6 +138,16 @@ static const struct WindowTemplate sTrailInterfaceWinTemplates[WINDOW_COUNT + 1]
         .paletteNum = 15,
         .baseBlock = 1 + 14*2,
     },
+    [WIN_CONTROLS] =
+    {
+        .bg = 1,
+        .tilemapLeft = 1,
+        .tilemapTop = 18,
+        .width = 28,
+        .height = 2,
+        .paletteNum = 15,
+        .baseBlock = 1 + 14*2 + 14*2,
+    },
     [WIN_MESSAGE] =
     {
         .bg = 1,
@@ -145,7 +156,7 @@ static const struct WindowTemplate sTrailInterfaceWinTemplates[WINDOW_COUNT + 1]
         .width = 28,
         .height = 4,
         .paletteNum = 15,
-        .baseBlock = 1 + 14*2 + 14*2,
+        .baseBlock = 1 + 14*2 + 14*2 + 28*2,
     },
     [WIN_YESNO] =
     {
@@ -155,7 +166,7 @@ static const struct WindowTemplate sTrailInterfaceWinTemplates[WINDOW_COUNT + 1]
         .width = 5,
         .height = 4,
         .paletteNum = 15,
-        .baseBlock = 1 + 14*2 + 14*2 + 28*4,
+        .baseBlock = 1 + 14*2 + 14*2 + 28*2 + 28*4,
     },
     DUMMY_WIN_TEMPLATE,
 };
@@ -449,11 +460,13 @@ static void TryTriggerEvent(u8 taskId);
 static void Task_TriggerOverworldEncounter(u8 taskId);
 static void Task_TriggerHealEvent(u8 taskId);
 static void Task_TriggerDysentery(u8 taskId);
+static void Task_PrintTerribleTunnelWarning(u8 taskId);
 
 static void LoadMapGraphics(u32 characterId);
 static void IncrementTime(u32 minutes);
 static void PrintTime(void);
 static void PrintLocation(void);
+static void PrintControls(void);
 static void PrintTextToMessageBox(const u8 *str);
 static u32 CreateYesNoBox(void);
 static void ClearWindow(u32 windowId);
@@ -530,6 +543,7 @@ void CB2_InitTrailInterface(void)
             }
             break;
         case 6:
+            FreeAllWindowBuffers();
             InitWindows(sTrailInterfaceWinTemplates);
             DeactivateAllTextPrinters();
             gMain.state++;
@@ -544,7 +558,11 @@ void CB2_InitTrailInterface(void)
             break;
         case 8:
             ResetMapMusic();
-            PlayBGM(MUS_ROUTE119);
+            if (!gTrailInterface.musicPlaying)
+            {
+                PlayBGM(MUS_ROUTE119);
+                gTrailInterface.musicPlaying = TRUE;
+            }
             ClearContinueGameWarpStatus();
             FadeScreen(FADE_FROM_BLACK, 2);
             SetVBlankCallback(VBlankCB2_TrailMap);
@@ -600,6 +618,11 @@ static void Task_TrailMapWaitForKeypress(u8 taskId)
     if ((JOY_NEW(DPAD_ANY) || JOY_HELD(DPAD_ANY)) && CheckCheckpointTrigger())
     {
         gTasks[taskId].func = Task_GoToCheckpoint;
+    }
+    // Check for Terrible Tunnel entrance.
+    else if (gSaveBlock1Ptr->currentTemplateType == TEMPLATES_TERRIBLE_TUNNEL && !FlagGet(FLAG_ENTERED_TERRIBLE_TUNNEL))
+    {
+        gTasks[taskId].func = Task_PrintTerribleTunnelWarning;
     }
     // Check for encounter.
     else if ((JOY_NEW(DPAD_ANY) || (JOY_HELD(DPAD_ANY) && gTrailInterface.keyHeldTimer % 12 == 0)))
@@ -680,6 +703,7 @@ static void Task_SaveAndExit(u8 taskId)
         case 5: // Return to trail map.
             ClearWindow(WIN_MESSAGE);
             ClearWindow(WIN_YESNO);
+            PrintControls();
             gTasks[taskId].func = Task_TrailMapWaitForKeypress;
             gTasks[taskId].data[0] = 0;
             break;
@@ -784,6 +808,7 @@ static void Task_GoToOverworldCamp(u8 taskId)
             TryWarpToRoom(STARTING_ROOM, 0xFF);
             Free(sTrailMapTilemapPtr);
             sTrailMapTilemapPtr = NULL;
+            gTrailInterface.musicPlaying = FALSE;
             FreeAllWindowBuffers();
             ResetSpriteData();
             UnlockPlayerFieldControls();
@@ -794,6 +819,7 @@ static void Task_GoToOverworldCamp(u8 taskId)
     case 6: // Return to trail map.
         ClearWindow(WIN_MESSAGE);
         ClearWindow(WIN_YESNO);
+        PrintControls();
         gTasks[taskId].func = Task_TrailMapWaitForKeypress;
         gTasks[taskId].data[0] = 0;
         break;
@@ -870,6 +896,8 @@ static void Task_GoToCheckpoint(u8 taskId)
             StoreInitialPlayerAvatarState();
             LockPlayerFieldControls();
             PlayBGM(GetCurrentTemplateRules()->bgm);
+            ClearFloorEventFlags();
+            gTrailInterface.musicPlaying = FALSE;
             WarpFadeOutScreen();
             PlayRainStoppingSoundEffect();
             SetWarpDestination(MAP_GROUP(INTRO_SEQUENCE), gCheckpointData[checkpoint].mapNum, gCheckpointData[checkpoint].warpId[gSaveBlock1Ptr->facing], 0, 0);
@@ -900,6 +928,7 @@ static void Task_GoToCheckpoint(u8 taskId)
     case 8: // Return to trail map.
         ClearWindow(WIN_MESSAGE);
         ClearWindow(WIN_YESNO);
+        PrintControls();
         gTasks[taskId].func = Task_TrailMapWaitForKeypress;
         gTasks[taskId].data[0] = 0;
         break;
@@ -1009,6 +1038,7 @@ static void Task_TriggerHealEvent(u8 taskId)
         {
             ClearWindow(WIN_MESSAGE);
             ClearWindow(WIN_YESNO);
+            PrintControls();
             gTasks[taskId].func = Task_TrailMapWaitForKeypress;
             gTasks[taskId].data[0] = 0;
             gTasks[taskId].data[2] = 0;
@@ -1083,6 +1113,41 @@ static void Task_TriggerDysentery(u8 taskId)
         {
             ClearWindow(WIN_MESSAGE);
             ClearWindow(WIN_YESNO);
+            PrintControls();
+            gTasks[taskId].func = Task_TrailMapWaitForKeypress;
+            gTasks[taskId].data[0] = 0;
+            gTasks[taskId].data[2] = 0;
+            gTasks[taskId].data[3] = 0;
+        }
+        break;
+    }
+}
+
+static void Task_PrintTerribleTunnelWarning(u8 taskId)
+{
+    switch (gTasks[taskId].data[0])
+    {
+    case 0: // Print message.
+        PlaySE(SE_PIN);
+        PrintTextToMessageBox(COMPOUND_STRING("This cave seems dangerous!"));
+        ++gTasks[taskId].data[0];
+        break;
+    case 1: // Print second message.
+        if (JOY_NEW(A_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            PrintTextToMessageBox(COMPOUND_STRING("You cannot rest in this area\nand monsters are tougher."));
+            ++gTasks[taskId].data[0];
+        }
+        break;
+    case 2: // Return to trail interface.
+        if (JOY_NEW(A_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            FlagSet(FLAG_ENTERED_TERRIBLE_TUNNEL);
+            ClearWindow(WIN_MESSAGE);
+            ClearWindow(WIN_YESNO);
+            PrintControls();
             gTasks[taskId].func = Task_TrailMapWaitForKeypress;
             gTasks[taskId].data[0] = 0;
             gTasks[taskId].data[2] = 0;
@@ -1151,6 +1216,9 @@ static void LoadMapGraphics(u32 characterId)
 
     // Print location.
     PrintLocation();
+
+    // Print controls.
+    PrintControls();
 }
 
 void IncrementTrailTime(u32 minutes)
@@ -1228,6 +1296,17 @@ static void PrintLocation(void)
     AddTextPrinterParameterized3(WIN_LOCATION, FONT_NORMAL, 7, 0, textColor, TEXT_SKIP_DRAW, GetCurrentTemplateRules()->name);
     CopyWindowToVram(WIN_LOCATION, COPYWIN_FULL);
     PutWindowTilemap(WIN_LOCATION);
+}
+
+// Print controls to bottom.
+static void PrintControls(void)
+{
+	const u8 textColor[] = {TEXT_COLOR_TRANSPARENT, 1, 15};
+    FillWindowPixelBuffer(WIN_CONTROLS, PIXEL_FILL(0));
+    AddTextPrinterParameterized3(WIN_CONTROLS, FONT_SMALL, 7, 0, textColor, TEXT_SKIP_DRAW, COMPOUND_STRING("{DPAD_NONE} MOVE {A_BUTTON} CAMP {START_BUTTON} SAVE {L_BUTTON} BAG {R_BUTTON} PARTY"));
+    CopyWindowToVram(WIN_CONTROLS, COPYWIN_FULL);
+    PutWindowTilemap(WIN_CONTROLS);
+    CopyBgTilemapBufferToVram(1);
 }
 
 // Draw message box and print text.
@@ -1374,51 +1453,6 @@ static bool32 TryMoveInDirection(u32 dir)
         PrintLocation();
 
     return TRUE;
-}
-
-void RestAtCampsite(void) // callnative
-{
-    CalculatePlayerPartyCount();
-    for (u32 i = 0; i < gPlayerPartyCount; ++i)
-    {
-        u32 maxHP = GetMonData(&gPlayerParty[i], MON_DATA_MAX_HP);
-        u32 hp = GetMonData(&gPlayerParty[i], MON_DATA_HP);
-        switch (gSpecialVar_Result)
-        {
-        case 0:
-            if (hp != 0)
-                hp += ((maxHP * 25) / 100);
-            IncrementTrailTime(180);
-            break;
-        case 1:            
-            if (hp != 0)
-                hp += ((maxHP * 50) / 100);
-            IncrementTrailTime(360);
-            break;
-        case 2:
-            hp = maxHP;
-            IncrementTrailTime(720);
-            break;
-        }
-        if (hp > maxHP)
-            hp = maxHP;
-        SetMonData(&gPlayerParty[i], MON_DATA_HP, &hp);
-    }
-
-    if (!gPaletteFade.active)
-    {
-        struct TimeBlendSettings cachedBlend = gTimeBlend;
-        u32 *bld0 = (u32*)&cachedBlend;
-        u32 *bld1 = (u32*)&gTimeBlend;
-        UpdateTimeOfDay();
-        if (bld0[0] != bld1[0]
-        || bld0[1] != bld1[1]
-        || bld0[2] != bld1[2])
-        {
-        UpdateAltBgPalettes(PALETTES_BG);
-        UpdatePalettesWithTime(PALETTES_ALL);
-        }
-    }
 }
 
 u32 GetCheckpointsCount(void)

@@ -39,6 +39,7 @@
 #include "save.h"
 #include "scanline_effect.h"
 #include "script.h"
+#include "script_menu.h"
 #include "sound.h"
 #include "start_menu.h"
 #include "strings.h"
@@ -47,6 +48,7 @@
 #include "text.h"
 #include "text_window.h"
 #include "trainer_card.h"
+#include "trail_interface.h"
 #include "window.h"
 #include "union_room.h"
 #include "dexnav.h"
@@ -80,8 +82,8 @@ static const struct WindowTemplate sBagListMenuWinTemplates[] =
         .bg = 0,
         .tilemapLeft = 1,
         .tilemapTop = 1,
-        .width = 14,
-        .height = 6,
+        .width = 16,
+        .height = 12,
         .paletteNum = 15,
         .baseBlock = 8,
     },
@@ -90,10 +92,10 @@ static const struct WindowTemplate sBagListMenuWinTemplates[] =
         .bg = 1,
         .tilemapLeft = 1,
         .tilemapTop = 3,
-        .width = 14,
-        .height = 6,
+        .width = 16,
+        .height = 12,
         .paletteNum = 15,
-        .baseBlock = 1 + 14*2 + 14*2, // no overlap with trail interface
+        .baseBlock = 1 + 14*2 + 14*2 + 28*2, // no overlap with trail interface
     },
 };
 
@@ -167,7 +169,7 @@ static void InitBagListMenuData(void)
     sBagListMenu.template.moveCursorFunc = ListMenuDefaultCursorMoveFunc;
     sBagListMenu.template.items = sBagListItems;
     sBagListMenu.template.totalItems = 0;
-    sBagListMenu.template.maxShowed = 3;
+    sBagListMenu.template.maxShowed = 6;
     sBagListMenu.template.windowId = sBagListMenu.windowId;
     sBagListMenu.template.item_X = 8;
     sBagListMenu.template.upText_Y = 1;
@@ -348,7 +350,7 @@ static void BagListMenu_ItemPrintFunc(u8 windowId, u32 itemId, u8 y)
     const u8 textColor[] = {TEXT_COLOR_TRANSPARENT, 1, 8};
     AddTextPrinterParameterized4(windowId, FONT_NORMAL, 8, y, 0, 0, textColor, TEXT_SKIP_DRAW, ItemId_GetName(sBagListMenu.items[itemId]));
     ConvertIntToDecimalStringN(gStringVar1, GetItemIdQuantity(sBagListMenu.items[itemId]), STR_CONV_MODE_LEFT_ALIGN, 2);
-    AddTextPrinterParameterized4(windowId, FONT_NORMAL, 8 + GetStringRightAlignXOffset(FONT_NORMAL, gStringVar1, 96), y, 0, 0, textColor, TEXT_SKIP_DRAW, gStringVar1);
+    AddTextPrinterParameterized4(windowId, FONT_NORMAL, 8 + GetStringRightAlignXOffset(FONT_NORMAL, gStringVar1, 112), y, 0, 0, textColor, TEXT_SKIP_DRAW, gStringVar1);
 }
 
 static void BagListMenu_PartyPrintFunc(u8 windowId, u32 itemId, u8 y)
@@ -363,7 +365,7 @@ static void BagListMenu_PartyPrintFunc(u8 windowId, u32 itemId, u8 y)
     ConvertIntToDecimalStringN(gStringVar2, hp, STR_CONV_MODE_LEFT_ALIGN, 3);
     ConvertIntToDecimalStringN(gStringVar3, maxHP, STR_CONV_MODE_LEFT_ALIGN, 3);
     StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("{STR_VAR_2}/{STR_VAR_3}"));
-    AddTextPrinterParameterized4(windowId, FONT_NORMAL, 8 + GetStringRightAlignXOffset(FONT_NORMAL, gStringVar1, 96), y, 0, 0, textColor, TEXT_SKIP_DRAW, gStringVar1);
+    AddTextPrinterParameterized4(windowId, FONT_NORMAL, 8 + GetStringRightAlignXOffset(FONT_NORMAL, gStringVar1, 112), y, 0, 0, textColor, TEXT_SKIP_DRAW, gStringVar1);
 }
 
 static bool32 UseItemOnPartyIndex(u32 itemId, u32 partyIndex)
@@ -375,7 +377,7 @@ static bool32 UseItemOnPartyIndex(u32 itemId, u32 partyIndex)
     // Check for invalid item use; TODO: assumes only healing items
     if (itemId == ITEM_REVIVE && hp != 0)
         return FALSE;
-    else if (hp == 0 || hp == maxHP)
+    else if (itemId != ITEM_REVIVE && (hp == 0 || hp == maxHP))
         return FALSE;
 
     // Heal party member; TODO: use item params.
@@ -400,4 +402,75 @@ static bool32 UseItemOnPartyIndex(u32 itemId, u32 partyIndex)
     SetMonData(mon, MON_DATA_HP, &hp);
 
     return TRUE;
+}
+
+void PopulateCampsiteItemList(void) // callnative
+{
+    u16 itemsList[] = {ITEM_POTION, ITEM_SUPER_POTION, ITEM_HYPER_POTION, ITEM_REVIVE};
+    for (u32 i = 0; i < ARRAY_COUNT(itemsList); ++i)
+    {
+        if (GetItemIdQuantity(itemsList[i]) != 0)
+        {
+            struct ListMenuItem item;
+            item.name = gItemsInfo[itemsList[i]].name;
+            item.id = itemsList[i];
+            MultichoiceDynamic_PushElement(item);
+            gSpecialVar_Result = TRUE;
+        }
+    }
+}
+
+void RestAtCampsite(void) // callnative
+{
+    CalculatePlayerPartyCount();
+    for (u32 i = 0; i < gPlayerPartyCount; ++i)
+    {
+        u32 maxHP = GetMonData(&gPlayerParty[i], MON_DATA_MAX_HP);
+        u32 hp = GetMonData(&gPlayerParty[i], MON_DATA_HP);
+        switch (gSpecialVar_Result)
+        {
+        case ITEM_POTION:
+            if (hp != 0)
+                hp += 20;
+            RemoveBagItem(gSpecialVar_Result, 1);
+            break;
+        case ITEM_SUPER_POTION:
+            if (hp != 0)
+                hp += 60;
+            RemoveBagItem(gSpecialVar_Result, 1);
+            break;
+        case ITEM_HYPER_POTION:
+            if (hp != 0)
+                hp += 200;
+            RemoveBagItem(gSpecialVar_Result, 1);
+            break;
+        case ITEM_REVIVE:
+            if (hp == 0)
+                hp += ((maxHP * 50) / 100);
+            RemoveBagItem(gSpecialVar_Result, 1);
+            break;
+        }
+        if (hp > maxHP)
+            hp = maxHP;
+        SetMonData(&gPlayerParty[i], MON_DATA_HP, &hp);
+    }
+
+    // Increment time and refresh encounter flags.
+    IncrementTrailTime(360);
+    ClearFloorEncounterFlags();
+
+    if (!gPaletteFade.active)
+    {
+        struct TimeBlendSettings cachedBlend = gTimeBlend;
+        u32 *bld0 = (u32*)&cachedBlend;
+        u32 *bld1 = (u32*)&gTimeBlend;
+        UpdateTimeOfDay();
+        if (bld0[0] != bld1[0]
+        || bld0[1] != bld1[1]
+        || bld0[2] != bld1[2])
+        {
+        UpdateAltBgPalettes(PALETTES_BG);
+        UpdatePalettesWithTime(PALETTES_ALL);
+        }
+    }
 }

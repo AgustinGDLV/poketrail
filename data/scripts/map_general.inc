@@ -10,7 +10,7 @@ EventScript_OverworldEncounterStart::
 	waitmoncry
 	callnative InitEnemyPartyFromEncounter
 	callnative OpenDeckBattle
-	removeobject VAR_0x8001
+	callnative RemoveEncounterObjectEvent
 	releaseall
     end
 
@@ -149,14 +149,13 @@ EventScript_Campfire::
 EventScript_Campfire_Rest:
 	callnative CheckTerribleTunnel
 	goto_if_eq VAR_RESULT, TRUE, EventScript_Campfire_TerribleTunnel
+	callnative PopulateCampsiteItemList
+	goto_if_eq VAR_RESULT, FALSE, EventScript_Campfire_NoItems
 	message EventScript_RestHowLong_Text
 	waitmessage
-	dynmultipush EventScript_3_Hours_Text, 0
-	dynmultipush EventScript_6_Hours_Text, 1
-	dynmultipush EventScript_12_Hours_Text, 2
-	dynmultipush EventScript_Exit_Text, 3
+	dynmultipush EventScript_Exit_Text, 0
 	dynmultistack 21, 4, TRUE, 4, FALSE, 0, NULL
-	goto_if_eq VAR_RESULT, 3, EventScript_End
+	goto_if_eq VAR_RESULT, 0, EventScript_End
 	fadescreenswapbuffers FADE_TO_BLACK
 	playfanfare MUS_HEAL
 	waitfanfare
@@ -174,6 +173,15 @@ EventScript_Campfire_TerribleTunnel::
 EventScript_CantRestHere_Text:
 	.string "It feels too dangerous\n"
 	.string "to rest here…$"
+
+EventScript_Campfire_NoItems::
+	message EventScript_NoItemsToRest_Text
+	waitmessage
+	end
+
+EventScript_NoItemsToRest_Text:
+	.string "You don't have any items to\n"
+	.string "share with your party to rest…$"
 
 EventScript_Campfire_Resume:
 	callnative GoToTrailMap
@@ -193,7 +201,8 @@ EventScript_Stay_Text:
 	.string "Stay$"
 
 EventScript_RestHowLong_Text:
-	.string "Rest how long?$"
+	.string "Share which item with\n"
+	.string "your party as you rest?$"
 
 EventScript_3_Hours_Text:
 	.string "3 hours$"

@@ -37,6 +37,9 @@ struct DeckSpeciesInfo
     u16 move;
     u16 ability;
 
+    u16 evoSpecies;
+    u16 evoLevel;
+
     const u8 *playerIdle;
     const u8 *opponentIdle;
     const u8 *playerAttack;
@@ -173,6 +176,7 @@ struct DeckMoveInfo
 {
     const u8* name;
     const u8* description;
+    const u8* infoMenuDesc;
     u8 power;
     u16 target;
     u8 effect;
@@ -205,6 +209,7 @@ struct DeckAbilityInfo
 {
     const u8* name;
     const u8* description;
+    const u8* infoMenuDesc;
 };
 
 struct DeckBattleStruct
@@ -213,19 +218,22 @@ struct DeckBattleStruct
     struct BattleAction queuedActions[MAX_ACTIONS];
     u8 actionsCount;
     u8 executedCount;
+    u8 attackCount; // for AGGRESSIVE and PATIENT
     u8 actingSide;
     u8 turns;
     u32 exp;
     enum BattleId battlerExp;
     enum BattleId battlerCaught;
     bool8 isSelectionPhase;
+    bool8 isBattleEndPhase;
 
     s32 lastHitDamage;
 
     bool8 isBossBattle;
     u32 musicOverride;
     uq4_12_t bossHPMult;
-    u8 caughtWindowId; // maybe belongs in interface struct
+
+    enum BattleId infoBattler;
 };
 
 enum DeckBattleBackgroundId

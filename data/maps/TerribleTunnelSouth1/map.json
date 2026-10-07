@@ -25,7 +25,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "4",
       "script": "NULL",
-      "flag": "FLAG_TERRIBLE_TUNNEL_SOUTH_ENCOUNTER_1"
+      "flag": "FLAG_ENCOUNTER_1"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(DUGTRIO)",
@@ -38,7 +38,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "4",
       "script": "NULL",
-      "flag": "FLAG_TERRIBLE_TUNNEL_SOUTH_ENCOUNTER_1"
+      "flag": "FLAG_ENCOUNTER_2"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(EXPLOUD)",
@@ -51,7 +51,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "4",
       "script": "NULL",
-      "flag": "FLAG_TERRIBLE_TUNNEL_SOUTH_ENCOUNTER_1"
+      "flag": "FLAG_ENCOUNTER_3"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",

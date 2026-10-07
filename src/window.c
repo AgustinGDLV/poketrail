@@ -562,8 +562,13 @@ bool32 SetWindowAttribute(u32 windowId, u32 attributeId, u32 value)
         gWindows[windowId].tileData = (u8 *)(value);
         return TRUE;
     case WINDOW_BG:
+        return TRUE;
     case WINDOW_WIDTH:
+        gWindows[windowId].window.width = value;
+        return FALSE;
     case WINDOW_HEIGHT:
+        gWindows[windowId].window.height = value;
+        return FALSE;
     default:
         return TRUE;
     }

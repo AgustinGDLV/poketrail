@@ -6129,6 +6129,7 @@ bool8 MovementType_EncounterTrackPlayer_TrackMove(struct ObjectEvent *objectEven
         else
             gSpecialVar_0x8000 = SPECIES_PORYGON;
         gSpecialVar_0x8001 = objectEvent->localId;
+        gSpecialVar_0x8002 = objectEvent->mapNum;
         LockPlayerFieldControls();
         ScriptContext_SetupScript(EventScript_OverworldEncounterStart);
         return FALSE;
@@ -6175,6 +6176,11 @@ bool8 MovementType_EncounterTrackPlayer_TrackPause(struct ObjectEvent *objectEve
         return TRUE;
     }
     return FALSE;
+}
+
+void RemoveEncounterObjectEvent(void) // ensure correct mapNum is used to remove object
+{
+    RemoveObjectEventByLocalIdAndMap(gSpecialVar_0x8001, gSpecialVar_0x8002, gSaveBlock1Ptr->location.mapGroup);
 }
 
 void ClearObjectEventMovement(struct ObjectEvent *objectEvent, struct Sprite *sprite)

@@ -2,7 +2,7 @@
   "id": "MAP_ORCHID_CITY1",
   "name": "OrchidCity1",
   "layout": "LAYOUT_ORCHID_CITY1",
-  "music": "MUS_HG_GOLDENROD",
+  "music": "MUS_LITTLEROOT",
   "region_map_section": "MAPSEC_ABANDONED_SHIP",
   "requires_flash": false,
   "weather": "WEATHER_NONE",

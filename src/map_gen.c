@@ -250,11 +250,19 @@ void ClearFloorEventFlags(void)
         FlagClear(i);
 }
 
+// Clears only encounter flags for a floor.
+void ClearFloorEncounterFlags(void)
+{
+    u32 i;
+    for (i = FLAG_ENCOUNTER_1; i < FLAG_ENCOUNTER_16 + 1; ++i)
+        FlagClear(i);
+}
+
 // Clears all checkpoint flags in a new run.
 void ClearCheckpointEventFlags(void)
 {
     u32 i;
-    for (i = FLAG_BOSS_ENCOUNTER; i < FLAG_UNUSED_0x4EF + 1; ++i)
+    for (i = FLAG_BOSS_ENCOUNTER; i < FLAG_ENTERED_TERRIBLE_TUNNEL + 1; ++i)
         FlagClear(i);
 }
 
