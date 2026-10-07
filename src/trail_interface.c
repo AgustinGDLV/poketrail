@@ -895,6 +895,7 @@ static void Task_GoToCheckpoint(u8 taskId)
             StoreInitialPlayerAvatarState();
             LockPlayerFieldControls();
             PlayBGM(GetCurrentTemplateRules()->bgm);
+            ClearFloorEventFlags();
             gTrailInterface.musicPlaying = FALSE;
             WarpFadeOutScreen();
             PlayRainStoppingSoundEffect();
