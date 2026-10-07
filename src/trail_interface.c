@@ -618,6 +618,11 @@ static void Task_TrailMapWaitForKeypress(u8 taskId)
     {
         gTasks[taskId].func = Task_GoToCheckpoint;
     }
+    // Check for Terrible Tunnel entrance.
+    else if (gSaveBlock1Ptr->currentTemplateType == TEMPLATES_TERRIBLE_TUNNEL && !FlagGet(FLAG_ENTERED_TERRIBLE_TUNNEL))
+    {
+        gTasks[taskId].func = Task_PrintTerribleTunnelWarning;
+    }
     // Check for encounter.
     else if ((JOY_NEW(DPAD_ANY) || (JOY_HELD(DPAD_ANY) && gTrailInterface.keyHeldTimer % 12 == 0)))
     {
@@ -1104,6 +1109,41 @@ static void Task_TriggerDysentery(u8 taskId)
     case 3: // Return to trail interface.
         if (JOY_NEW(A_BUTTON))
         {
+            ClearWindow(WIN_MESSAGE);
+            ClearWindow(WIN_YESNO);
+            PrintControls();
+            gTasks[taskId].func = Task_TrailMapWaitForKeypress;
+            gTasks[taskId].data[0] = 0;
+            gTasks[taskId].data[2] = 0;
+            gTasks[taskId].data[3] = 0;
+        }
+        break;
+    }
+}
+
+
+static void Task_PrintTerribleTunnelWarning(u8 taskId)
+{
+    switch (gTasks[taskId].data[0])
+    {
+    case 0: // Print message.
+        PlaySE(SE_PIN);
+        PrintTextToMessageBox(COMPOUND_STRING("This cave seems dangerous!"));
+        ++gTasks[taskId].data[0];
+        break;
+    case 1: // Print second message.
+        if (JOY_NEW(A_BUTTON))
+        {
+            Play(SE_SELECT);
+            PrintTextToMessageBox(COMPOUND_STRING("You cannot rest in this area\nand monsters are tougher."));
+            ++gTasks[taskId].data[0];
+        }
+        break;
+    case 2: // Return to trail interface.
+        if (JOY_NEW(A_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            FlagSet(FLAG_ENTERED_TERRIBLE_TUNNEL);
             ClearWindow(WIN_MESSAGE);
             ClearWindow(WIN_YESNO);
             PrintControls();

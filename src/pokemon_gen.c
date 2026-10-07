@@ -55,7 +55,7 @@ void InitEnemyPartyFromEncounter(void) // used by callnative
         SetMonData(&gEnemyParty[i], MON_DATA_POSITION, &i);
     }
     gDeckStruct.isBossBattle = FALSE;
-    if (gSaveBlock1Ptr->currentTemplateType == TEMPLATES_TERRIBLE_TUNNEL && !IsPlayerInFloorMap())
+    if (gSaveBlock1Ptr->currentTemplateType == TEMPLATES_TERRIBLE_TUNNEL)
         gDeckStruct.bossHPMult = UQ_4_12(1.5);
     else
         gDeckStruct.bossHPMult = 0;
