@@ -667,9 +667,9 @@ static void PrintMonInfo(u32 index)
     AddTextPrinterParameterized3(WINDOW_INFO, FONT_NORMAL, 0, 23, sTextColor_Black, TEXT_SKIP_DRAW, gStringVar1);
 
     // Print evolution.
-    if (gSpeciesInfo[sPartyMenuData.mons[index].species].evolutions[0].method == EVO_LEVEL || gSpeciesInfo[sPartyMenuData.mons[index].species].evolutions[0].method == EVO_LEVEL_BATTLE_ONLY)
+    if (gDeckSpeciesInfo[sPartyMenuData.mons[index].species].evoSpecies != SPECIES_NONE)
     {
-        ConvertIntToDecimalStringN(gStringVar2, gSpeciesInfo[sPartyMenuData.mons[index].species].evolutions[0].param, STR_CONV_MODE_LEFT_ALIGN, 2);
+        ConvertIntToDecimalStringN(gStringVar2, gDeckSpeciesInfo[sPartyMenuData.mons[index].species].evoLevel, STR_CONV_MODE_LEFT_ALIGN, 2);
         StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Evolves at {STR_VAR_2}"));
         AddTextPrinterParameterized3(WINDOW_INFO, FONT_NORMAL, 0, 34, sTextColor_Black, TEXT_SKIP_DRAW, gStringVar1);
     }

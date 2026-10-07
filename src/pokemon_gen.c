@@ -37,8 +37,8 @@ u16 GetOverworldSpeciesInRoom(u32 index, u32 localId)
 
     // Check for evolutions.
     u32 species = ChooseElementFromPool(GetCurrentTemplateRules()->encounterPool);
-    while (gSpeciesInfo[species].evolutions[0].method == EVO_LEVEL && gSpeciesInfo[species].evolutions[0].param <= GetEncounterLevel())
-        species = gSpeciesInfo[species].evolutions[0].targetSpecies;
+    while (gDeckSpeciesInfo[species].evoSpecies != SPECIES_NONE && gDeckSpeciesInfo[species].evoLevel <= GetEncounterLevel())
+        species = gDeckSpeciesInfo[species].evoSpecies;
 
     return species;    
 }
@@ -49,7 +49,7 @@ void InitEnemyPartyFromEncounter(void) // used by callnative
     for (u32 i = 0; i < PARTY_SIZE; ++i)
     {
         if (gSaveBlock1Ptr->currentTemplateType == TEMPLATES_TERRIBLE_TUNNEL)
-            CreateMon(&gEnemyParty[i], gTerribleEncountersInfo[gSpecialVar_0x8000][i], level + (Random() % 2) + 3, USE_RANDOM_IVS, 0, 0, OT_ID_PLAYER_ID, 0);
+            CreateMon(&gEnemyParty[i], gTerribleEncountersInfo[gSpecialVar_0x8000][i], level + (Random() % 2), USE_RANDOM_IVS, 0, 0, OT_ID_PLAYER_ID, 0);
         else
             CreateMon(&gEnemyParty[i], gEncountersInfo[gSpecialVar_0x8000][i], level + (Random() % 2), USE_RANDOM_IVS, 0, 0, OT_ID_PLAYER_ID, 0);
         SetMonData(&gEnemyParty[i], MON_DATA_POSITION, &i);

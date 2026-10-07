@@ -21,9 +21,9 @@ OrchidCity1_Movement_Jump:
 	step_end
 
 OrchidCity1_Porygon_Text:
-	.string "This is what you\n"
-	.string "journeyed for…\p"
-	.string "It's so cool!$"
+	.string "You finally made it!\p"
+	.string "Porygon seems excited\n"
+	.string "for more visitors…$"
 
 OrchidCity1_Porygon_Text2:
 	.string "Your journey is complete!$"

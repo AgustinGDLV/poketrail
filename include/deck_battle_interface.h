@@ -33,6 +33,7 @@ struct DeckBattleGraphics
     u8 swapCursorSpriteId;
     u8 portraitSpriteId;
     u8 bobTaskId;
+    u8 multichoiceWindowId;
 };
 
 void ClearDeckBattleGraphicsStruct(void);
@@ -57,6 +58,7 @@ u32 GetBattlerXCoord(enum BattleId battler);
 u32 GetBattlerYCoord(enum BattleId battler);
 bool32 HasBattlerAnimTriggeredCry(enum BattleId battler);
 
+void PrintDeckBattleControls(void);
 void PrintBattlerMoveInfo(enum BattleId battler);
 void PrintTargetBattlerPrompt(enum BattleId battler);
 void PrintFixedTargetsPrompt(bool32 viableTarget);
@@ -72,6 +74,13 @@ void DisplayActionSelectionInfo(enum BattleId battler);
 void DisplaySwapSelectionInfo(enum BattlePosition position);
 
 void PrintDamageNumbers(enum BattleId battler, s32 damage);
+
+void LoadBattleInfoMenuGraphics(void);
+void UpdateBattlerInfoDisplay(enum BattleId battler);
+void ReloadBattleMenuGraphics(void);
+
+void AddDeckBattleControlsWindow(void);
+void RemoveDeckBattleControlsWindow(void);
 
 extern struct DeckBattleGraphics gDeckGraphics;
 
