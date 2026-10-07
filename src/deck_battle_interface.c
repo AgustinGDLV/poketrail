@@ -1074,7 +1074,11 @@ void PrintTargetBattlerPrompt(enum BattleId battler)
     if (gDeckMovesInfo[gDeckSpeciesInfo[gDeckMons[gBattlerAttacker].species].move].effect == DECK_EFFECT_POWER_UP)
         StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Boost {STR_VAR_2}?"));
     else if (gDeckMovesInfo[gDeckSpeciesInfo[gDeckMons[gBattlerAttacker].species].move].effect == DECK_EFFECT_HEAL)
-        StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Heal {STR_VAR_2}?"));
+    {
+        ConvertIntToDecimalStringN(gStringVar3, gDeckMons[battler].hp, STR_CONV_MODE_LEFT_ALIGN, 3);
+        ConvertIntToDecimalStringN(gStringVar4, gDeckMons[battler].maxHP, STR_CONV_MODE_LEFT_ALIGN, 3);
+        StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Heal {STR_VAR_2}?\nHP: {STR_VAR_3}/{STR_VAR_4}"));
+    }
     else
         StringExpandPlaceholders(gStringVar1, COMPOUND_STRING("Attack {STR_VAR_2}?"));
 
