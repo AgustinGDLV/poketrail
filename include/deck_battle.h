@@ -225,6 +225,7 @@ struct DeckBattleStruct
     enum BattleId battlerExp;
     enum BattleId battlerCaught;
     bool8 isSelectionPhase;
+    bool8 isBattleEndPhase;
 
     s32 lastHitDamage;
 
@@ -232,7 +233,7 @@ struct DeckBattleStruct
     u32 musicOverride;
     uq4_12_t bossHPMult;
 
-    enum BattleId  infoBattler;
+    enum BattleId infoBattler;
 };
 
 enum DeckBattleBackgroundId

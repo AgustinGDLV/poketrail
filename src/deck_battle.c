@@ -402,6 +402,9 @@ static void Task_HandleBattleVictory(u8 taskId)
     case 0: // Print EXP message.
     {
         gDeckStruct.isSelectionPhase = TRUE;
+        gDeckStruct.isBattleEndPhase = TRUE;
+        ResetTurnValues();
+
         u32 exp = gDeckStruct.exp;
         if (gDeckStruct.isBossBattle) // more exp from bosses
             exp *= 2;
@@ -805,7 +808,13 @@ static void Task_SelectPartyMemberToReplace(u8 taskId)
     switch (gTasks[taskId].tState)
     {
     default:
-    case 0: // Print message.
+    case 0: // Print message and show battlers to replace.
+        for (u32 battler = 0; battler < B_PLAYER_5; ++battler)
+        {
+            LoadBattlerObjectSprite(battler);
+            if (gDeckMons[battler].hp == 0)
+                GetBattlerSprite(battler)->oam.objMode = ST_OAM_OBJ_BLEND;
+        }
         PrintStringToMessageBox(COMPOUND_STRING("Your party is full! Select a battler to send home."));
         ++gTasks[taskId].tState;
         break;
@@ -943,6 +952,7 @@ static void Task_SelectPartyMemberToReplace(u8 taskId)
         SetMonData(&gPlayerParty[gDeckMons[battler].partyIndex], MON_DATA_POSITION, &gDeckStruct.selectedPos);
         UpdateBattlerSelection(battler, FALSE);
         LoadBattlerObjectSprite(battler);
+        GetBattlerSprite(battler)->oam.objMode = ST_OAM_OBJ_NORMAL;
         StartBattlerAnim(battler, ANIM_ATTACK);
         gTasks[taskId].tState = 6;
         break;
@@ -1121,6 +1131,7 @@ static void InitBattleStructData(void)
     gDeckStruct.exp = 0;
     gDeckStruct.battlerCaught = MAX_DECK_BATTLERS_COUNT;
     gDeckStruct.selectedPos = GetLeftmostOccupiedPosition(B_SIDE_PLAYER);
+    gDeckStruct.isBattleEndPhase = FALSE;
 }
 
 // Reset struct data associated with a single turn.

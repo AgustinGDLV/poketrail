@@ -262,7 +262,7 @@ void ClearFloorEncounterFlags(void)
 void ClearCheckpointEventFlags(void)
 {
     u32 i;
-    for (i = FLAG_BOSS_ENCOUNTER; i < FLAG_UNUSED_0x4EF + 1; ++i)
+    for (i = FLAG_BOSS_ENCOUNTER; i < FLAG_ENTERED_TERRIBLE_TUNNEL + 1; ++i)
         FlagClear(i);
 }
 

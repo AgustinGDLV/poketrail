@@ -538,7 +538,7 @@ void LoadBattlerObjectSprite(enum BattleId battler)
 {
     u32 *dst, *src, index;
 
-    if (IsDeckBattlerAlive(battler))
+    if (IsDeckBattlerAlive(battler) || (gDeckStruct.isBattleEndPhase && gDeckMons[battler].species != SPECIES_NONE))
     {
         FreeSpritePaletteByTag(TAG_BATTLER_OBJ + battler); // just in case?
         index = LoadSpritePaletteWithTag(gDeckSpeciesInfo[gDeckMons[battler].species].objectPalette, TAG_BATTLER_OBJ + battler);

@@ -460,6 +460,7 @@ static void TryTriggerEvent(u8 taskId);
 static void Task_TriggerOverworldEncounter(u8 taskId);
 static void Task_TriggerHealEvent(u8 taskId);
 static void Task_TriggerDysentery(u8 taskId);
+static void Task_PrintTerribleTunnelWarning(u8 taskId);
 
 static void LoadMapGraphics(u32 characterId);
 static void IncrementTime(u32 minutes);
@@ -1122,7 +1123,6 @@ static void Task_TriggerDysentery(u8 taskId)
     }
 }
 
-
 static void Task_PrintTerribleTunnelWarning(u8 taskId)
 {
     switch (gTasks[taskId].data[0])
@@ -1135,7 +1135,7 @@ static void Task_PrintTerribleTunnelWarning(u8 taskId)
     case 1: // Print second message.
         if (JOY_NEW(A_BUTTON))
         {
-            Play(SE_SELECT);
+            PlaySE(SE_SELECT);
             PrintTextToMessageBox(COMPOUND_STRING("You cannot rest in this area\nand monsters are tougher."));
             ++gTasks[taskId].data[0];
         }
