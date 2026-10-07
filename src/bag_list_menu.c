@@ -39,6 +39,7 @@
 #include "save.h"
 #include "scanline_effect.h"
 #include "script.h"
+#include "script_menu.h"
 #include "sound.h"
 #include "start_menu.h"
 #include "strings.h"
@@ -47,6 +48,7 @@
 #include "text.h"
 #include "text_window.h"
 #include "trainer_card.h"
+#include "trail_interface.h"
 #include "window.h"
 #include "union_room.h"
 #include "dexnav.h"
@@ -400,4 +402,75 @@ static bool32 UseItemOnPartyIndex(u32 itemId, u32 partyIndex)
     SetMonData(mon, MON_DATA_HP, &hp);
 
     return TRUE;
+}
+
+void PopulateCampsiteItemList(void) // callnative
+{
+    u16 itemsList[] = {ITEM_POTION, ITEM_SUPER_POTION, ITEM_HYPER_POTION, ITEM_REVIVE};
+    for (u32 i = 0; i < ARRAY_COUNT(itemsList); ++i)
+    {
+        if (GetItemIdQuantity(itemsList[i]) != 0)
+        {
+            struct ListMenuItem item;
+            item.name = gItemsInfo[itemsList[i]].name;
+            item.id = itemsList[i];
+            MultichoiceDynamic_PushElement(item);
+            gSpecialVar_Result = TRUE;
+        }
+    }
+}
+
+void RestAtCampsite(void) // callnative
+{
+    CalculatePlayerPartyCount();
+    for (u32 i = 0; i < gPlayerPartyCount; ++i)
+    {
+        u32 maxHP = GetMonData(&gPlayerParty[i], MON_DATA_MAX_HP);
+        u32 hp = GetMonData(&gPlayerParty[i], MON_DATA_HP);
+        switch (gSpecialVar_Result)
+        {
+        case ITEM_POTION:
+            if (hp != 0)
+                hp += 20;
+            RemoveBagItem(gSpecialVar_Result, 1);
+            break;
+        case ITEM_SUPER_POTION:
+            if (hp != 0)
+                hp += 60;
+            RemoveBagItem(gSpecialVar_Result, 1);
+            break;
+        case ITEM_HYPER_POTION:
+            if (hp != 0)
+                hp += 200;
+            RemoveBagItem(gSpecialVar_Result, 1);
+            break;
+        case ITEM_REVIVE:
+            if (hp == 0)
+                hp += ((maxHP * 50) / 100);
+            RemoveBagItem(gSpecialVar_Result, 1);
+            break;
+        }
+        if (hp > maxHP)
+            hp = maxHP;
+        SetMonData(&gPlayerParty[i], MON_DATA_HP, &hp);
+    }
+
+    // Increment time and refresh encounter flags.
+    IncrementTrailTime(360);
+    ClearFloorEncounterFlags();
+
+    if (!gPaletteFade.active)
+    {
+        struct TimeBlendSettings cachedBlend = gTimeBlend;
+        u32 *bld0 = (u32*)&cachedBlend;
+        u32 *bld1 = (u32*)&gTimeBlend;
+        UpdateTimeOfDay();
+        if (bld0[0] != bld1[0]
+        || bld0[1] != bld1[1]
+        || bld0[2] != bld1[2])
+        {
+        UpdateAltBgPalettes(PALETTES_BG);
+        UpdatePalettesWithTime(PALETTES_ALL);
+        }
+    }
 }
