@@ -10,7 +10,7 @@ EventScript_OverworldEncounterStart::
 	waitmoncry
 	callnative InitEnemyPartyFromEncounter
 	callnative OpenDeckBattle
-	removeobject VAR_0x8001
+	callnative RemoveEncounterObjectEvent
 	releaseall
     end
 
