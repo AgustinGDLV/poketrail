@@ -182,6 +182,7 @@ static void ExecuteSwapEffect(void)
 {
     u32 targetsCount = 0;
     u32 aliveCount = 0;
+    u32 aliveTargets[2] = {0};
     enum BattleId targets[MAX_DECK_BATTLERS_COUNT] = {0};
     PopulateTargetsList(targets, &targetsCount);
 
@@ -189,36 +190,39 @@ static void ExecuteSwapEffect(void)
     for (u32 i = 0; i < targetsCount; ++i)
     {
         if (IsDeckBattlerAlive(targets[i]))
+        {
+            aliveTargets[aliveCount] = targets[i];
             aliveCount += 1;
+        }
     }
 
     // Execute effect.
-    if (aliveCount == 1 && targets[0] != gBattlerAttacker)
+    if (aliveCount == 1 && aliveTargets[0] != gBattlerAttacker)
     {
-        SwapBattlerPositions(gBattlerAttacker, targets[0]);
         PlaySE(SE_M_DOUBLE_TEAM);
         PrintMoveOutcomeString(aliveCount);
         
+        SwapBattlerPositions(gBattlerAttacker, aliveTargets[0]);
         if (gDeckMovesInfo[gCurrentMove].param == STAT_ATK || gDeckMovesInfo[gCurrentMove].param == 0xFF)
-            gDeckMons[targets[0]].powerBoost += (gDeckMons[gBattlerAttacker].power * gDeckMovesInfo[gCurrentMove].power) / 100;
+            gDeckMons[aliveTargets[0]].powerBoost += (gDeckMons[gBattlerAttacker].power * gDeckMovesInfo[gCurrentMove].power) / 100;
         if (gDeckMovesInfo[gCurrentMove].param == STAT_DEF || gDeckMovesInfo[gCurrentMove].param == 0xFF)
-            gDeckMons[targets[0]].defBoost += (gDeckMons[gBattlerAttacker].power * gDeckMovesInfo[gCurrentMove].power) / 100;
+            gDeckMons[aliveTargets[0]].defBoost += (gDeckMons[gBattlerAttacker].power * gDeckMovesInfo[gCurrentMove].power) / 100;
     }
     else if (aliveCount == 2)
     {
-        SwapBattlerPositions(targets[0], targets[1]);
+        SwapBattlerPositions(aliveTargets[0], aliveTargets[1]);
         PlaySE(SE_M_DOUBLE_TEAM);
         PrintMoveOutcomeString(aliveCount);
         
         if (gDeckMovesInfo[gCurrentMove].param == STAT_ATK || gDeckMovesInfo[gCurrentMove].param == 0xFF)
         {
-            gDeckMons[targets[0]].powerBoost += (gDeckMons[gBattlerAttacker].power * gDeckMovesInfo[gCurrentMove].power) / 100;
-            gDeckMons[targets[1]].powerBoost += (gDeckMons[gBattlerAttacker].power * gDeckMovesInfo[gCurrentMove].power) / 100;
+            gDeckMons[aliveTargets[0]].powerBoost += (gDeckMons[gBattlerAttacker].power * gDeckMovesInfo[gCurrentMove].power) / 100;
+            gDeckMons[aliveTargets[1]].powerBoost += (gDeckMons[gBattlerAttacker].power * gDeckMovesInfo[gCurrentMove].power) / 100;
         }
         if (gDeckMovesInfo[gCurrentMove].param == STAT_DEF || gDeckMovesInfo[gCurrentMove].param == 0xFF)
         {
-            gDeckMons[targets[0]].defBoost += (gDeckMons[gBattlerAttacker].power * gDeckMovesInfo[gCurrentMove].power) / 100;
-            gDeckMons[targets[1]].defBoost += (gDeckMons[gBattlerAttacker].power * gDeckMovesInfo[gCurrentMove].power) / 100;
+            gDeckMons[aliveTargets[0]].defBoost += (gDeckMons[gBattlerAttacker].power * gDeckMovesInfo[gCurrentMove].power) / 100;
+            gDeckMons[aliveTargets[1]].defBoost += (gDeckMons[gBattlerAttacker].power * gDeckMovesInfo[gCurrentMove].power) / 100;
         }
     }
     else

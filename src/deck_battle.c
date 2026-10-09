@@ -597,46 +597,6 @@ void Task_CloseDeckBattle(u8 taskId)
             SetMonData(&gPlayerParty[gDeckMons[battler].partyIndex], MON_DATA_HP, &gDeckMons[battler].hp);
     }
 
-    // TODO: Band-aid fix for any position bugs.
-    u32 battlersAtPos[POSITIONS_COUNT] = {0};
-
-    for (u32 battler = B_PLAYER_0; battler < B_PLAYER_5; ++battler)
-        if (gDeckMons[battler].species != SPECIES_NONE)
-            ++battlersAtPos[gDeckMons[battler].pos];
-
-    while (TRUE)
-    {
-        bool32 madeChanges = FALSE;
-        for (u32 pos = POSITION_0; pos < POSITIONS_COUNT; ++pos)
-        {
-            if (battlersAtPos[pos] > 1)
-            {
-                u32 battler = GetDeckBattlerAtPosUnsafe(B_SIDE_PLAYER, pos);
-                if (battler == MAX_DECK_BATTLERS_COUNT)
-                    continue;
-                for (u32 pos2 = POSITION_0; pos2 < POSITIONS_COUNT; ++pos2)
-                {
-                    if (battlersAtPos[pos2] == 0)
-                    {
-                        battlersAtPos[pos] -= 1;
-                        battlersAtPos[pos2] += 1;
-                        gDeckMons[battler].pos = pos2;
-                        madeChanges = TRUE;
-                    }
-                }
-            }
-        }
-        if (!madeChanges)
-            break;
-    }
-
-    // Update battler positions.
-    for (u32 battler = B_PLAYER_0; battler < B_PLAYER_5; ++battler)
-    {
-        if (gDeckMons[battler].species != SPECIES_NONE)
-            SetMonData(&gPlayerParty[gDeckMons[battler].partyIndex], MON_DATA_POSITION, &gDeckMons[battler].pos);
-    }
-
     // Return to overworld.
     FadeOutMapMusic(5);
     if (!UseContinueGameWarp())
@@ -769,6 +729,13 @@ static void Task_HandleCaughtBattler(u8 taskId)
         struct Pokemon *mon = &gEnemyParty[gDeckMons[gDeckStruct.battlerCaught].partyIndex];
         u32 hp = gDeckMons[gDeckStruct.battlerCaught].maxHP;
         SetMonData(mon, MON_DATA_HP, &hp);
+        for (u32 battler = B_PLAYER_0; battler < B_PLAYER_5; ++battler)
+        {
+            if (gDeckMons[battler].species != SPECIES_NONE)
+                gDeckMons[battler].pos = GetMonData(&gPlayerParty[gDeckMons[battler].partyIndex], MON_DATA_POSITION);
+        }
+        u32 position = GetPlayerLeftmostUnoccupiedPosition();
+        SetMonData(mon, MON_DATA_POSITION, &position);
         GiveMonToPlayer(mon);
         gTasks[taskId].tState = 6; // *TODO: remove magic numbers
         break;
