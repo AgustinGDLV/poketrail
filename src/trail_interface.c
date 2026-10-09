@@ -938,15 +938,15 @@ static void Task_GoToCheckpoint(u8 taskId)
 static void TryTriggerEvent(u8 taskId)
 {
     u32 rand = Random() % 100;
-    if (rand < 3)
+    if (rand < 2)
     {
         gTasks[taskId].func = Task_TriggerHealEvent;
     }
-    else if (rand < 6)
+    else if (rand < 4)
     {
         gTasks[taskId].func = Task_TriggerDysentery;
     }
-    else if (rand < 15)
+    else if (rand < 16)
     {
         gTasks[taskId].func = Task_TriggerOverworldEncounter;
     }

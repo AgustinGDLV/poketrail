@@ -130,7 +130,7 @@ void ChooseOverworldItem(void)
     u32 rand = RandomF();
     u32 tier = ITEM_TIER_1;
 
-    if (rand % 100 < 70)
+    if (rand % 100 < 33)
     {
         if (checkpointsCount < 3)
             gSpecialVar_0x8000 = ITEM_POTION;
@@ -139,7 +139,7 @@ void ChooseOverworldItem(void)
         else
             gSpecialVar_0x8000 = ITEM_HYPER_POTION;
     }
-    else if (rand % 100 < 90)
+    else if (rand % 100 < 66)
     {
         if (checkpointsCount < 3)
             gSpecialVar_0x8000 = ITEM_SUPER_POTION;

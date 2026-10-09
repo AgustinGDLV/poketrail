@@ -127,6 +127,7 @@ IntroSequence_StartJourney:
 	applymovement OBJ_EVENT_ID_PLAYER, IntroSequence_Movement_FaceUp
 	waitmovement 1
 	additem ITEM_POTION, 5
+	additem ITEM_REVIVE, 3
 	playfanfare MUS_OBTAIN_ITEM
 	msgbox IntroSequence_StarterKit
 	msgbox IntroSequence_JourneyQuestion, MSGBOX_YESNO
